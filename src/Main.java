@@ -1,14 +1,72 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+
+
+class Lexer {
+    private String _text;
+    private int _position;
+
+    public Lexer(String text){
+        _text = text;
+    }
+
+    private char getCurrent(){
+        if (_position >= _text.length()) {
+            return '\n';
+        }
+        return _text.charAt(_position);
+    }
+    private void next(){
+        _position++;
+    }
+    public SyntaxToken nextToken(){
+        if (Character.isDigit(getCurrent())){
+            var start = _position;
+            while (Character.isDigit(getCurrent())) {
+                next();
+            }
+            int length = _position - start;
+            String text = this._text.substring(start, start + length);
+            int value = Integer.parseInt(text);
+            return new SyntaxToken(SyntaxKind.NumberToken, start, text);
+        }
+        return null;  // Return null or handle other token types as needed
+    }
+}
+enum SyntaxKind{
+    NumberToken
+}
+class SyntaxToken {
+    private final SyntaxKind kind;
+    private final int position;
+    private final String text;
+
+    public SyntaxToken(SyntaxKind kind, int position, String text){
+
+        this.kind = kind;
+        this.position = position;
+        this.text = text;
+    }
+
+    public SyntaxKind getKind() {
+        return kind;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public String getText() {
+        return text;
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
+
         System.out.printf("Hello and welcome!");
 
         for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
+
             System.out.println("i = " + i);
         }
     }
