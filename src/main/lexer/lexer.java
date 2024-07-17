@@ -1,11 +1,19 @@
+package main.lexer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 class Lexer {
     private String _text;
     private int _position;
+    private List<String> _diagnostics = new ArrayList<>();
+
 
     public Lexer(String text){
         _text = text;
+
     }
 
     private char getCurrent(){
@@ -55,7 +63,13 @@ class Lexer {
         else if (getCurrent()== ')')
             return new SyntaxToken(SyntaxKind.ClosedParanthesisToken, _position++, ")",null);
 
-        return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position -1, 1),null);
+        _diagnostics.add("Erroe: bad character input: " + getCurrent());
+
+         return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position -1, 1),null);
+    }
+
+    public List<String> get_diagnostics() {
+        return _diagnostics;
     }
 }
 enum SyntaxKind{

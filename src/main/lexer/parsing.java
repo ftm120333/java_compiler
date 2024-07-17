@@ -1,9 +1,12 @@
+package main.lexer;
+
 import java.util.ArrayList;
+import java.util.List;
 
 class Parser {
     private  SyntaxToken[] _tokens;
     private int _position;
-
+    private List<String> _diagnostics = new ArrayList<>();
     public Parser(String text){
         var tokens = new ArrayList<SyntaxToken>();
         var lexer = new Lexer(text);
@@ -17,7 +20,13 @@ class Parser {
         } while (token.kind != SyntaxKind.EndOfFileToken);
 
         _tokens = tokens.toArray(new SyntaxToken[0]);
+        _diagnostics.addAll(lexer.get_diagnostics());
+        System.out.println(_diagnostics);
 
+    }
+
+    public  Iterable<String> Diognostics(){
+        return  _diagnostics;
     }
     private SyntaxToken Peek(int offset){
         var index = _position + offset;
@@ -37,6 +46,7 @@ class Parser {
     private SyntaxToken Match(SyntaxKind kind){
         if(current().kind == kind)
             return nextToken();
+        _diagnostics.add("Error: Unexpected token "+ current().kind + ", expected {" + kind+ "} ");
         return new SyntaxToken(kind, current().position, null, null);
 
     }

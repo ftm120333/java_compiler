@@ -1,3 +1,5 @@
+package main.lexer;
+
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -11,7 +13,7 @@ abstract class SyntaxNode {
 abstract  class ExpressionSyntax extends SyntaxNode{
 
 }
-//sealed class NumberExpresionSyntax permits ExpressionSyntax
+//sealed class main.lexer.NumberExpresionSyntax permits main.lexer.ExpressionSyntax
 class NumberExpresionSyntax extends ExpressionSyntax  {
     public SyntaxToken numberToken;
     public  NumberExpresionSyntax(SyntaxToken numberToken){
