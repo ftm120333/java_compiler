@@ -1,8 +1,6 @@
 package main.lexer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 class Lexer {
@@ -13,7 +11,6 @@ class Lexer {
 
     public Lexer(String text){
         _text = text;
-
     }
 
     private char getCurrent(){
@@ -35,7 +32,7 @@ class Lexer {
                 next();
             }
             int length = _position - start;
-            String text = this._text.substring(start, start + length);
+            String text = this._text.substring(start , start + length);
             int value = Integer.parseInt(text);
             return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
         }
@@ -46,7 +43,7 @@ class Lexer {
                 next();
             }
             int length = _position - start;
-            String text = this._text.substring(start, start + length);
+            String text = this._text.substring(start,start + length);
             return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
         }
 
@@ -62,10 +59,11 @@ class Lexer {
             return new SyntaxToken(SyntaxKind.OpenParanthesisToken, _position++, "(",null);
         else if (getCurrent()== ')')
             return new SyntaxToken(SyntaxKind.ClosedParanthesisToken, _position++, ")",null);
+        else{
 
-        _diagnostics.add("Erroe: bad character input: " + getCurrent());
-
-         return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position -1, 1),null);
+            _diagnostics.add("Error: bad character input: " + getCurrent());
+            return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position -1, _position),null);
+        }
     }
 
     public List<String> get_diagnostics() {
@@ -83,7 +81,8 @@ enum SyntaxKind{
     BadToken,
     EndOfFileToken,
     NumberExpression,
-    BinaryExpression, NumberToken
+    BinaryExpression,
+    NumberToken
 }
 class SyntaxToken extends SyntaxNode{
     public final SyntaxKind kind;
@@ -105,8 +104,8 @@ class SyntaxToken extends SyntaxNode{
     }
 
     @Override
-    public Iterable<SyntaxNode> GetChildren() {
-        return  Collections.emptyList();
+    public List<SyntaxNode> GetChildren() {
+        return new ArrayList<SyntaxNode>();
     }
 }
 

@@ -12,16 +12,15 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true){
             System.out.printf("> ");
+
             var line = scanner.nextLine();
+            if(line.isEmpty())
+                return;
             var parser = new Parser(line);
-            var expression = parser.Parse();
-    /*         ConsoleColors.RESET + " NORMAL"*/
-    /*                 ConsoleColors.RED*/
+            var syntaxTree = parser.Parse();
 
-
-            PrettyPrint(expression, "",false);
-            if(parser.Diognostics() != null){
-                System.out.println("it is not null");
+            PrettyPrint(syntaxTree.getRoot(),"", false);
+            if(syntaxTree.getDiagnostics() != null){
                 for (var diagnostic:parser.Diognostics() ) {
                     System.out.println(ConsoleColors.CYAN_BRIGHT+ diagnostic);
 
@@ -31,24 +30,26 @@ public class Main {
     }
     static void PrettyPrint(SyntaxNode node, String indent,boolean isLast){
         var marker = isLast ? "|__": "|--";
-        System.out.print( indent);
+        System.out.print(indent);
         System.out.print(marker);
         System.out.print(node.getKind());
 
-        if (node instanceof SyntaxToken t && t.value != null ){
+        if (node instanceof SyntaxToken t && t.value != null){
             System.out.print(" ");
             System.out.print(t.value);
         }
         System.out.println(" ");
+        // Update indentation for child nodes
         indent +=  isLast? "   ": "|   ";
 
-        SyntaxNode lastChild = null;
-        for (SyntaxNode child : node.GetChildren()) {
-            lastChild = child;
-        }
 
-        for (var child:node.GetChildren()) {
-            PrettyPrint(child,indent, node == lastChild);
+        var children = node.GetChildren();
+        if (!children.isEmpty()) {
+            SyntaxNode lastChild = children.get(children.size() - 1);
+
+            for (var child : children) {
+                PrettyPrint(child, indent, child == lastChild);
+            }
         }
     }
 }

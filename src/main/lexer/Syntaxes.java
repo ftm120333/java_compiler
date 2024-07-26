@@ -7,20 +7,21 @@ import java.util.List;
 
 abstract class SyntaxNode {
     public abstract SyntaxKind getKind();
-    public abstract Iterable<SyntaxNode> GetChildren();
+    public abstract List<SyntaxNode> GetChildren();
 }
 
 abstract  class ExpressionSyntax extends SyntaxNode{
 
 }
+
 //sealed class main.lexer.NumberExpresionSyntax permits main.lexer.ExpressionSyntax
-class NumberExpresionSyntax extends ExpressionSyntax  {
-    public SyntaxToken numberToken;
-    public  NumberExpresionSyntax(SyntaxToken numberToken){
-         this.numberToken = numberToken;
+class NumberExpressionSyntax extends ExpressionSyntax  {
+    private  SyntaxToken numberToken;
+    public NumberExpressionSyntax(SyntaxToken numberToken){
+        this.numberToken = numberToken;
     }
 
-    public SyntaxToken NumberToken() {
+    public SyntaxToken getNumberToken() {
         return numberToken;
     }
 
@@ -30,7 +31,7 @@ class NumberExpresionSyntax extends ExpressionSyntax  {
     }
 
     @Override
-    public Iterable<SyntaxNode> GetChildren() {
+    public List<SyntaxNode> GetChildren() {
         return Collections.singletonList(numberToken);
     }
 }
@@ -64,11 +65,36 @@ class BinaryExpressionSyntax extends  ExpressionSyntax{
     }
 
     @Override
-    public Iterable<SyntaxNode> GetChildren() {
+    public List<SyntaxNode> GetChildren() {
         List<SyntaxNode> children = new ArrayList<>();
         children.add(left);
         children.add(right);
         children.add(operatorToken);
         return children;
+    }
+}
+
+class SyntaxTree {
+    private final List<String> diagnostics;
+    private final ExpressionSyntax Root;
+    private final SyntaxToken EndOfFileToken;
+
+    public SyntaxTree(List<String> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
+    {
+        this.diagnostics = diagnostics;
+        this.Root = root;
+        this.EndOfFileToken = endOfFileToken;
+    }
+
+    public Iterable<String> getDiagnostics() {
+        return diagnostics;
+    }
+
+    public ExpressionSyntax getRoot() {
+        return Root;
+    }
+
+    public SyntaxToken getEndOfFileToken() {
+        return EndOfFileToken;
     }
 }

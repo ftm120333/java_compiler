@@ -12,49 +12,59 @@ class Parser {
         var lexer = new Lexer(text);
         SyntaxToken token;
         do{
+
             token = lexer.nextToken();
             if(token.kind != SyntaxKind.WhitespaceToken && token.kind != SyntaxKind.BadToken ){
                 tokens.add(token);
+
             }
 
         } while (token.kind != SyntaxKind.EndOfFileToken);
 
+
         _tokens = tokens.toArray(new SyntaxToken[0]);
+
         _diagnostics.addAll(lexer.get_diagnostics());
         System.out.println(_diagnostics);
 
     }
 
-    public  Iterable<String> Diognostics(){
+    public  List<String> Diognostics(){
         return  _diagnostics;
     }
     private SyntaxToken Peek(int offset){
         var index = _position + offset;
-        if(index >= _tokens.length - 1)
+        if(index >= _tokens.length - 1) //If the index is out of bounds, the method returns the last token in the array
             return  _tokens[_tokens.length - 1];
         return _tokens[index];
     }
+
     private SyntaxToken current() {
         return Peek(0);
-    }
+    } // return the token at the current position in the _tokens array.
 
-    private SyntaxToken nextToken(){
+    private SyntaxToken nextToken(){ //advances the parser's current position
         var current = current();
         _position++;
         return current;
     }
-    private SyntaxToken Match(SyntaxKind kind){
-        if(current().kind == kind)
-            return nextToken();
+    private SyntaxToken Match(SyntaxKind kind){//checks if the current token's kind matches the expected kind
+        if(current().kind == kind)              // If it matches, it consumes the token and returns it.
+            return nextToken();                 //If it doesn't match, it logs an error and returns a new token of the expected kind to handle the error
         _diagnostics.add("Error: Unexpected token "+ current().kind + ", expected {" + kind+ "} ");
         return new SyntaxToken(kind, current().position, null, null);
 
     }
 
-    public ExpressionSyntax Parse(){
+    public SyntaxTree Parse(){
+        var expression = ParseExpression();
+        var endOfFileToken = Match(SyntaxKind.EndOfFileToken);
+        return new SyntaxTree(_diagnostics, expression, endOfFileToken);
+    }
+    public ExpressionSyntax ParseExpression(){
         var left = ParsePrimaryExpresion();
         while (current().kind == SyntaxKind.PlusToken ||
-               current().kind == SyntaxKind.MinusToken){
+                current().kind == SyntaxKind.MinusToken){
             var operatorToken = nextToken();
             var right = ParsePrimaryExpresion();
             left = new BinaryExpressionSyntax(left,operatorToken,right);
@@ -63,7 +73,7 @@ class Parser {
     }
 
     private ExpressionSyntax ParsePrimaryExpresion() {
-      var numberToken = Match(SyntaxKind.NumberToken);
-      return  new NumberExpresionSyntax(numberToken);
+        var numberToken = Match(SyntaxKind.NumberToken);
+        return  new NumberExpressionSyntax(numberToken);
     }
 }
