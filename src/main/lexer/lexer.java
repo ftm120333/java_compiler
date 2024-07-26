@@ -34,6 +34,8 @@ class Lexer {
             int length = _position - start;
             String text = this._text.substring(start , start + length);
             int value = Integer.parseInt(text);
+            if(!Integer.valueOf(text).equals(value))
+                _diagnostics.add("The number " + text + " is not a valid integer.");
             return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
         }
 
@@ -82,7 +84,7 @@ enum SyntaxKind{
     EndOfFileToken,
     NumberExpression,
     BinaryExpression,
-    NumberToken
+    ParanthrsizedExpression, NumberToken
 }
 class SyntaxToken extends SyntaxNode{
     public final SyntaxKind kind;

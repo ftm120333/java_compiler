@@ -25,7 +25,7 @@ class Parser {
         _tokens = tokens.toArray(new SyntaxToken[0]);
 
         _diagnostics.addAll(lexer.get_diagnostics());
-        System.out.println(_diagnostics);
+
 
     }
 
@@ -56,15 +56,30 @@ class Parser {
 
     }
 
+    public ExpressionSyntax ParseExpression(){
+        return ParseTerm();
+    }
     public SyntaxTree Parse(){
-        var expression = ParseExpression();
+        var expression = ParseTerm();
         var endOfFileToken = Match(SyntaxKind.EndOfFileToken);
         return new SyntaxTree(_diagnostics, expression, endOfFileToken);
     }
-    public ExpressionSyntax ParseExpression(){
-        var left = ParsePrimaryExpresion();
+    public ExpressionSyntax ParseTerm(){
+        var left = ParseFactor();
         while (current().kind == SyntaxKind.PlusToken ||
                 current().kind == SyntaxKind.MinusToken){
+            var operatorToken = nextToken();
+            var right = ParseFactor();
+            left = new BinaryExpressionSyntax(left,operatorToken,right);
+        }
+        return left;
+    }
+
+
+    public ExpressionSyntax ParseFactor(){
+        var left = ParsePrimaryExpresion();
+        while (current().kind == SyntaxKind.StarToken ||
+                current().kind == SyntaxKind.SlashToken){
             var operatorToken = nextToken();
             var right = ParsePrimaryExpresion();
             left = new BinaryExpressionSyntax(left,operatorToken,right);
@@ -73,7 +88,16 @@ class Parser {
     }
 
     private ExpressionSyntax ParsePrimaryExpresion() {
+        if (current().kind == SyntaxKind.OpenParanthesisToken) {
+            var left = nextToken();
+            var expression = ParseExpression();
+            var right = Match(SyntaxKind.ClosedParanthesisToken);
+            return new ParanthrsizedExpressionSyntax(left, expression, right);
+        }
+
         var numberToken = Match(SyntaxKind.NumberToken);
         return  new NumberExpressionSyntax(numberToken);
     }
 }
+
+

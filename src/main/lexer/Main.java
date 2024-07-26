@@ -8,20 +8,38 @@ import main.lexer.SyntaxToken;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
+        boolean showTree = false;
         while (true){
-            System.out.printf("> ");
+            System.out.printf(">> ");
 
             var line = scanner.nextLine();
             if(line.isEmpty())
                 return;
-            var parser = new Parser(line);
-            var syntaxTree = parser.Parse();
 
-            PrettyPrint(syntaxTree.getRoot(),"", false);
-            if(syntaxTree.getDiagnostics() != null){
-                for (var diagnostic:parser.Diognostics() ) {
+            if (line.equals("#showTree"))
+            {
+                showTree = !showTree;
+                System.out.println(showTree? "showing parse tree.": "Do not show parse tree.");
+                continue;
+            }
+
+
+            var syntaxTree = SyntaxTree.Parse(line);
+
+            if(showTree){
+                PrettyPrint(syntaxTree.getRoot(),"", false);
+            }
+
+            if (syntaxTree.getDiagnostics() != null) {
+                var evaluator = new Evaluator(syntaxTree.getRoot());
+                var result = evaluator.Evaluate();
+                System.out.println(result);
+            }
+            else {
+
+                for (var diagnostic: syntaxTree.getDiagnostics()) {
                     System.out.println(ConsoleColors.CYAN_BRIGHT+ diagnostic);
 
                 }
