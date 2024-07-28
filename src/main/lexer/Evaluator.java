@@ -131,7 +131,7 @@ class SyntaxTree {
 }
 
 
-class Evaluator{
+public class Evaluator{
     private final ExpressionSyntax root;
 
     public Evaluator(ExpressionSyntax root) {
