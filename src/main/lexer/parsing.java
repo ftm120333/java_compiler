@@ -48,22 +48,23 @@ class Parser {
         _position++;
         return current;
     }
-    private SyntaxToken Match(SyntaxKind kind){//checks if the current token's kind matches the expected kind
+    private SyntaxToken MatchToken(SyntaxKind kind){//checks if the current token's kind matches the expected kind
         if(current().kind == kind)              // If it matches, it consumes the token and returns it.
             return nextToken();                 //If it doesn't match, it logs an error and returns a new token of the expected kind to handle the error
         _diagnostics.add("Error: Unexpected token "+ current().kind + ", expected {" + kind+ "} ");
         return new SyntaxToken(kind, current().position, null, null);
 
     }
+    public SyntaxTree Parse(){
+        var expression = ParseExpression();
+        var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
+        return new SyntaxTree(_diagnostics, expression, endOfFileToken);
+    }
 
     public ExpressionSyntax ParseExpression(){
         return ParseTerm();
     }
-    public SyntaxTree Parse(){
-        var expression = ParseTerm();
-        var endOfFileToken = Match(SyntaxKind.EndOfFileToken);
-        return new SyntaxTree(_diagnostics, expression, endOfFileToken);
-    }
+
     public ExpressionSyntax ParseTerm(){
         var left = ParseFactor();
         while (current().kind == SyntaxKind.PlusToken ||
@@ -91,11 +92,11 @@ class Parser {
         if (current().kind == SyntaxKind.OpenParanthesisToken) {
             var left = nextToken();
             var expression = ParseExpression();
-            var right = Match(SyntaxKind.ClosedParanthesisToken);
+            var right = MatchToken(SyntaxKind.ClosedParanthesisToken);
             return new ParanthrsizedExpressionSyntax(left, expression, right);
         }
 
-        var numberToken = Match(SyntaxKind.NumberToken);
+        var numberToken = MatchToken(SyntaxKind.NumberToken);
         return  new NumberExpressionSyntax(numberToken);
     }
 }

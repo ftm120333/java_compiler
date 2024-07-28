@@ -5,13 +5,13 @@ import java.util.List;
 
 //sealed class main.lexer.NumberExpresionSyntax permits main.lexer.ExpressionSyntax
 public class NumberExpressionSyntax extends ExpressionSyntax  {
-    private  SyntaxToken numberToken;
+    private  SyntaxToken literalToken;
     public NumberExpressionSyntax(SyntaxToken numberToken){
-        this.numberToken = numberToken;
+        this.literalToken = numberToken;
     }
 
     public SyntaxToken getNumberToken() {
-        return numberToken;
+        return literalToken;
     }
 
     @Override
@@ -21,6 +21,6 @@ public class NumberExpressionSyntax extends ExpressionSyntax  {
 
     @Override
     public List<SyntaxNode> GetChildren() {
-        return Collections.singletonList(numberToken);
+        return Collections.singletonList(literalToken);
     }
 }

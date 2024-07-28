@@ -1,16 +1,23 @@
 package main.lexer;
 
 public enum SyntaxKind{
+    //Tokens
+    BadToken,
+    EndOfFileToken,
     WhitespaceToken,
+    NumberToken,
+
+    //Operators
     PlusToken,
     MinusToken,
     StarToken,
     SlashToken,
     OpenParanthesisToken,
     ClosedParanthesisToken,
-    BadToken,
-    EndOfFileToken,
+
+
+    //Expressions
     NumberExpression,
     BinaryExpression,
-    ParanthrsizedExpression, NumberToken
+    ParanthrsizedExpression,
 }

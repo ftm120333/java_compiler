@@ -22,7 +22,7 @@ class Lexer {
     private void next(){
         _position++;
     }
-    public SyntaxToken nextToken(){
+    public SyntaxToken lex(){
         if (_position >= _text.length())
             return new SyntaxToken(SyntaxKind.EndOfFileToken, _position,"\n", null);
 
@@ -49,65 +49,35 @@ class Lexer {
             return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
         }
 
-        if (getCurrent()== '+')
-            return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+",null);
-        else if (getCurrent()== '-')
-            return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-",null);
-        else if (getCurrent()== '*')
-            return new SyntaxToken(SyntaxKind.StarToken, _position++, "*",null);
-        else if (getCurrent()== '/')
-            return new SyntaxToken(SyntaxKind.SlashToken, _position++, "/",null);
-        else if (getCurrent()== '(')
-            return new SyntaxToken(SyntaxKind.OpenParanthesisToken, _position++, "(",null);
-        else if (getCurrent()== ')')
-            return new SyntaxToken(SyntaxKind.ClosedParanthesisToken, _position++, ")",null);
-        else{
+        switch (getCurrent()) {
+            case '+' -> {
+                return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);
+            }
+            case '-' -> {
+                return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-", null);
+            }
+            case '*' -> {
+                return new SyntaxToken(SyntaxKind.StarToken, _position++, "*", null);
+            }
+            case '/' -> {
+                return new SyntaxToken(SyntaxKind.SlashToken, _position++, "/", null);
+            }
+            case '(' -> {
+                return new SyntaxToken(SyntaxKind.OpenParanthesisToken, _position++, "(", null);
+            }
+            case ')' -> {
+                return new SyntaxToken(SyntaxKind.ClosedParanthesisToken, _position++, ")", null);
+            }
+            default -> {
 
-            _diagnostics.add("Error: bad character input: " + getCurrent());
-            return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position -1, _position),null);
+                _diagnostics.add("Error: bad character input: " + getCurrent());
+                return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
+            }
         }
     }
 
     public List<String> get_diagnostics() {
         return _diagnostics;
-    }
-}
-enum SyntaxKind{
-    WhitespaceToken,
-    PlusToken,
-    MinusToken,
-    StarToken,
-    SlashToken,
-    OpenParanthesisToken,
-    ClosedParanthesisToken,
-    BadToken,
-    EndOfFileToken,
-    NumberExpression,
-    BinaryExpression,
-    ParanthrsizedExpression, NumberToken
-}
-class SyntaxToken extends SyntaxNode{
-    public final SyntaxKind kind;
-    public final int position;
-    public final String text;
-    public final Object value;
-
-    public SyntaxToken(SyntaxKind kind, int position, String text, Object value){
-
-        this.kind = kind;
-        this.position = position;
-        this.text = text;
-        this.value = value;
-    }
-
-    @Override
-    public SyntaxKind getKind() {
-        return kind;
-    }
-
-    @Override
-    public List<SyntaxNode> GetChildren() {
-        return new ArrayList<SyntaxNode>();
     }
 }
 

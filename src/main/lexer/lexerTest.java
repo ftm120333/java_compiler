@@ -1,9 +1,6 @@
-package main.test;
+package main.lexer;
 
 
-import main.lexer.Lexer;
-import main.lexer.SyntaxKind;
-import main.lexer.SyntaxToken;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

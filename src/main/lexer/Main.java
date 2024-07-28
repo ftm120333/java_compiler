@@ -1,9 +1,7 @@
 package main.lexer;
 
 import main.ConsoleColors;
-import main.lexer.Parser;
-import main.lexer.SyntaxNode;
-import main.lexer.SyntaxToken;
+
 
 import java.util.Scanner;
 
