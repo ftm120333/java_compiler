@@ -28,6 +28,6 @@ public class SyntaxTree {
 
     public static SyntaxTree Parse(String text) {
         var parser = new Parser(text);
-        return parser.Parse();
+        return parser.parse();
     }
 }

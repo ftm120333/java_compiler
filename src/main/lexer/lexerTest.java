@@ -13,7 +13,7 @@ class LexerTest {
     @Test
     void testEndOfFileToken() {
         Lexer lexer = new Lexer("");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         Assertions.assertEquals(SyntaxKind.EndOfFileToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("\n", token.text);
@@ -23,7 +23,7 @@ class LexerTest {
     @Test
     void testNumberToken() {
         Lexer lexer = new Lexer("123");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.NumberToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("123", token.text);
@@ -33,7 +33,7 @@ class LexerTest {
     @Test
     void testWhitespaceToken() {
         Lexer lexer = new Lexer("   ");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.WhitespaceToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("   ", token.text);
@@ -43,7 +43,7 @@ class LexerTest {
     @Test
     void testPlusToken() {
         Lexer lexer = new Lexer("+");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.PlusToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("+", token.text);
@@ -53,7 +53,7 @@ class LexerTest {
     @Test
     void testMinusToken() {
         Lexer lexer = new Lexer("-");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.MinusToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("-", token.text);
@@ -63,7 +63,7 @@ class LexerTest {
     @Test
     void testStarToken() {
         Lexer lexer = new Lexer("*");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.StarToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("*", token.text);
@@ -73,7 +73,7 @@ class LexerTest {
     @Test
     void testSlashToken() {
         Lexer lexer = new Lexer("/");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.SlashToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("/", token.text);
@@ -83,7 +83,7 @@ class LexerTest {
     @Test
     void testOpenParenthesisToken() {
         Lexer lexer = new Lexer("(");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.OpenParanthesisToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("(", token.text);
@@ -93,7 +93,7 @@ class LexerTest {
     @Test
     void testClosedParenthesisToken() {
         Lexer lexer = new Lexer(")");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.ClosedParanthesisToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals(")", token.text);
@@ -103,7 +103,7 @@ class LexerTest {
     @Test
     void testBadToken() {
         Lexer lexer = new Lexer("@");
-        SyntaxToken token = lexer.nextToken();
+        SyntaxToken token = lexer.lex();
         assertEquals(SyntaxKind.BadToken, token.getKind());
         assertEquals(0, token.position);
         assertEquals("@", token.text);
@@ -113,7 +113,7 @@ class LexerTest {
     @Test
     void testDiagnostics() {
         Lexer lexer = new Lexer("@");
-        lexer.nextToken();
+        lexer.lex();
         List<String> diagnostics = lexer.get_diagnostics();
         assertFalse(diagnostics.isEmpty());
         assertEquals("Error: bad character input: @", diagnostics.get(0));

@@ -7,13 +7,14 @@ class Parser {
     private  SyntaxToken[] _tokens;
     private int _position;
     private List<String> _diagnostics = new ArrayList<>();
+
     public Parser(String text){
         var tokens = new ArrayList<SyntaxToken>();
         var lexer = new Lexer(text);
         SyntaxToken token;
         do{
 
-            token = lexer.nextToken();
+            token = lexer.lex();
             if(token.kind != SyntaxKind.WhitespaceToken && token.kind != SyntaxKind.BadToken ){
                 tokens.add(token);
 
@@ -32,7 +33,7 @@ class Parser {
     public  List<String> Diognostics(){
         return  _diagnostics;
     }
-    private SyntaxToken Peek(int offset){
+    private SyntaxToken peek(int offset){
         var index = _position + offset;
         if(index >= _tokens.length - 1) //If the index is out of bounds, the method returns the last token in the array
             return  _tokens[_tokens.length - 1];
@@ -40,7 +41,7 @@ class Parser {
     }
 
     private SyntaxToken current() {
-        return Peek(0);
+        return peek(0);
     } // return the token at the current position in the _tokens array.
 
     private SyntaxToken nextToken(){ //advances the parser's current position
@@ -48,55 +49,55 @@ class Parser {
         _position++;
         return current;
     }
-    private SyntaxToken MatchToken(SyntaxKind kind){//checks if the current token's kind matches the expected kind
+    private SyntaxToken matchToken(SyntaxKind kind){//checks if the current token's kind matches the expected kind
         if(current().kind == kind)              // If it matches, it consumes the token and returns it.
             return nextToken();                 //If it doesn't match, it logs an error and returns a new token of the expected kind to handle the error
         _diagnostics.add("Error: Unexpected token "+ current().kind + ", expected {" + kind+ "} ");
         return new SyntaxToken(kind, current().position, null, null);
 
     }
-    public SyntaxTree Parse(){
-        var expression = ParseExpression();
-        var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
+    public SyntaxTree parse(){
+        var expression = parseExpression(0);
+        var endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
         return new SyntaxTree(_diagnostics, expression, endOfFileToken);
     }
 
-    public ExpressionSyntax ParseExpression(){
-        return ParseTerm();
-    }
 
-    public ExpressionSyntax ParseTerm(){
-        var left = ParseFactor();
-        while (current().kind == SyntaxKind.PlusToken ||
-                current().kind == SyntaxKind.MinusToken){
-            var operatorToken = nextToken();
-            var right = ParseFactor();
-            left = new BinaryExpressionSyntax(left,operatorToken,right);
-        }
-        return left;
-    }
-
-
-    public ExpressionSyntax ParseFactor(){
+    private ExpressionSyntax parseExpression(int parentPrecedence ) {
         var left = ParsePrimaryExpresion();
-        while (current().kind == SyntaxKind.StarToken ||
-                current().kind == SyntaxKind.SlashToken){
+
+        while (true) {
+            var precedence = getBinaryOperatorPrecedence(current().kind);
+            if (precedence == 0 || precedence <= parentPrecedence) {
+                break;
+            }
             var operatorToken = nextToken();
-            var right = ParsePrimaryExpresion();
-            left = new BinaryExpressionSyntax(left,operatorToken,right);
+            var right = parseExpression(precedence);
+            left = new BinaryExpressionSyntax(left, operatorToken, right);
         }
         return left;
+        }
+
+    private static int getBinaryOperatorPrecedence(SyntaxKind kind) {
+        return switch (kind) {
+            case SyntaxKind.PlusToken, SyntaxKind.MinusToken -> 1;
+            case SyntaxKind.StarToken, SyntaxKind.SlashToken -> 2;
+            default -> 0;
+        };
     }
+
+
+
 
     private ExpressionSyntax ParsePrimaryExpresion() {
         if (current().kind == SyntaxKind.OpenParanthesisToken) {
             var left = nextToken();
-            var expression = ParseExpression();
-            var right = MatchToken(SyntaxKind.ClosedParanthesisToken);
+            var expression = parseExpression(0);
+            var right = matchToken(SyntaxKind.ClosedParanthesisToken);
             return new ParanthrsizedExpressionSyntax(left, expression, right);
         }
 
-        var numberToken = MatchToken(SyntaxKind.NumberToken);
+        var numberToken = matchToken(SyntaxKind.NumberToken);
         return  new NumberExpressionSyntax(numberToken);
     }
 }
