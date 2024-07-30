@@ -16,7 +16,7 @@ public class NumberExpressionSyntax extends ExpressionSyntax  {
 
     @Override
     public SyntaxKind getKind() {
-        return SyntaxKind.NumberExpression;
+        return SyntaxKind.LiteralExpression;
     }
 
     @Override

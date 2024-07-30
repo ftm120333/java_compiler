@@ -38,13 +38,13 @@ public class Evaluator{
         }
 
         if (node instanceof UnaryExpressionSyntax u) {
-            var operand = EvaluateExpression(u.getOperand());
-            if (u.operand.getKind() == SyntaxKind.PlusToken) {
+            var operand = EvaluateExpression(u.operand);
+            if (u.operatorToken.getKind() == SyntaxKind.PlusToken) {
                 return operand;
-            } else if (u.operand.getKind() == SyntaxKind.MinusToken) {
+            } else if (u.operatorToken.getKind() == SyntaxKind.MinusToken) {
                 return -operand;
             } else
-                throw new Exception("UnExpected unary operator " + u.operand.getKind());
+                throw new Exception("UnExpected unary operator " + u.operatorToken.getKind());
         }
         if (node instanceof ParanthrsizedExpressionSyntax p) {
             return EvaluateExpression(p.expression);

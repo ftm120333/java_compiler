@@ -1,5 +1,6 @@
 package main.lexer;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,16 @@ class Parser {
 
 
     private ExpressionSyntax parseExpression(int parentPrecedence ) {
-        var left = ParsePrimaryExpresion();
+
+        ExpressionSyntax left;
+        var unaryOperatorPrecedence = SyntaxFact.getUnaryOperatorPrecedence(current().kind);
+        if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence) {
+            var operatorToken = nextToken();
+            var operand = parseExpression(unaryOperatorPrecedence);
+            left = new UnaryExpressionSyntax(operatorToken, operand);
+        }else{
+           left = ParsePrimaryExpresion();
+        }
 
         while (true) {
             var precedence = SyntaxFact.getBinaryOperatorPrecedence(current().kind);
