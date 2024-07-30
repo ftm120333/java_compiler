@@ -1,4 +1,4 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
 
 import org.junit.jupiter.api.Assertions;

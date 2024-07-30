@@ -1,10 +1,7 @@
-package main.lexer;
+package codeAnalysis;
 
-import java.util.ArrayList;
 
-import java.util.Collections;
-import java.util.List;
-
+import codeAnalysis.syntax.*;
 
 public class Evaluator{
     private final ExpressionSyntax root;
@@ -18,7 +15,7 @@ public class Evaluator{
     }
 
     private int EvaluateExpression(ExpressionSyntax node) throws Exception {
-        if (node instanceof NumberExpressionSyntax n) {
+        if (node instanceof LiteralExpressionSyntax n) {
             return (int) n.getNumberToken().value;
         }
 

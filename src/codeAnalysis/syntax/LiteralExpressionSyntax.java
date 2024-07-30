@@ -1,12 +1,12 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
 import java.util.Collections;
 import java.util.List;
 
 //sealed class main.lexer.NumberExpresionSyntax permits main.lexer.ExpressionSyntax
-public class NumberExpressionSyntax extends ExpressionSyntax  {
+public class LiteralExpressionSyntax extends ExpressionSyntax  {
     private  SyntaxToken literalToken;
-    public NumberExpressionSyntax(SyntaxToken numberToken){
+    public LiteralExpressionSyntax(SyntaxToken numberToken){
         this.literalToken = numberToken;
     }
 

@@ -1,6 +1,8 @@
-package main.lexer;
+package codeAnalysis;
 
-import main.ConsoleColors;
+import codeAnalysis.syntax.SyntaxNode;
+import codeAnalysis.syntax.SyntaxToken;
+import codeAnalysis.syntax.SyntaxTree;
 
 
 import java.util.Scanner;
@@ -38,13 +40,13 @@ public class Main {
             else {
 
                 for (var diagnostic: syntaxTree.getDiagnostics()) {
-                    System.out.println(ConsoleColors.CYAN_BRIGHT+ diagnostic);
+                    System.out.println( diagnostic);
 
                 }
             }
         }
     }
-    static void PrettyPrint(SyntaxNode node, String indent,boolean isLast){
+    static void PrettyPrint(SyntaxNode node, String indent, boolean isLast){
         var marker = isLast ? "|__": "|--";
         System.out.print(indent);
         System.out.print(marker);

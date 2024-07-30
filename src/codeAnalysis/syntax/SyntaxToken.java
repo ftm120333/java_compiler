@@ -1,4 +1,4 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
 import java.util.ArrayList;
 import java.util.List;

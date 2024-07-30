@@ -1,9 +1,9 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class BinaryExpressionSyntax extends  ExpressionSyntax{
+public class BinaryExpressionSyntax extends  ExpressionSyntax{
     ExpressionSyntax left;
     SyntaxToken operatorToken;
     ExpressionSyntax right;

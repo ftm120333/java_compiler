@@ -1,12 +1,12 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-class ParanthrsizedExpressionSyntax extends ExpressionSyntax {
+public class ParanthrsizedExpressionSyntax extends ExpressionSyntax {
     SyntaxToken openParenthesisToken;
-    ExpressionSyntax expression;
+    public ExpressionSyntax expression;
     SyntaxToken closedParenthesisToken;
 
     public ParanthrsizedExpressionSyntax(SyntaxToken openParenthesisToken, ExpressionSyntax expression, SyntaxToken closedParenthesisToken) {

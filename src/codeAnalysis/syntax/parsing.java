@@ -1,6 +1,5 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,7 +99,7 @@ class Parser {
         }
 
         var numberToken = matchToken(SyntaxKind.NumberToken);
-        return  new NumberExpressionSyntax(numberToken);
+        return  new LiteralExpressionSyntax(numberToken);
     }
 }
 

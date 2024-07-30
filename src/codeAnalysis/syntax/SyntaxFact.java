@@ -1,4 +1,4 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
 public final class SyntaxFact {
 

@@ -1,13 +1,13 @@
-package main.lexer;
+package codeAnalysis.syntax;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-class UnaryExpressionSyntax extends  ExpressionSyntax{
+public class UnaryExpressionSyntax extends  ExpressionSyntax{
 
-    SyntaxToken operatorToken;
-    ExpressionSyntax operand;
+    public SyntaxToken operatorToken;
+    public ExpressionSyntax operand;
 
     public UnaryExpressionSyntax( SyntaxToken operatorToken, ExpressionSyntax operand) {
 
