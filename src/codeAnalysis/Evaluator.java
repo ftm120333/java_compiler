@@ -1,12 +1,15 @@
 package codeAnalysis;
 
 
+import codeAnalysis.binding.BoundExpression;
+import codeAnalysis.binding.BoundLiteralExpression;
+import codeAnalysis.binding.BoundUnaryExpression;
 import codeAnalysis.syntax.*;
 
 public class Evaluator{
-    private final ExpressionSyntax root;
+    private final BoundExpression root;
 
-    public Evaluator(ExpressionSyntax root) {
+    public Evaluator(BoundExpression root) {
         this.root = root;
     }
 
@@ -14,9 +17,20 @@ public class Evaluator{
         return EvaluateExpression(root);
     }
 
-    private int EvaluateExpression(ExpressionSyntax node) throws Exception {
-        if (node instanceof LiteralExpressionSyntax n) {
-            return (int) n.getNumberToken().value;
+    private int EvaluateExpression(BoundExpression node) throws Exception {
+        if (node instanceof BoundLiteralExpression n) {
+            return (int) n.getValue();
+        }
+
+
+        if (node instanceof BoundUnaryExpression u) {
+            var operand = EvaluateExpression(u.getOperand());
+            if (u.getOperatorKind().getKind() == SyntaxKind.PlusToken) {
+                return operand;
+            } else if (u.operatorToken.getKind() == SyntaxKind.MinusToken) {
+                return -operand;
+            } else
+                throw new Exception("UnExpected unary operator " + u.operatorToken.getKind());
         }
 
         if (node instanceof BinaryExpressionSyntax b) {
@@ -34,15 +48,6 @@ public class Evaluator{
                 throw new Exception("UnExpected binary operator " + b.getOperatorToken().kind);
         }
 
-        if (node instanceof UnaryExpressionSyntax u) {
-            var operand = EvaluateExpression(u.operand);
-            if (u.operatorToken.getKind() == SyntaxKind.PlusToken) {
-                return operand;
-            } else if (u.operatorToken.getKind() == SyntaxKind.MinusToken) {
-                return -operand;
-            } else
-                throw new Exception("UnExpected unary operator " + u.operatorToken.getKind());
-        }
         if (node instanceof ParanthrsizedExpressionSyntax p) {
             return EvaluateExpression(p.expression);
         }
