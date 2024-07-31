@@ -1,10 +1,13 @@
 package codeAnalysis;
 
+import codeAnalysis.binding.Binder;
 import codeAnalysis.syntax.SyntaxNode;
 import codeAnalysis.syntax.SyntaxToken;
 import codeAnalysis.syntax.SyntaxTree;
 
 
+
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -27,13 +30,17 @@ public class Main {
 
 
             var syntaxTree = SyntaxTree.Parse(line);
+            var binder = new Binder();
+            var boundExpression = binder.bindExpression(syntaxTree.getRoot());
+            final Iterable<String> diagnostics= syntaxTree.getDiagnostics();
+
 
             if(showTree){
                 PrettyPrint(syntaxTree.getRoot(),"", false);
             }
 
             if (syntaxTree.getDiagnostics() != null) {
-                var evaluator = new Evaluator(syntaxTree.getRoot());
+                var evaluator = new Evaluator(boundExpression);
                 var result = evaluator.Evaluate();
                 System.out.println(result);
             }

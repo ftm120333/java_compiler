@@ -38,4 +38,33 @@ public final class SyntaxFact {
         };
 }
 
+    public static SyntaxKind getKeywordKind(String text) {
+
+        switch (text) {
+            case "true" -> {
+                return SyntaxKind.TrueKeyword;
+            }
+            case "false" -> {
+                return SyntaxKind.FalseKeyword;
+            }
+//            case "if" -> {
+//                return SyntaxKind.IfKeyword;
+//            }
+//            case "else" -> {
+//                return SyntaxKind.ElseKeyword;
+//            }
+//            case "while" -> {
+//                return SyntaxKind.WhileKeyword;
+//            }
+//            case "do" -> {
+//                return SyntaxKind.DoKeyword;
+//            }
+//            case "for" -> {
+//
+//    }
+            default -> {
+                return SyntaxKind.IdentifierToken;
+            }
+        }
+    }
 }

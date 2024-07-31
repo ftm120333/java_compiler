@@ -14,50 +14,8 @@ abstract class BoundNode {
     public abstract BoundNodeKind getKind();
 }
 
-enum BoundUnaryOperatorKind {
-    Identity,
-    Negation
-}
 
-enum BoundBinaryOperatorKind{
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division
-}
-
-
-class BoundBinaryExpression extends BoundExpression {
-
-    BoundExpression left;
-    BoundExpression right;
-    BoundBinaryOperatorKind operatorKind;
-    public BoundBinaryExpression(BoundExpression left, BoundBinaryOperatorKind operatorKind, BoundExpression right) {
-        this.left = left;
-        this.right = right;
-        this.operatorKind = operatorKind;
-    }
-    @Override
-    public BoundNodeKind getKind() {
-        return BoundNodeKind.BinaryExpression;
-    }
-    @Override
-    public Class<?> type() {
-        return left.type();
-    }
-    public BoundExpression getLeft() {
-        return left;
-    }
-    public BoundExpression getRight() {
-        return right;
-    }
-    public BoundBinaryOperatorKind getOperatorKind() {
-        return operatorKind;
-    }
-}
-
-
-class Binder {
+public class Binder {
    private final List<String> diagnostics = new ArrayList<>();
 
    public List<String> getDiagnostics() {
@@ -83,7 +41,7 @@ class Binder {
     private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax) {
         //cast the value to a nullable integer (If the cast fails, it results in null)
         //If the result of the cast is null, it defaults to 0.
-       var valueObj = syntax.getNumberToken().value;
+       var valueObj = syntax.getValue();
        var value = (valueObj instanceof Integer)? (Integer) valueObj : 0;
 
         return new BoundLiteralExpression(value);

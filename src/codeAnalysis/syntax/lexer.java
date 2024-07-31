@@ -49,6 +49,16 @@ class Lexer {
             return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
         }
 
+        if (Character.isLetter(getCurrent())) {
+            var start = _position;
+            while (Character.isLetter(getCurrent())) {
+                next();
+            }
+            int length = _position - start;
+            String text = this._text.substring(start, length);
+            var kind = SyntaxFact.getKeywordKind(text);
+            return new SyntaxToken(kind, start, text, null);
+        }
         switch (getCurrent()) {
             case '+' -> {
                 return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);

@@ -15,10 +15,15 @@ public enum SyntaxKind{
     OpenParanthesisToken,
     ClosedParanthesisToken,
 
+    //Keywords
+    TrueKeyword,
+    FalseKeyword,
+    IdentifierToken,
 
     //Expressions
     LiteralExpression,
     UnaryExpression,
     BinaryExpression,
     ParanthrsizedExpression,
+
 }

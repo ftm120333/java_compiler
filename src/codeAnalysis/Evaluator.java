@@ -1,9 +1,7 @@
 package codeAnalysis;
 
 
-import codeAnalysis.binding.BoundExpression;
-import codeAnalysis.binding.BoundLiteralExpression;
-import codeAnalysis.binding.BoundUnaryExpression;
+import codeAnalysis.binding.*;
 import codeAnalysis.syntax.*;
 
 public class Evaluator{
@@ -25,32 +23,29 @@ public class Evaluator{
 
         if (node instanceof BoundUnaryExpression u) {
             var operand = EvaluateExpression(u.getOperand());
-            if (u.getOperatorKind().getKind() == SyntaxKind.PlusToken) {
+            if (u.getOperatorKind() == BoundUnaryOperatorKind.Identity) {
                 return operand;
-            } else if (u.operatorToken.getKind() == SyntaxKind.MinusToken) {
+            } else if (u.getOperatorKind() == BoundUnaryOperatorKind.Negation) {
                 return -operand;
             } else
-                throw new Exception("UnExpected unary operator " + u.operatorToken.getKind());
+                throw new Exception("UnExpected unary operator " + u.getOperatorKind());
         }
 
-        if (node instanceof BinaryExpressionSyntax b) {
+        if (node instanceof BoundBinaryExpression b) {
             var left = EvaluateExpression(b.getLeft());
             var right = EvaluateExpression(b.getRight());
-            if (b.getOperatorToken().kind == SyntaxKind.PlusToken) {
-                return left + right;
-            } else if (b.getOperatorToken().kind == SyntaxKind.MinusToken) {
-                return left - right;
-            } else if (b.getOperatorToken().kind == SyntaxKind.StarToken) {
-                return left * right;
-            } else if (b.getOperatorToken().kind == SyntaxKind.SlashToken) {
-                return left / right;
-            }else
-                throw new Exception("UnExpected binary operator " + b.getOperatorToken().kind);
+            return switch (b.getOperatorKind()) {
+                case BoundBinaryOperatorKind.Addition -> left + right;
+                case BoundBinaryOperatorKind.Subtraction -> left - right;
+                case BoundBinaryOperatorKind.Multiplication -> left * right;
+                case BoundBinaryOperatorKind.Division -> left / right;
+                case null, default -> throw new Exception("UnExpected binary operator " + b.getOperatorKind());
+            };
         }
 
-        if (node instanceof ParanthrsizedExpressionSyntax p) {
+    /*    if (node instanceof ParanthrsizedExpressionSyntax p) {
             return EvaluateExpression(p.expression);
-        }
+        }*/
 
         throw new Exception("UnExpected node " + node.getKind());
 
