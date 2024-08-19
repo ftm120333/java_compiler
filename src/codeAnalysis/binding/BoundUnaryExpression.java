@@ -3,11 +3,11 @@ package codeAnalysis.binding;
 public class BoundUnaryExpression extends BoundExpression {
 
     BoundExpression operand;
-    BoundUnaryOperatorKind operatorKind;
+    BoundUnaryOperator op;
 
-    public BoundUnaryExpression(BoundUnaryOperatorKind operatorKind, BoundExpression operand) {
+    public BoundUnaryExpression(BoundUnaryOperator op, BoundExpression operand) {
         this.operand = operand;
-        this.operatorKind = operatorKind;
+        this.op = op;
     }
 
     @Override
@@ -24,8 +24,8 @@ public class BoundUnaryExpression extends BoundExpression {
         return operand;
     }
 
-    public BoundUnaryOperatorKind getOperatorKind() {
-        return operatorKind;
+    public BoundUnaryOperator getOperatorKind() {
+        return op;
     }
 
 

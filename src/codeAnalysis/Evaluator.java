@@ -23,7 +23,7 @@ public class Evaluator{
 
         if (node instanceof BoundUnaryExpression u) {
             var operand =  EvaluateExpression(u.getOperand());
-            return switch (u.getOperatorKind()) {
+            return switch (u.getOperatorKind().getKind()) {
                 case Identity -> (int) operand;
                 case Negation -> -(int) operand;
                 case LogicalNegation -> !(boolean) operand;
@@ -34,7 +34,7 @@ public class Evaluator{
         if (node instanceof BoundBinaryExpression b) {
             var left =  EvaluateExpression(b.getLeft());
             var right =  EvaluateExpression(b.getRight());
-            return switch (b.getOperatorKind()) {
+            return switch (b.getOperatorKind().getKind()) {
                 case BoundBinaryOperatorKind.Addition -> (int) left +(int) right;
                 case BoundBinaryOperatorKind.Subtraction -> (int) left -(int)  right;
                 case BoundBinaryOperatorKind.Multiplication -> (int) left *  (int) right;

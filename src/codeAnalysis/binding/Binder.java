@@ -50,71 +50,31 @@ public class Binder {
     private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax) {
 
        var boundOperand = bindExpression(syntax.operand);
-       var boundOperatorKind = BindUnaryOperatorKind(syntax.operatorToken.kind, boundOperand.type());
+       var boundOperator = BoundUnaryOperator.bind(syntax.operatorToken.kind, boundOperand.type());
 
-       if (boundOperatorKind == null) {
+       if (boundOperator == null) {
            diagnostics.add("unary operator: " + syntax.operatorToken.text + " is not valid for type: " + boundOperand.type().getName());
            return boundOperand;
        }
                                             //boundOperatorKind.value (in the video)
-       return new BoundUnaryExpression(boundOperatorKind, boundOperand);
+       return new BoundUnaryExpression(boundOperator, boundOperand);
     }
 
     private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax){
 
         var boundLeft = bindExpression(syntax.getLeft());
         var boundRight = bindExpression(syntax.getRight());
-        var boundOperatorKind = BindBinaryOperatorKind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
+        var boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
 
-        if (boundOperatorKind == null) {
+        if (boundOperator == null) {
             diagnostics.add("binary operator: " + syntax.getOperatorToken().text + " is not valid for type: " +boundLeft.type() + " and " + boundRight.type());
             return boundLeft;
         }
 
 
-        return new BoundBinaryExpression(boundLeft, boundOperatorKind, boundRight);
+        return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
 
     }
 
-    private BoundUnaryOperatorKind BindUnaryOperatorKind(SyntaxKind kind, Class<?> operandType) {
 
-        //TODO: SOLVE THIS ISSUE
-        if (operandType == Integer.class)
-        {
-        return switch (kind) {
-            case SyntaxKind.PlusToken -> BoundUnaryOperatorKind.Identity;
-            case SyntaxKind.MinusToken -> BoundUnaryOperatorKind.Negation;
-            default -> throw new IllegalStateException("Unexpected unary operator: " + kind);
-        };
-    }
-        if (operandType == Boolean.class)
-        {
-            return switch (kind) {
-                case SyntaxKind.BangToken -> BoundUnaryOperatorKind.LogicalNegation;
-                default -> throw new IllegalStateException("Unexpected unary operator: " + kind);
-            };
-        }
-        return null;
-   }
-    private BoundBinaryOperatorKind BindBinaryOperatorKind(SyntaxKind kind, Class<?> leftType, Class<?> rightType) {
-        if (leftType == Integer.class || rightType == Integer.class){
-            return switch (kind) {
-                case SyntaxKind.StarToken -> BoundBinaryOperatorKind.Multiplication;
-                case SyntaxKind.SlashToken -> BoundBinaryOperatorKind.Division;
-                case SyntaxKind.MinusToken -> BoundBinaryOperatorKind.Subtraction;
-                case SyntaxKind.PlusToken -> BoundBinaryOperatorKind.Addition;
-                default -> throw new IllegalStateException("Unexpected binary operator: " + kind);
-        };}
-
-        if (leftType == Boolean.class || rightType == Boolean.class) {
-            return switch (kind) {
-                case SyntaxKind.AmpersandAmpersandToken -> BoundBinaryOperatorKind.LogicalAnd;
-                case SyntaxKind.PipePipeToken -> BoundBinaryOperatorKind.LogicalOr;
-
-                default -> throw new IllegalStateException("Unexpected binary operator: " + kind);
-            };
-        }
-
-        return null;
-    }
 }

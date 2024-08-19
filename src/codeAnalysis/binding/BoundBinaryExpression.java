@@ -1,14 +1,17 @@
 package codeAnalysis.binding;
 
+
+import codeAnalysis.syntax.SyntaxKind;
+
 public class BoundBinaryExpression extends BoundExpression {
 
     BoundExpression left;
     BoundExpression right;
-    BoundBinaryOperatorKind operatorKind;
-    public BoundBinaryExpression(BoundExpression left, BoundBinaryOperatorKind operatorKind, BoundExpression right) {
+    BoundBinaryOperator op;
+    public BoundBinaryExpression(BoundExpression left, BoundBinaryOperator op, BoundExpression right) {
         this.left = left;
         this.right = right;
-        this.operatorKind = operatorKind;
+        this.op = op;
     }
     @Override
     public BoundNodeKind getKind() {
@@ -24,7 +27,7 @@ public class BoundBinaryExpression extends BoundExpression {
     public BoundExpression getRight() {
         return right;
     }
-    public BoundBinaryOperatorKind getOperatorKind() {
-        return operatorKind;
+    public BoundBinaryOperator getOperatorKind() {
+        return op;
     }
 }
