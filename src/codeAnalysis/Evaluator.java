@@ -4,6 +4,8 @@ package codeAnalysis;
 import codeAnalysis.binding.*;
 import codeAnalysis.syntax.*;
 
+import java.util.Objects;
+
 public class Evaluator{
     private final BoundExpression root;
 
@@ -41,7 +43,9 @@ public class Evaluator{
                 case BoundBinaryOperatorKind.Division -> (int) left / (int)  right;
                 case BoundBinaryOperatorKind.LogicalAnd -> (Boolean) left && (Boolean) right;
                 case BoundBinaryOperatorKind.LogicalOr -> (Boolean) left || (Boolean) right;
-                case null, default -> throw new Exception("UnExpected binary operator " + b.getOperatorKind());
+                case BoundBinaryOperatorKind.Equals -> Objects.equals(left, right);
+                case BoundBinaryOperatorKind.NotEquals -> !Objects.equals(left, right);
+                default -> throw new Exception("UnExpected binary operator " + b.getOperatorKind());
             };
         }
 

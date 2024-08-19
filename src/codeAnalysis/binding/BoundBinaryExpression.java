@@ -19,7 +19,7 @@ public class BoundBinaryExpression extends BoundExpression {
     }
     @Override
     public Class<?> type() {
-        return left.type();
+        return op.getResultType();
     }
     public BoundExpression getLeft() {
         return left;

@@ -16,6 +16,9 @@ public final class BoundBinaryOperator {
         this(syntaxKind, kind,type,type,type);
     }
 
+    private BoundBinaryOperator(SyntaxKind syntaxKind, BoundBinaryOperatorKind kind, Class<?> operandType, Class<?> resultType) {
+        this(syntaxKind, kind,operandType, operandType,resultType);
+    }
     private BoundBinaryOperator(SyntaxKind syntaxKind, BoundBinaryOperatorKind kind,
                                 Class<?> leftType,Class<?> rightType, Class<?> resultType) {
         this.syntaxKind = syntaxKind;
@@ -51,6 +54,12 @@ public final class BoundBinaryOperator {
             new BoundBinaryOperator(SyntaxKind.MinusToken, BoundBinaryOperatorKind.Subtraction, int.class),
             new BoundBinaryOperator(SyntaxKind.StarToken, BoundBinaryOperatorKind.Multiplication, int.class),
             new BoundBinaryOperator(SyntaxKind.SlashToken, BoundBinaryOperatorKind.Division, int.class),
+
+            new BoundBinaryOperator(SyntaxKind.EqualsEqualsToken, BoundBinaryOperatorKind.Equals, int.class, boolean.class),
+            new BoundBinaryOperator(SyntaxKind.BangEqualsToken, BoundBinaryOperatorKind.NotEquals, int.class, boolean.class),
+
+            new BoundBinaryOperator(SyntaxKind.EqualsEqualsToken, BoundBinaryOperatorKind.Equals, boolean.class),
+            new BoundBinaryOperator(SyntaxKind.BangEqualsToken, BoundBinaryOperatorKind.NotEquals, boolean.class),
 
             new BoundBinaryOperator(SyntaxKind.AmpersandAmpersandToken, BoundBinaryOperatorKind.LogicalAnd, boolean.class),
             new BoundBinaryOperator(SyntaxKind.PipePipeToken, BoundBinaryOperatorKind.LogicalOr, boolean.class),
