@@ -11,34 +11,36 @@ public class Evaluator{
         this.root = root;
     }
 
-    public int Evaluate() throws Exception {
+    public Object Evaluate() throws Exception {
         return EvaluateExpression(root);
     }
 
-    private int EvaluateExpression(BoundExpression node) throws Exception {
+    private Object EvaluateExpression(BoundExpression node) throws Exception {
         if (node instanceof BoundLiteralExpression n) {
             return (int) n.getValue();
         }
 
 
         if (node instanceof BoundUnaryExpression u) {
-            var operand = EvaluateExpression(u.getOperand());
-            if (u.getOperatorKind() == BoundUnaryOperatorKind.Identity) {
-                return operand;
-            } else if (u.getOperatorKind() == BoundUnaryOperatorKind.Negation) {
-                return -operand;
-            } else
-                throw new Exception("UnExpected unary operator " + u.getOperatorKind());
+            var operand =  EvaluateExpression(u.getOperand());
+            return switch (u.getOperatorKind()) {
+                case Identity -> (int) operand;
+                case Negation -> -(int) operand;
+                case LogicalNegation -> !(boolean) operand;
+                case null, default -> throw new Exception("UnExpected unary operator " + u.getOperatorKind());
+            };
         }
 
         if (node instanceof BoundBinaryExpression b) {
-            var left = EvaluateExpression(b.getLeft());
-            var right = EvaluateExpression(b.getRight());
+            var left =  EvaluateExpression(b.getLeft());
+            var right =  EvaluateExpression(b.getRight());
             return switch (b.getOperatorKind()) {
-                case BoundBinaryOperatorKind.Addition -> left + right;
-                case BoundBinaryOperatorKind.Subtraction -> left - right;
-                case BoundBinaryOperatorKind.Multiplication -> left * right;
-                case BoundBinaryOperatorKind.Division -> left / right;
+                case BoundBinaryOperatorKind.Addition -> (int) left +(int) right;
+                case BoundBinaryOperatorKind.Subtraction -> (int) left -(int)  right;
+                case BoundBinaryOperatorKind.Multiplication -> (int) left *  (int) right;
+                case BoundBinaryOperatorKind.Division -> (int) left / (int)  right;
+                case BoundBinaryOperatorKind.LogicalAnd -> (Boolean) left && (Boolean) right;
+                case BoundBinaryOperatorKind.LogicalOr -> (Boolean) left || (Boolean) right;
                 case null, default -> throw new Exception("UnExpected binary operator " + b.getOperatorKind());
             };
         }

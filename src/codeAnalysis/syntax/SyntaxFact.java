@@ -25,15 +25,17 @@ public final class SyntaxFact {
 // 1
     public static int getUnaryOperatorPrecedence( SyntaxKind kind) {
         return switch (kind) {
-            case SyntaxKind.PlusToken, SyntaxKind.MinusToken -> 3;
+            case SyntaxKind.PlusToken, SyntaxKind.MinusToken, SyntaxKind.BangToken-> 5;
             default -> 0;
         };
     }
 
     public static int getBinaryOperatorPrecedence( SyntaxKind kind) {
         return switch (kind) {
-            case SyntaxKind.PlusToken, SyntaxKind.MinusToken -> 1;
-            case SyntaxKind.StarToken, SyntaxKind.SlashToken -> 2;
+            case SyntaxKind.PlusToken, SyntaxKind.MinusToken -> 4;
+            case SyntaxKind.StarToken, SyntaxKind.SlashToken -> 3;
+            case SyntaxKind.AmpersandAmpersandToken -> 2;
+                case SyntaxKind.PipePipeToken -> 1;
             default -> 0;
         };
 }

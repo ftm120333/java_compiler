@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Lexer {
-    private String _text;
+    private final String _text;
     private int _position;
-    private List<String> _diagnostics = new ArrayList<>();
+    private final List<String> _diagnostics = new ArrayList<>();
+
 
 
     public Lexer(String text){
@@ -19,6 +20,19 @@ class Lexer {
         }
         return _text.charAt(_position);
     }
+    private char current() {
+        return Peek(0);
+    }
+    private char lookAhead() { return Peek(1);
+    }
+
+    private char Peek(int offset){
+        var index = _position + offset;
+        if (index >= _text.length())
+            return '\n';
+        return _text.charAt(index);
+    }
+
     private void next(){
         _position++;
     }
@@ -55,7 +69,7 @@ class Lexer {
                 next();
             }
             int length = _position - start;
-            String text = this._text.substring(start, length);
+            String text = this._text.substring(start,start +  length);
             var kind = SyntaxFact.getKeywordKind(text);
             return new SyntaxToken(kind, start, text, null);
         }
@@ -78,12 +92,29 @@ class Lexer {
             case ')' -> {
                 return new SyntaxToken(SyntaxKind.ClosedParanthesisToken, _position++, ")", null);
             }
+
+            case '!' -> {
+                return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
+            }
+            case '&' -> {
+                if (lookAhead() == '&')
+                    return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, _position +=2 , "&&", null);
+
+            }
+            case '|' -> {
+                if (lookAhead() == '|')
+                    return new SyntaxToken(SyntaxKind.PipePipeToken, _position +=2 , "||", null);
+
+            }
+
             default -> {
 
                 _diagnostics.add("Error: bad character input: " + getCurrent());
                 return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
             }
+
         }
+        return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
     }
 
     public List<String> get_diagnostics() {

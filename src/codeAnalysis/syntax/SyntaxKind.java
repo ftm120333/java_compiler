@@ -24,6 +24,6 @@ public enum SyntaxKind{
     LiteralExpression,
     UnaryExpression,
     BinaryExpression,
-    ParanthrsizedExpression,
+    ParanthrsizedExpression, BangToken, EqualsToken, AmpersandAmpersandToken, PipePipeToken,
 
 }

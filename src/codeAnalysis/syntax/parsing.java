@@ -15,6 +15,7 @@ class Parser {
         do {
 
             token = lexer.lex();
+
             if (token.kind != SyntaxKind.WhitespaceToken && token.kind != SyntaxKind.BadToken) {
                 tokens.add(token);
 
@@ -75,7 +76,7 @@ class Parser {
             var operand = parseExpression(unaryOperatorPrecedence);
             left = new UnaryExpressionSyntax(operatorToken, operand);
         } else {
-            left = ParsePrimaryExpresion();
+            left = ParsePrimaryExpression();
         }
 
         while (true) {
@@ -91,21 +92,25 @@ class Parser {
     }
 
 
-    private ExpressionSyntax ParsePrimaryExpresion() {
-        if (current().kind == SyntaxKind.OpenParanthesisToken) {
-            var left = nextToken();
-            var expression = parseExpression(0);
-            var right = matchToken(SyntaxKind.ClosedParanthesisToken);
-            return new ParanthrsizedExpressionSyntax(left, expression, right);
-        } else if (current().kind == SyntaxKind.FalseKeyword || current().kind == SyntaxKind.TrueKeyword) {
-            var value = current().kind == SyntaxKind.TrueKeyword;
-
-            return new LiteralExpressionSyntax(current(), value);
+    private ExpressionSyntax ParsePrimaryExpression() {
+        switch (current().kind) {
+            case OpenParanthesisToken -> {
+                var left = nextToken();
+                var expression = parseExpression(0);
+                var right = matchToken(SyntaxKind.ClosedParanthesisToken);
+                return new ParanthrsizedExpressionSyntax(left, expression, right);
+            }
+            case FalseKeyword, TrueKeyword -> {
+                var keywordToken = nextToken();
+                var value = keywordToken.kind == SyntaxKind.TrueKeyword;
+                return new LiteralExpressionSyntax(keywordToken, value);
+            }
+            default -> {
+                var numberToken = matchToken(SyntaxKind.NumberToken);
+                return  new LiteralExpressionSyntax(numberToken);
+            }
         }
 
-
-        var numberToken = matchToken(SyntaxKind.NumberToken);
-        return  new LiteralExpressionSyntax(numberToken);
     }
 }
 
