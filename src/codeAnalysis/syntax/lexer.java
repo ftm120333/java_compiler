@@ -1,12 +1,16 @@
 package codeAnalysis.syntax;
 
+import codeAnalysis.compiling.Diagnostic;
+import codeAnalysis.compiling.DiagnosticBag;
+import codeAnalysis.compiling.TextSpan;
+
 import java.util.ArrayList;
 import java.util.List;
 
 class Lexer {
     private final String _text;
     private int _position;
-    private final List<String> _diagnostics = new ArrayList<>();
+    private final DiagnosticBag _diagnostics = new DiagnosticBag();
 
 
 
@@ -16,7 +20,7 @@ class Lexer {
 
     private char getCurrent(){
         if (_position >= _text.length()) {
-            return '\n';
+            return '\0';
         }
         return _text.charAt(_position);
     }
@@ -39,9 +43,9 @@ class Lexer {
     public SyntaxToken lex(){
         if (_position >= _text.length())
             return new SyntaxToken(SyntaxKind.EndOfFileToken, _position,"\n", null);
-
+        var start = _position;
         if (Character.isDigit(getCurrent())){
-            var start = _position;
+
             while (Character.isDigit(getCurrent())) {
                 next();
             }
@@ -49,12 +53,12 @@ class Lexer {
             String text = this._text.substring(start , start + length);
             int value = Integer.parseInt(text);
             if(!Integer.valueOf(text).equals(value))
-                _diagnostics.add("The number " + text + " is not a valid integer.");
+                _diagnostics.reportInvalidNumber(new TextSpan(start, length), text, Integer.class);
             return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
         }
 
         if (Character.isWhitespace(getCurrent())){
-            var start = _position;
+
             while (Character.isWhitespace(getCurrent())) {
                 next();
             }
@@ -64,7 +68,7 @@ class Lexer {
         }
 
         if (Character.isLetter(getCurrent())) {
-            var start = _position;
+
             while (Character.isLetter(getCurrent())) {
                 next();
             }
@@ -94,29 +98,44 @@ class Lexer {
             }
 
             case '&' -> {
-                if (lookAhead() == '&')
-                    return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, _position +=2 , "&&", null);
+                if (lookAhead() == '&') {
+                    _position += 2;
+                    return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, start, "&&", null);
+                }
 
             }
             case '|' -> {
-                if (lookAhead() == '|')
-                    return new SyntaxToken(SyntaxKind.PipePipeToken, _position +=2 , "||", null);
+                if (lookAhead() == '|') {
+                    _position += 2;
+                    return new SyntaxToken(SyntaxKind.PipePipeToken,start, "||", null);
+                }
 
             }
             case '=' -> {
-                if (lookAhead() == '=')
-                    return new SyntaxToken(SyntaxKind.EqualsEqualsToken, _position +=2 , "==", null);
+                if (lookAhead() == '=') {
+                    _position += 2;
+                    return new SyntaxToken(SyntaxKind.EqualsEqualsToken, start, "==", null);
+                }
+                else{
+                    _position += 1;
+                    return new SyntaxToken(SyntaxKind.EqualsToken, start, "=", null);
+                }
             }
             case '!' -> {
-                if (lookAhead() == '=')
-                    return new SyntaxToken(SyntaxKind.BangEqualsToken, _position +=2 , "!=", null);
+                if (lookAhead() == '=') {
+                    _position += 2;
+                    return new SyntaxToken(SyntaxKind.BangEqualsToken, start, "!=", null);
+                }
                 else
-                    return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
+                {
+                    _position +=1;
+                    return new SyntaxToken(SyntaxKind.BangToken, start, "!", null);
+                }
             }
 
             default -> {
 
-                _diagnostics.add("Error: bad character input: " + getCurrent());
+                _diagnostics.reportBadCharacter(_position, getCurrent());
                 return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
             }
 
@@ -124,7 +143,7 @@ class Lexer {
         return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
     }
 
-    public List<String> get_diagnostics() {
+    public DiagnosticBag get_diagnostics() {
         return _diagnostics;
     }
 }

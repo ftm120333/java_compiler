@@ -1,12 +1,18 @@
 package codeAnalysis.binding;
 
 
+import codeAnalysis.compiling.DiagnosticBag;
 import codeAnalysis.syntax.*;
-import java.util.ArrayList;
-import java.util.List;
+
+
+import java.util.Map;
 
 enum BoundNodeKind {
-    LiteralExpression, BinaryExpression, UnaryExpression
+    LiteralExpression,
+    VariableExpression,
+    AssignmentExpression,
+    BinaryExpression,
+    UnaryExpression
 
 }
 
@@ -16,10 +22,15 @@ abstract class BoundNode {
 
 
 public class Binder {
-   private final List<String> diagnostics = new ArrayList<>();
+   private final Map<String, Object> _variables;
+   private final DiagnosticBag _diagnostics = new DiagnosticBag();
 
-   public List<String> getDiagnostics() {
-       return diagnostics;
+    public Binder(Map<String, Object> variables) {
+        _variables = variables;
+    }
+
+    public DiagnosticBag diagnostics() {
+       return _diagnostics;
    }
 
     public BoundExpression bindExpression(ExpressionSyntax syntax) {
@@ -32,17 +43,42 @@ public class Binder {
 
             case SyntaxKind.BinaryExpression:
                 return  BindBinaryExpression((BinaryExpressionSyntax) syntax);
-
+            case SyntaxKind.ParanthesizedExpression:
+                return  BindParenthesizedExpression((ParanthrsizedExpressionSyntax) syntax);
+            case SyntaxKind.NameExpression:
+                return  BindNameExpression((NameExpressionSyntax) syntax);
+            case SyntaxKind.AssignmentExpression:
+                return  BindAssignmentExpression((AssignmentExpressionSyntax) syntax);
             default:
                 throw new IllegalStateException("Unexpected value: " + syntax.getKind());
         }
     }
 
+    private BoundExpression BindNameExpression(NameExpressionSyntax syntax) {
+       var name = syntax.getIdentifierToken().text;
+       if(!_variables.containsKey(name)){
+           _diagnostics.ReportUndefinedName(syntax.getIdentifierToken().span(), name);
+           return new BoundLiteralExpression(0);
+       }
+        Class<?> type = Integer.class;
+       return new BoundVariableExpression(name, type);
+    }
+
+    private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax) {
+        var name = syntax.getIdentifierToken().text;
+        var boundExpression = bindExpression(syntax.getExpression());
+        return new BoundAssignmentExpression(name, boundExpression);
+    }
+
+
+    private BoundExpression BindParenthesizedExpression(ParanthrsizedExpressionSyntax syntax) {
+        return bindExpression(syntax.expression);
+    }
+
     private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax) {
         //cast the value to a nullable integer (If the cast fails, it results in null)
         //If the result of the cast is null, it defaults to 0.
-       var valueObj = syntax.getValue();
-       var value = (valueObj instanceof Integer)? (Integer) valueObj : 0;
+        Object value = syntax.getValue() != null ? syntax.getValue() : 0;
         //syntax.getValue() != null ? syntax.getValue() : 0;
         return new BoundLiteralExpression(value);
     }
@@ -53,7 +89,7 @@ public class Binder {
        var boundOperator = BoundUnaryOperator.bind(syntax.operatorToken.kind, boundOperand.type());
 
        if (boundOperator == null) {
-           diagnostics.add("unary operator: " + syntax.operatorToken.text + " is not valid for type: " + boundOperand.type().getName());
+           _diagnostics.reportUndefinedUnaryOperator(syntax.operatorToken.span(), syntax.operatorToken.text, boundOperand.type());
            return boundOperand;
        }
                                             //boundOperatorKind.value (in the video)
@@ -67,7 +103,7 @@ public class Binder {
         var boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
 
         if (boundOperator == null) {
-            diagnostics.add("binary operator: " + syntax.getOperatorToken().text + " is not valid for type: " +boundLeft.type() + " and " + boundRight.type());
+            _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, boundLeft.type(), boundRight.type() );
             return boundLeft;
         }
 

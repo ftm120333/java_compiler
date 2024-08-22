@@ -14,16 +14,22 @@ public enum SyntaxKind{
     SlashToken,
     OpenParanthesisToken,
     ClosedParanthesisToken,
-
+    BangToken, EqualsToken,
+    AmpersandAmpersandToken,
+    PipePipeToken,
+    EqualsEqualsToken,
+    BangEqualsToken,
+    IdentifierToken,
     //Keywords
     TrueKeyword,
     FalseKeyword,
-    IdentifierToken,
+
 
     //Expressions
     LiteralExpression,
     UnaryExpression,
     BinaryExpression,
-    ParanthrsizedExpression, BangToken, EqualsToken, AmpersandAmpersandToken, PipePipeToken, EqualsEqualsToken, BangEqualsToken,
+    ParanthesizedExpression,
+    NameExpression, AssignmentExpression,
 
 }

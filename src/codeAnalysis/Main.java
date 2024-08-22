@@ -1,19 +1,21 @@
 package codeAnalysis;
 
 import codeAnalysis.binding.Binder;
+import codeAnalysis.compiling.Compilation;
 import codeAnalysis.syntax.SyntaxNode;
 import codeAnalysis.syntax.SyntaxToken;
 import codeAnalysis.syntax.SyntaxTree;
 
 
-
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean showTree = false;
+        Map<String, Object> variable = new HashMap<>();
         while (true){
             System.out.printf(">> ");
 
@@ -28,11 +30,15 @@ public class Main {
                 continue;
             }
 
-
             var syntaxTree = SyntaxTree.Parse(line);
-            var binder = new Binder();
+            var compilation = new Compilation(syntaxTree);
+            var result = compilation.Evaluate(variable);
+            var diagnostics = result.getDiagnostics();
+
+
+            /* var binder = new Binder();
             var boundExpression = binder.bindExpression(syntaxTree.getRoot());
-            final Iterable<String> diagnostics= syntaxTree.getDiagnostics();
+            final Iterable<String> diagnostics= (Iterable<String>) syntaxTree.getDiagnostics();*/
 
 
             if(showTree){
@@ -40,16 +46,24 @@ public class Main {
             }
 
             if (syntaxTree.getDiagnostics() != null) {
-                var evaluator = new Evaluator(boundExpression);
-                var result = evaluator.Evaluate();
-                System.out.println(result);
+                System.out.println(result.getValue());
             }
             else {
 
                 for (var diagnostic: syntaxTree.getDiagnostics()) {
-                    System.out.println( diagnostic);
+                    System.out.println(diagnostic);
 
+                    var prefix = line.substring(0, diagnostic.getSpan().getStart());
+                    var error = line.substring(diagnostic.getSpan().getLength());
+                    var suffix = line.substring(diagnostic.getSpan().end());
+                    System.out.println();
+                    System.out.print("  ");
+                    System.out.print(prefix);
+                    System.out.print("\u001B[31m" + error + "\u001B[0m");
+                    System.out.print(suffix);
+                    System.out.println();
                 }
+                System.out.println();
             }
         }
     }

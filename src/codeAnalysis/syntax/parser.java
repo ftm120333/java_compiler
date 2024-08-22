@@ -1,12 +1,13 @@
 package codeAnalysis.syntax;
 
+import codeAnalysis.compiling.DiagnosticBag;
+
 import java.util.ArrayList;
-import java.util.List;
 
 class Parser {
     private SyntaxToken[] _tokens;
     private int _position;
-    private List<String> _diagnostics = new ArrayList<>();
+    private DiagnosticBag _diagnostics = new  DiagnosticBag();
 
     public Parser(String text) {
         var tokens = new ArrayList<SyntaxToken>();
@@ -26,12 +27,12 @@ class Parser {
 
         _tokens = tokens.toArray(new SyntaxToken[0]);
 
-        _diagnostics.addAll(lexer.get_diagnostics());
+        _diagnostics.addRange(lexer.get_diagnostics());
 
 
     }
 
-    public List<String> Diognostics() {
+    public DiagnosticBag Diognostics() {
         return _diagnostics;
     }
 
@@ -55,25 +56,39 @@ class Parser {
     private SyntaxToken matchToken(SyntaxKind kind) {//checks if the current token's kind matches the expected kind
         if (current().kind == kind)              // If it matches, it consumes the token and returns it.
             return nextToken();                 //If it doesn't match, it logs an error and returns a new token of the expected kind to handle the error
-        _diagnostics.add("Error: Unexpected token " + current().kind + ", expected {" + kind + "} ");
+        _diagnostics.reportUnexpectedToken( current().span(), current().kind , kind);
         return new SyntaxToken(kind, current().position, null, null);
 
     }
 
     public SyntaxTree parse() {
-        var expression = parseExpression(0);
+        var expression = parseExpression();
         var endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
-        return new SyntaxTree(_diagnostics, expression, endOfFileToken);
+        return new SyntaxTree(_diagnostics.get_diagnostics(), expression, endOfFileToken);
     }
 
+    private ExpressionSyntax parseExpression(){
+         return parseAssignmentExpression();
+    }
 
-    private ExpressionSyntax parseExpression(int parentPrecedence) {
+    private ExpressionSyntax parseAssignmentExpression(){
+
+        if (peek(0).kind == SyntaxKind.IdentifierToken &&
+            peek(1).kind == SyntaxKind.EqualsToken){
+                var identifierToken = nextToken();
+                var operatorToken = nextToken();
+                var right = parseAssignmentExpression();
+                return  new AssignmentExpressionSyntax(identifierToken, operatorToken, right );
+        }
+        return parseBinaryExpression(0);
+    }
+    private ExpressionSyntax parseBinaryExpression(int parentPrecedence) {
 
         ExpressionSyntax left;
         var unaryOperatorPrecedence = SyntaxFact.getUnaryOperatorPrecedence(current().kind);
         if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence) {
             var operatorToken = nextToken();
-            var operand = parseExpression(unaryOperatorPrecedence);
+            var operand = parseBinaryExpression(unaryOperatorPrecedence);
             left = new UnaryExpressionSyntax(operatorToken, operand);
         } else {
             left = ParsePrimaryExpression();
@@ -85,7 +100,7 @@ class Parser {
                 break;
             }
             var operatorToken = nextToken();
-            var right = parseExpression(precedence);
+            var right = parseBinaryExpression(precedence);
             left = new BinaryExpressionSyntax(left, operatorToken, right);
         }
         return left;
@@ -96,7 +111,7 @@ class Parser {
         switch (current().kind) {
             case OpenParanthesisToken -> {
                 var left = nextToken();
-                var expression = parseExpression(0);
+                var expression = parseExpression();
                 var right = matchToken(SyntaxKind.ClosedParanthesisToken);
                 return new ParanthrsizedExpressionSyntax(left, expression, right);
             }
@@ -104,6 +119,10 @@ class Parser {
                 var keywordToken = nextToken();
                 var value = keywordToken.kind == SyntaxKind.TrueKeyword;
                 return new LiteralExpressionSyntax(keywordToken, value);
+            }
+            case IdentifierToken -> {
+                var identifierToken = nextToken();
+                return new NameExpressionSyntax(identifierToken);
             }
             default -> {
                 var numberToken = matchToken(SyntaxKind.NumberToken);

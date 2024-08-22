@@ -1,20 +1,24 @@
 package codeAnalysis.syntax;
 
+import codeAnalysis.compiling.Diagnostic;
+import codeAnalysis.compiling.DiagnosticBag;
+
+import java.util.Collection;
 import java.util.List;
 
 public class SyntaxTree {
-    private final List<String> diagnostics;
+    private final List<Diagnostic> diagnostics;
     private final ExpressionSyntax Root;
     private final SyntaxToken EndOfFileToken;
 
-    public SyntaxTree(List<String> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
+    public SyntaxTree(List<Diagnostic> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
     {
         this.diagnostics = diagnostics;
         this.Root = root;
         this.EndOfFileToken = endOfFileToken;
     }
 
-    public Iterable<String> getDiagnostics() {
+    public Collection<Diagnostic> getDiagnostics() {
         return diagnostics;
     }
 

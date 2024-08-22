@@ -17,7 +17,7 @@ public class ParanthrsizedExpressionSyntax extends ExpressionSyntax {
 
     @Override
     public SyntaxKind getKind() {
-        return SyntaxKind.ParanthrsizedExpression;
+        return SyntaxKind.ParanthesizedExpression;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package codeAnalysis.syntax;
 
+import codeAnalysis.compiling.TextSpan;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,9 @@ public class SyntaxToken extends SyntaxNode{
         this.value = value;
     }
 
+    public TextSpan span () {
+        return new TextSpan(position, text.length());
+    }
     @Override
     public SyntaxKind getKind() {
         return kind;
