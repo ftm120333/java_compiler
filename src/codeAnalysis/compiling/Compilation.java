@@ -1,6 +1,7 @@
 package codeAnalysis.compiling;
 
 import codeAnalysis.Evaluator;
+import codeAnalysis.VariableSymbol;
 import codeAnalysis.binding.Binder;
 import codeAnalysis.syntax.SyntaxTree;
 
@@ -17,7 +18,7 @@ public class Compilation {
         return syntax;
     }
 
-    public EvaluationResult Evaluate(Map<String, Object> variables) throws Exception {
+    public EvaluationResult Evaluate(Map<VariableSymbol, Object> variables) throws Exception {
        var binder = new Binder(variables);
        var boundExpression = binder.bindExpression(syntax.getRoot());
         List<Diagnostic> diagnostics = new ArrayList<>();

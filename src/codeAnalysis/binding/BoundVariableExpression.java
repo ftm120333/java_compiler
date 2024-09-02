@@ -1,13 +1,16 @@
 package codeAnalysis.binding;
 
-public final class BoundVariableExpression extends BoundExpression {
-    final String name;
-    final  Class<?> type;
-    public BoundVariableExpression(String name, Class<?> type) {
-        this.name = name;
+import codeAnalysis.VariableSymbol;
 
-        this.type = type;
+public final class BoundVariableExpression extends BoundExpression {
+    final VariableSymbol variable;
+
+    public BoundVariableExpression(VariableSymbol Variable ) {
+        this.variable = Variable;
+
     }
+
+
 
     @Override
     public BoundNodeKind getKind() {
@@ -16,10 +19,11 @@ public final class BoundVariableExpression extends BoundExpression {
 
     @Override
     public Class<?> type() {
-        return type;
+        return variable.getType();
     }
 
-    public String getName() {
-        return name;
+    public VariableSymbol getName() {
+        return variable;
     }
+
 }

@@ -9,9 +9,9 @@ import java.util.Objects;
 
 public class Evaluator{
     private final BoundExpression _root;
-    private final Map<String, Object> _variables;
+    private final Map<VariableSymbol, Object> _variables;
 
-    public Evaluator(BoundExpression root, Map<String, Object> variables) {
+    public Evaluator(BoundExpression root, Map<VariableSymbol, Object> variables) {
         _root = root;
         _variables = variables;
     }
@@ -26,12 +26,12 @@ public class Evaluator{
         }
 
         if (node instanceof BoundVariableExpression v) {
-            return _variables.get(v.getName());
+            return _variables.get(v);
         }
 
         if (node instanceof BoundAssignmentExpression a) {
-            var value = EvaluateExpression(a.getBoundExpression());
-            _variables.put(a.getName(),value);
+            var value = EvaluateExpression(a.getExpression());
+            _variables.put(a.getVariable(),value);
             return value;
 
         }

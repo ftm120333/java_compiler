@@ -1,6 +1,7 @@
 package codeAnalysis.binding;
 
 
+import codeAnalysis.VariableSymbol;
 import codeAnalysis.compiling.DiagnosticBag;
 import codeAnalysis.syntax.*;
 
@@ -22,10 +23,10 @@ abstract class BoundNode {
 
 
 public class Binder {
-   private final Map<String, Object> _variables;
+   private final Map<VariableSymbol, Object> _variables;
    private final DiagnosticBag _diagnostics = new DiagnosticBag();
 
-    public Binder(Map<String, Object> variables) {
+    public Binder(Map<VariableSymbol, Object> variables) {
         _variables = variables;
     }
 
@@ -56,18 +57,26 @@ public class Binder {
 
     private BoundExpression BindNameExpression(NameExpressionSyntax syntax) {
        var name = syntax.getIdentifierToken().text;
-       if(!_variables.containsKey(name)){
+        var variable = _variables.keySet().stream()
+                .filter(v -> v.getName().equals(name))
+                .findFirst();
+       if(variable != null){
            _diagnostics.ReportUndefinedName(syntax.getIdentifierToken().span(), name);
            return new BoundLiteralExpression(0);
        }
-        Class<?> type = Integer.class;
-       return new BoundVariableExpression(name, type);
+       return new BoundVariableExpression(variable.get());
     }
 
     private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax) {
         var name = syntax.getIdentifierToken().text;
         var boundExpression = bindExpression(syntax.getExpression());
-        return new BoundAssignmentExpression(name, boundExpression);
+        var existingVariable = _variables.keySet().stream()
+                .filter(v -> v.getName().equals(name))
+                .findFirst();
+        if(existingVariable != null)
+            _variables.remove(existingVariable);
+        var variable = new VariableSymbol(name, boundExpression.getClass());
+        return new BoundAssignmentExpression(variable, boundExpression);
     }
 
 

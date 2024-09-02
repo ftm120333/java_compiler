@@ -1,8 +1,6 @@
 package codeAnalysis.binding;
 
 
-import codeAnalysis.syntax.SyntaxKind;
-
 public class BoundBinaryExpression extends BoundExpression {
 
     BoundExpression left;

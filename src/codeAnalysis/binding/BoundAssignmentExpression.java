@@ -1,14 +1,14 @@
 package codeAnalysis.binding;
 
-import java.beans.Expression;
+import codeAnalysis.VariableSymbol;
 
 public final class BoundAssignmentExpression extends BoundExpression {
-    final String name;
-    final BoundExpression boundExpression;
+    final VariableSymbol variable;
+    final BoundExpression expression;
 
-    public BoundAssignmentExpression(String name, BoundExpression boundExpression) {
-        this.name = name;
-        this.boundExpression = boundExpression;
+    public BoundAssignmentExpression(VariableSymbol variable, BoundExpression expression) {
+        this.variable = variable;
+        this.expression = expression;
     }
 
     @Override
@@ -16,16 +16,18 @@ public final class BoundAssignmentExpression extends BoundExpression {
         return BoundNodeKind.AssignmentExpression;
     }
 
+
+
+    public VariableSymbol getVariable() {
+        return variable;
+    }
+
+    public BoundExpression getExpression() {
+        return expression;
+    }
+
     @Override
     public Class<?> type() {
-        return Expression.class;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public BoundExpression getBoundExpression() {
-        return boundExpression;
+        return variable.getType();
     }
 }

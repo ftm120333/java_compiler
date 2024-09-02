@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean showTree = false;
-        Map<String, Object> variable = new HashMap<>();
+        Map<VariableSymbol, Object> variable = new HashMap<>();
         while (true){
             System.out.printf(">> ");
 
