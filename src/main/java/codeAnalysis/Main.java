@@ -1,10 +1,9 @@
 package codeAnalysis;
 
-import codeAnalysis.binding.Binder;
-import codeAnalysis.compiling.Compilation;
 import codeAnalysis.syntax.SyntaxNode;
 import codeAnalysis.syntax.SyntaxToken;
 import codeAnalysis.syntax.SyntaxTree;
+import codeAnalysis.compiling.Compilation;
 
 
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class Main {
                 continue;
             }
 
-            var syntaxTree = SyntaxTree.Parse(line);
+            var syntaxTree = SyntaxTree.parse(line);
             var compilation = new Compilation(syntaxTree);
             var result = compilation.Evaluate(variable);
             var diagnostics = result.getDiagnostics();

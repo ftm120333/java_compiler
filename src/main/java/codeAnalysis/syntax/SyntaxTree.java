@@ -1,7 +1,6 @@
 package codeAnalysis.syntax;
 
 import codeAnalysis.compiling.Diagnostic;
-import codeAnalysis.compiling.DiagnosticBag;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,8 +29,20 @@ public class SyntaxTree {
         return EndOfFileToken;
     }
 
-    public static SyntaxTree Parse(String text) {
+    public static SyntaxTree parse(String text) {
         var parser = new Parser(text);
         return parser.parse();
     }
+
+    public static Iterable<SyntaxToken> parseTokens(String text){
+        var lexer = new Lexer(text);
+        while (true){
+            var token= lexer.lex();
+            if (token.kind == SyntaxKind.EndOfFileToken)
+                break;
+            return (Iterable<SyntaxToken>) token;
+        }
+    return null;
+    }
+
 }

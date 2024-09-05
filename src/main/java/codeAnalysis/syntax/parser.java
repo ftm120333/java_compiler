@@ -5,9 +5,9 @@ import codeAnalysis.compiling.DiagnosticBag;
 import java.util.ArrayList;
 
 class Parser {
-    private SyntaxToken[] _tokens;
+    private final SyntaxToken[] _tokens;
     private int _position;
-    private DiagnosticBag _diagnostics = new  DiagnosticBag();
+    private final DiagnosticBag _diagnostics = new  DiagnosticBag();
 
     public Parser(String text) {
         var tokens = new ArrayList<SyntaxToken>();
@@ -17,7 +17,9 @@ class Parser {
 
             token = lexer.lex();
 
-            if (token.kind != SyntaxKind.WhitespaceToken && token.kind != SyntaxKind.BadToken) {
+            if (token.kind != SyntaxKind.WhitespaceToken
+                && token.kind != SyntaxKind.BadToken
+                && token.kind != SyntaxKind.EndOfFileToken) {
                 tokens.add(token);
 
             }
@@ -28,17 +30,13 @@ class Parser {
         _tokens = tokens.toArray(new SyntaxToken[0]);
 
         _diagnostics.addRange(lexer.get_diagnostics());
-
-
     }
 
-    public DiagnosticBag Diognostics() {
-        return _diagnostics;
-    }
 
     private SyntaxToken peek(int offset) {
         var index = _position + offset;
-        if (index >= _tokens.length - 1) //If the index is out of bounds, the method returns the last token in the array
+        if (index >= _tokens.length - 1) //If the index is out of bounds,
+                                         // the method returns the last token in the array
             return _tokens[_tokens.length - 1];
         return _tokens[index];
     }
@@ -53,7 +51,7 @@ class Parser {
         return current;
     }
 
-    private SyntaxToken matchToken(SyntaxKind kind) {//checks if the current token's kind matches the expected kind
+    public SyntaxToken matchToken(SyntaxKind kind) {//checks if the current token's kind matches the expected kind
         if (current().kind == kind)              // If it matches, it consumes the token and returns it.
             return nextToken();                 //If it doesn't match, it logs an error and returns a new token of the expected kind to handle the error
         _diagnostics.reportUnexpectedToken( current().span(), current().kind , kind);
@@ -130,6 +128,10 @@ class Parser {
             }
         }
 
+    }
+
+    public SyntaxToken[] getTokens() {
+        return _tokens;
     }
 }
 

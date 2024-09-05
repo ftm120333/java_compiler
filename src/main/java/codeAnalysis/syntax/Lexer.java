@@ -1,13 +1,9 @@
 package codeAnalysis.syntax;
 
-import codeAnalysis.compiling.Diagnostic;
 import codeAnalysis.compiling.DiagnosticBag;
 import codeAnalysis.compiling.TextSpan;
 
-import java.util.ArrayList;
-import java.util.List;
-
-class Lexer {
+public class Lexer {
     private final String _text;
     private int _position;
     private final DiagnosticBag _diagnostics = new DiagnosticBag();
@@ -25,12 +21,12 @@ class Lexer {
         return _text.charAt(_position);
     }
     private char current() {
-        return Peek(0);
+        return peek(0);
     }
-    private char lookAhead() { return Peek(1);
+    private char lookAhead() { return peek(1);
     }
 
-    private char Peek(int offset){
+    private char peek(int offset){
         var index = _position + offset;
         if (index >= _text.length())
             return '\n';
@@ -141,6 +137,14 @@ class Lexer {
 
         }
         return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
+    }
+
+    public String get_text() {
+        return _text;
+    }
+
+    public int get_position() {
+        return _position;
     }
 
     public DiagnosticBag get_diagnostics() {

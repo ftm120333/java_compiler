@@ -1,7 +1,6 @@
 package codeAnalysis.syntax;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 // a = 10
@@ -44,4 +43,6 @@ public final class AssignmentExpressionSyntax extends ExpressionSyntax {
         return Arrays.asList(identifierToken, equalsToken, expression);
 
     }
+
+
 }
