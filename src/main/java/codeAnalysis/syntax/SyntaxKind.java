@@ -1,5 +1,7 @@
 package codeAnalysis.syntax;
 
+
+
 public enum SyntaxKind{
     //Tokens
     BadToken,
@@ -47,6 +49,7 @@ public enum SyntaxKind{
     CommaToken, ColonToken, CloseBraceToken,
     OpenBraceToken, CloseParenthesisToken,
     OpenParenthesisToken, HatEqualsToken,
-    HatToken, PipeEqualsToken;
+    HatToken, PipeEqualsToken,
+
 
 }

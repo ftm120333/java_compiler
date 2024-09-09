@@ -48,7 +48,7 @@ public class Main {
                 System.out.println(result.getValue());
             }
             else {
-
+                var text = syntaxTree.getText();
                 for (var diagnostic: syntaxTree.getDiagnostics()) {
                     System.out.println(diagnostic);
 

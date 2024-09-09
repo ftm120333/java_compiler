@@ -2,7 +2,7 @@ package codeAnalysis.compiling;
 
 public final class EvaluationResult {
 
-    Iterable<Diagnostic> diagnostics;
+    final Iterable<Diagnostic> diagnostics;
     Object value;
 
     public EvaluationResult(Iterable<Diagnostic> diagnostics, Object value) {

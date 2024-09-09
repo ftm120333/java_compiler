@@ -2,9 +2,10 @@ package codeAnalysis.syntax;
 
 import codeAnalysis.compiling.DiagnosticBag;
 import codeAnalysis.compiling.TextSpan;
+import codeAnalysis.text.SourceText;
 
 public class Lexer {
-    private final String _text;
+    private final SourceText _text;
     private int _position;
     private int _start;
     private SyntaxKind _kind;
@@ -14,7 +15,7 @@ public class Lexer {
 
 
 
-    public Lexer(String text){
+    public Lexer(SourceText text){
         _text = text;
     }
 
@@ -124,7 +125,7 @@ public class Lexer {
     var length = _position - _start;
     var text = SyntaxFact.getText(_kind);
     if(text == null)
-        text = _text.substring(_start,_position);
+        text = _text.toString(_start,_position);
 
     return new SyntaxToken(_kind, _start, (String) text, _value);
 
@@ -143,7 +144,7 @@ public class Lexer {
         while (Character.isDigit(getCurrent()))
             next();
 
-        String text = this._text.substring(_start, _position);
+        String text = this._text.toString(_start, _position);
         try {
             int value = Integer.parseInt(text);
             _value = value;
@@ -158,12 +159,12 @@ public class Lexer {
             next();
 
 
-        String text = this._text.substring(_start, _position);
+        String text = this._text.toString(_start, _position);
         _kind = SyntaxFact.getKeywordKind(text);
 
     }
 
-    public String get_text() {
+    public SourceText get_text() {
         return _text;
     }
 
