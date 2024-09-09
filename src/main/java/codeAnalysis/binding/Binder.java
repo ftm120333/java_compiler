@@ -9,15 +9,6 @@ import codeAnalysis.syntax.*;
 
 import java.util.Map;
 
-enum BoundNodeKind {
-    LiteralExpression,
-    VariableExpression,
-    AssignmentExpression,
-    BinaryExpression,
-    UnaryExpression
-
-}
-
 abstract class BoundNode {
     public abstract BoundNodeKind getKind();
 }

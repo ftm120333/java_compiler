@@ -22,8 +22,8 @@ public final class BoundVariableExpression extends BoundExpression {
         return variable.getType();
     }
 
-    public VariableSymbol getName() {
+
+    public VariableSymbol getVariable() {
         return variable;
     }
-
 }

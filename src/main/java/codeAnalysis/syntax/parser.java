@@ -18,8 +18,7 @@ class Parser {
             token = lexer.lex();
 
             if (token.kind != SyntaxKind.WhitespaceToken
-                && token.kind != SyntaxKind.BadToken
-                && token.kind != SyntaxKind.EndOfFileToken) {
+                && token.kind != SyntaxKind.BadToken) {
                 tokens.add(token);
 
             }
@@ -27,15 +26,18 @@ class Parser {
         } while (token.kind != SyntaxKind.EndOfFileToken);
 
 
-        _tokens = tokens.toArray(new SyntaxToken[0]);
+        _tokens = (SyntaxToken[]) tokens.toArray();
 
         _diagnostics.addRange(lexer.get_diagnostics());
     }
 
+   public  DiagnosticBag diagnosticBag() {
+        return _diagnostics;
+   }
 
     private SyntaxToken peek(int offset) {
         var index = _position + offset;
-        if (index >= _tokens.length - 1) //If the index is out of bounds,
+        if (index >= _tokens.length) //If the index is out of bounds,
                                          // the method returns the last token in the array
             return _tokens[_tokens.length - 1];
         return _tokens[index];
@@ -83,7 +85,7 @@ class Parser {
     private ExpressionSyntax parseBinaryExpression(int parentPrecedence) {
 
         ExpressionSyntax left;
-        var unaryOperatorPrecedence = SyntaxFact.getUnaryOperatorPrecedence(current().kind);
+        var unaryOperatorPrecedence =  SyntaxFact.getUnaryOperatorPrecedence(current().kind);
         if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence) {
             var operatorToken = nextToken();
             var operand = parseBinaryExpression(unaryOperatorPrecedence);
@@ -108,31 +110,48 @@ class Parser {
     private ExpressionSyntax ParsePrimaryExpression() {
         switch (current().kind) {
             case OpenParanthesisToken -> {
-                var left = nextToken();
-                var expression = parseExpression();
-                var right = matchToken(SyntaxKind.ClosedParanthesisToken);
-                return new ParanthrsizedExpressionSyntax(left, expression, right);
+                return parseParenthesizedExpression();
             }
             case FalseKeyword, TrueKeyword -> {
-                var keywordToken = nextToken();
-                var value = keywordToken.kind == SyntaxKind.TrueKeyword;
-                return new LiteralExpressionSyntax(keywordToken, value);
+                return parseBooleanLiteral();
+            }
+            case NumberToken -> {
+                return parseNumberLiteral();
             }
             case IdentifierToken -> {
-                var identifierToken = nextToken();
-                return new NameExpressionSyntax(identifierToken);
+              return parseNamExpression();
             }
             default -> {
-                var numberToken = matchToken(SyntaxKind.NumberToken);
-                return  new LiteralExpressionSyntax(numberToken);
+                return parseNamExpression();
             }
         }
 
     }
 
-    public SyntaxToken[] getTokens() {
-        return _tokens;
+    private ExpressionSyntax parseNamExpression() {
+        var identifierToken = matchToken(SyntaxKind.IdentifierToken);
+        return new NameExpressionSyntax(identifierToken);
     }
+
+    private ExpressionSyntax parseNumberLiteral() {
+        var numberToken = matchToken(SyntaxKind.NumberToken);
+        return  new LiteralExpressionSyntax(numberToken);
+    }
+
+    private ExpressionSyntax parseBooleanLiteral() {
+        var isTrue = current().kind == SyntaxKind.TrueKeyword;
+        var keyword = isTrue? matchToken(SyntaxKind.TrueKeyword): matchToken(SyntaxKind.FalseKeyword);
+        return new LiteralExpressionSyntax(keyword, isTrue);
+    }
+
+    private ExpressionSyntax parseParenthesizedExpression() {
+        var left = matchToken(SyntaxKind.OpenParanthesisToken);
+        var expression = parseExpression();
+        var right = matchToken(SyntaxKind.ClosedParanthesisToken);
+        return new ParanthrsizedExpressionSyntax(left, expression, right);
+    }
+
+
 }
 
 
