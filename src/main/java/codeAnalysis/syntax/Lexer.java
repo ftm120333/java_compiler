@@ -6,6 +6,10 @@ import codeAnalysis.compiling.TextSpan;
 public class Lexer {
     private final String _text;
     private int _position;
+    private int _start;
+    private SyntaxKind _kind;
+    private Object _value;
+
     private final DiagnosticBag _diagnostics = new DiagnosticBag();
 
 
@@ -29,123 +33,140 @@ public class Lexer {
     private char peek(int offset){
         var index = _position + offset;
         if (index >= _text.length())
-            return '\n';
+            return '\0';
         return _text.charAt(index);
     }
 
     private void next(){
         _position++;
     }
-    public SyntaxToken lex(){
-        if (_position >= _text.length())
-            return new SyntaxToken(SyntaxKind.EndOfFileToken, _position,"\n", null);
-        var start = _position;
-        if (Character.isDigit(getCurrent())){
+    public SyntaxToken lex() {
 
-            while (Character.isDigit(getCurrent())) {
-                next();
-            }
-            int length = _position - start;
-            String text = this._text.substring(start , start + length);
+
+        _start = _position;
+
+            switch (getCurrent()) {
+
+                case '\0' ->
+                    _kind = SyntaxKind.EndOfFileToken;
+                case '+' -> {
+                    _kind = SyntaxKind.PlusToken;
+                    _position++;
+                }
+                case '-' -> {
+                    _kind = SyntaxKind.MinusToken;
+                    _position++;
+                }
+                case '*' -> {
+                    _kind = SyntaxKind.StarToken;
+                    _position++;
+                }
+                case '/' -> {
+                    _kind = SyntaxKind.SlashToken;
+                    _position++;
+                }
+                case '(' -> {
+                    _kind = SyntaxKind.OpenParanthesisToken;
+                    _position++;
+                }
+
+                case ')' -> {
+                    _kind = SyntaxKind.ClosedParanthesisToken;
+                    _position++;
+                }
+
+                case '&' -> {
+                    if (lookAhead() == '&') {
+                        _position += 2;
+                        _kind = SyntaxKind.AmpersandAmpersandToken;
+                    }
+
+                }
+                case '|' -> {
+                    if (lookAhead() == '|') {
+                        _position += 2;
+                        _kind = SyntaxKind.PipePipeToken;
+                    }
+
+                }
+                case '=' -> {
+                    if (lookAhead() != '=') {
+                        _kind = SyntaxKind.EqualsToken;
+                        _position++;
+                    } else {
+                        _position += 2;
+                        _kind = SyntaxKind.EqualsEqualsToken;
+                    }
+                }
+                case '!' -> {
+                    if (lookAhead() != '=') {
+                        _kind = SyntaxKind.BangToken;
+                        _position++;
+                    } else {
+                        _kind = SyntaxKind.BangEqualsToken;
+                        _position += 2;
+                    }
+                }
+                case '0', '1', '2', '3', '4', '5' , '6', '7','8','9'-> readNumberToken();
+                case ' ', '\r', '\t' ->  readWhiteSpace();
+                default -> {
+                if (Character.isLetter(getCurrent())) {
+                        readIdentifierOrKeyword();
+                }else if(Character.isWhitespace(getCurrent())){
+                    readWhiteSpace();
+                }else{
+                        _diagnostics.reportBadCharacter(_position, getCurrent());
+                        _position++;
+                    }
+
+                }}
+
+    var length = _position - _start;
+    var text = SyntaxFact.getText(_kind);
+    if(text == null)
+        text = _text.substring(_start,_position);
+
+    return new SyntaxToken(_kind, _start, (String) text, _value);
+
+
+    }
+
+
+    private void readWhiteSpace() {
+        while (Character.isWhitespace(getCurrent()))
+            next();
+
+      _kind = SyntaxKind.WhitespaceToken;
+    }
+
+    public void readNumberToken() {
+        while (Character.isDigit(getCurrent()))
+            next();
+
+        String text = this._text.substring(_start, _position);
+        try {
             int value = Integer.parseInt(text);
-            if(!Integer.valueOf(text).equals(value))
-                _diagnostics.reportInvalidNumber(new TextSpan(start, length), text, Integer.class);
-            return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
+            _value = value;
+        } catch (NumberFormatException e) {
+            _diagnostics.reportInvalidNumber(new TextSpan(_start, text.length()), text, Integer.class);
         }
+        _kind = SyntaxKind.NumberToken;
+    }
 
-        if (Character.isWhitespace(getCurrent())){
+    private void readIdentifierOrKeyword() {
+        while (Character.isLetter(getCurrent()))
+            next();
 
-            while (Character.isWhitespace(getCurrent())) {
-                next();
-            }
-            int length = _position - start;
-            String text = this._text.substring(start,start + length);
-            return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
-        }
 
-        if (Character.isLetter(getCurrent())) {
+        String text = this._text.substring(_start, _position);
+        _kind = SyntaxFact.getKeywordKind(text);
 
-            while (Character.isLetter(getCurrent())) {
-                next();
-            }
-            int length = _position - start;
-            String text = this._text.substring(start,start +  length);
-            var kind = SyntaxFact.getKeywordKind(text);
-            return new SyntaxToken(kind, start, text, null);
-        }
-        switch (getCurrent()) {
-            case '+' -> {
-                return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);
-            }
-            case '-' -> {
-                return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-", null);
-            }
-            case '*' -> {
-                return new SyntaxToken(SyntaxKind.StarToken, _position++, "*", null);
-            }
-            case '/' -> {
-                return new SyntaxToken(SyntaxKind.SlashToken, _position++, "/", null);
-            }
-            case '(' -> {
-                return new SyntaxToken(SyntaxKind.OpenParanthesisToken, _position++, "(", null);
-            }
-            case ')' -> {
-                return new SyntaxToken(SyntaxKind.ClosedParanthesisToken, _position++, ")", null);
-            }
-
-            case '&' -> {
-                if (lookAhead() == '&') {
-                    _position += 2;
-                    return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, start, "&&", null);
-                }
-
-            }
-            case '|' -> {
-                if (lookAhead() == '|') {
-                    _position += 2;
-                    return new SyntaxToken(SyntaxKind.PipePipeToken,start, "||", null);
-                }
-
-            }
-            case '=' -> {
-                if (lookAhead() == '=') {
-                    _position += 2;
-                    return new SyntaxToken(SyntaxKind.EqualsEqualsToken, start, "==", null);
-                }
-                else{
-                    _position += 1;
-                    return new SyntaxToken(SyntaxKind.EqualsToken, start, "=", null);
-                }
-            }
-            case '!' -> {
-                if (lookAhead() == '=') {
-                    _position += 2;
-                    return new SyntaxToken(SyntaxKind.BangEqualsToken, start, "!=", null);
-                }
-                else
-                {
-                    _position +=1;
-                    return new SyntaxToken(SyntaxKind.BangToken, start, "!", null);
-                }
-            }
-
-            default -> {
-
-                _diagnostics.reportBadCharacter(_position, getCurrent());
-                return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
-            }
-
-        }
-        return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.substring(_position - 1, _position), null);
     }
 
     public String get_text() {
         return _text;
     }
 
-    public int get_position() {
-        return _position;
-    }
 
     public DiagnosticBag get_diagnostics() {
         return _diagnostics;

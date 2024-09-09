@@ -1,14 +1,13 @@
 package codeAnalysis.syntax;
 
-import codeAnalysis.syntax.Lexer;
-import codeAnalysis.syntax.SyntaxKind;
-import codeAnalysis.syntax.SyntaxToken;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 //src/test/java/codeAnalysis/syntax/codeAnalysis.syntax.LexerTest.java
+
+/*The Lexer class is designed to break down an input string into tokens,
+ which represent meaningful elements like operators, numbers, keywords, and identifiers.*/
 class LexerTest {
 
     @Test
