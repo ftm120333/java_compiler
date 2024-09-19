@@ -43,6 +43,4 @@ public final class AssignmentExpressionSyntax extends ExpressionSyntax {
         return Arrays.asList(identifierToken, equalsToken, expression);
 
     }
-
-
 }

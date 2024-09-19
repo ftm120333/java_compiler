@@ -1,4 +1,4 @@
-package codeAnalysis;
+package codeAnalysis.text;
 
 
 public class TextSpan {

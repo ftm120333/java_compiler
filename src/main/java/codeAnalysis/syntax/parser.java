@@ -1,6 +1,7 @@
 package codeAnalysis.syntax;
 
 import codeAnalysis.compiling.DiagnosticBag;
+import codeAnalysis.text.SourceText;
 
 import java.util.ArrayList;
 
@@ -8,8 +9,9 @@ class Parser {
     private final SyntaxToken[] _tokens;
     private int _position;
     private final DiagnosticBag _diagnostics = new  DiagnosticBag();
+    private final  SourceText _text;
 
-    public Parser(String text) {
+    public Parser(SourceText text) {
         var tokens = new ArrayList<SyntaxToken>();
         var lexer = new Lexer(text);
         SyntaxToken token;
@@ -25,10 +27,11 @@ class Parser {
 
         } while (token.kind != SyntaxKind.EndOfFileToken);
 
-
+        _text = text;
         _tokens = (SyntaxToken[]) tokens.toArray();
-
         _diagnostics.addRange(lexer.get_diagnostics());
+
+
     }
 
    public  DiagnosticBag diagnosticBag() {
@@ -64,7 +67,7 @@ class Parser {
     public SyntaxTree parse() {
         var expression = parseExpression();
         var endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
-        return new SyntaxTree(_diagnostics.get_diagnostics(), expression, endOfFileToken);
+        return new SyntaxTree(_text, _diagnostics.get_diagnostics(), expression, endOfFileToken);
     }
 
     private ExpressionSyntax parseExpression(){
