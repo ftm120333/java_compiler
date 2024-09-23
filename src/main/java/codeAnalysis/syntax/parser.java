@@ -6,7 +6,7 @@ import codeAnalysis.text.SourceText;
 import java.util.ArrayList;
 
 class Parser {
-    private final SyntaxToken[] _tokens;
+    private final ArrayList<SyntaxToken> _tokens;
     private int _position;
     private final DiagnosticBag _diagnostics = new  DiagnosticBag();
     private final  SourceText _text;
@@ -28,7 +28,7 @@ class Parser {
         } while (token.kind != SyntaxKind.EndOfFileToken);
 
         _text = text;
-        _tokens = (SyntaxToken[]) tokens.toArray();
+        _tokens =  tokens;
         _diagnostics.addRange(lexer.get_diagnostics());
 
 
@@ -40,10 +40,10 @@ class Parser {
 
     private SyntaxToken peek(int offset) {
         var index = _position + offset;
-        if (index >= _tokens.length) //If the index is out of bounds,
+        if (index >= _tokens.size()) //If the index is out of bounds,
                                          // the method returns the last token in the array
-            return _tokens[_tokens.length - 1];
-        return _tokens[index];
+            return _tokens.get(_tokens.size() - 1);
+        return _tokens.get(index);
     }
 
     private SyntaxToken current() {

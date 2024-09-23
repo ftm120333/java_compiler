@@ -5,56 +5,82 @@ import codeAnalysis.syntax.SyntaxToken;
 import codeAnalysis.syntax.SyntaxTree;
 import codeAnalysis.compiling.Compilation;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
+import codeAnalysis.text.TextSpan;
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean showTree = false;
         Map<VariableSymbol, Object> variable = new HashMap<>();
+        var textBuilder = new StringBuilder();
         while (true){
-            System.out.printf(">> ");
+            if(textBuilder.isEmpty())
+                System.out.print("> ");
+            else
+                System.out.print("| ");
 
-            var line = scanner.nextLine();
-            if(line.isEmpty())
-                return;
+            var input = scanner.nextLine();
+            boolean isBlank = input == null || input.isBlank();
+            if(textBuilder.isEmpty()){
+                if(isBlank)
+                {
+                    break;
+                }
+                else if (input.equals("#showTree"))
+                {
+                    showTree = !showTree;
+                    System.out.println(showTree? "showing parse tree.": "Do not show parse tree.");
+                    continue;
+                }
+                else if(input.equals("#cls"))
+                {  ///TODO:CHECK THIS
+                    /*This method clears the terminal screen and moves the cursor to the top.
+                     It works on most Unix-based terminals (Linux, macOS),
+                     and some Windows terminals that support ANSI codes.
+                    */
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                    continue;
+                }
+        }
+        textBuilder.append(input);  //appendLine in C#
+        var text = textBuilder.toString();
+        var syntaxTree = SyntaxTree.parse(text);
+        if(!isBlank && syntaxTree.getDiagnostics() != null)
+            continue;
 
-            if (line.equals("#showTree"))
-            {
-                showTree = !showTree;
-                System.out.println(showTree? "showing parse tree.": "Do not show parse tree.");
-                continue;
-            }
-
-            var syntaxTree = SyntaxTree.parse(line);
-            var compilation = new Compilation(syntaxTree);
-            var result = compilation.Evaluate(variable);
-            var diagnostics = result.getDiagnostics();
-
-
-            /* var binder = new Binder();
-            var boundExpression = binder.bindExpression(syntaxTree.getRoot());
-            final Iterable<String> diagnostics= (Iterable<String>) syntaxTree.getDiagnostics();*/
-
+        var compilation = new Compilation(syntaxTree);
+        var result = compilation.Evaluate(variable);
 
             if(showTree){
-                PrettyPrint(syntaxTree.getRoot(),"", false);
+                //PrettyPrint(syntaxTree.getRoot(),"", false);
+                System.out.println(syntaxTree.getRoot());
             }
 
             if (syntaxTree.getDiagnostics() != null) {
                 System.out.println(result.getValue());
             }
             else {
-                var text = syntaxTree.getText();
-                for (var diagnostic: syntaxTree.getDiagnostics()) {
-                    System.out.println(diagnostic);
+                for (var diagnostic: result.getDiagnostics()) {
+                    var lineIndex = syntaxTree.getText().getLineIndex(diagnostic.getSpan().getStart());
+                    var line = syntaxTree.getText().getLines().get(lineIndex);
+                    var lineNumber = lineIndex + 1;
+                    var character = diagnostic.getSpan().getStart() - syntaxTree.getText().getLines().get(lineIndex).getStart() + 1;
 
-                    var prefix = line.substring(0, diagnostic.getSpan().getStart());
-                    var error = line.substring(diagnostic.getSpan().getLength());
-                    var suffix = line.substring(diagnostic.getSpan().end());
+                    System.out.println();
+                    System.out.println("(" +lineNumber + ", " + character + "): ");
+                    System.out.println(diagnostic);
+                    System.out.println();
+
+                    var prefixSpan = TextSpan.fromBounds(line.getStart(), diagnostic.getSpan().getStart());
+                    var suffixSpan = TextSpan.fromBounds(diagnostic.getSpan().end(), line.end());
+
+                    var prefix = input.substring(0, diagnostic.getSpan().getStart());
+                    var error = input.substring(diagnostic.getSpan().getLength());
+                    var suffix = input.substring(diagnostic.getSpan().end());
+
                     System.out.println();
                     System.out.print("  ");
                     System.out.print(prefix);
@@ -65,6 +91,7 @@ public class Main {
                 System.out.println();
             }
         }
+        //textBuilder.delete();
     }
     static void PrettyPrint(SyntaxNode node, String indent, boolean isLast){
         var marker = isLast ? "|__": "|--";

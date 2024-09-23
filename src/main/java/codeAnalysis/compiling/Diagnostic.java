@@ -1,5 +1,7 @@
 package codeAnalysis.compiling;
 
+import codeAnalysis.text.TextSpan;
+
 public class Diagnostic {
 
     TextSpan span;

@@ -1,8 +1,8 @@
 package codeAnalysis.syntax;
 
 import codeAnalysis.compiling.DiagnosticBag;
-import codeAnalysis.compiling.TextSpan;
 import codeAnalysis.text.SourceText;
+import codeAnalysis.text.TextSpan;
 
 public class Lexer {
     private final SourceText _text;
