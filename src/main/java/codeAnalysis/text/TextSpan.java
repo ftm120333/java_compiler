@@ -20,5 +20,14 @@ public class TextSpan {
     public int end() {
         return start + length;
     }
+
+
+    public static TextSpan fromBounds(int start, int end)
+    {
+        var length = end - start;
+        return new TextSpan(start, length);
+    }
+
+
 }
 

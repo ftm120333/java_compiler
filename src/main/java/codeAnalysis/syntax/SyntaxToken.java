@@ -1,6 +1,6 @@
 package codeAnalysis.syntax;
 
-import codeAnalysis.compiling.TextSpan;
+import codeAnalysis.text.TextSpan;
 
 import java.util.ArrayList;
 import java.util.List;
