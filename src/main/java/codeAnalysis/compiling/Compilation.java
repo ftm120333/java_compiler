@@ -20,7 +20,7 @@ public class Compilation {
 
     public EvaluationResult Evaluate(Map<VariableSymbol, Object> variables) throws Exception {
        var binder = new Binder(variables);
-       var boundExpression = binder.bindExpression(syntax.getRoot());
+       var boundExpression = binder.bindExpression(syntax.getRoot().getExpression());
         List<Diagnostic> diagnostics = new ArrayList<>();
         diagnostics.addAll(syntax.getDiagnostics());
         diagnostics.addAll(binder.diagnostics().get_diagnostics());

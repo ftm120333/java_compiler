@@ -17,9 +17,9 @@ public class Main {
         var textBuilder = new StringBuilder();
         while (true){
             if(textBuilder.isEmpty())
-                System.out.print("> ");
+                System.out.print("» ");
             else
-                System.out.print("| ");
+                System.out.print("· ");
 
             var input = scanner.nextLine();
             boolean isBlank = input == null || input.isBlank();
@@ -77,9 +77,9 @@ public class Main {
                     var prefixSpan = TextSpan.fromBounds(line.getStart(), diagnostic.getSpan().getStart());
                     var suffixSpan = TextSpan.fromBounds(diagnostic.getSpan().end(), line.end());
 
-                    var prefix = input.substring(0, diagnostic.getSpan().getStart());
+                    var prefix = syntaxTree.getText().toString(prefixSpan);
                     var error = input.substring(diagnostic.getSpan().getLength());
-                    var suffix = input.substring(diagnostic.getSpan().end());
+                    var suffix = syntaxTree.getText().toString(suffixSpan);
 
                     System.out.println();
                     System.out.print("  ");
