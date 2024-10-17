@@ -27,6 +27,9 @@ public enum SyntaxKind{
     FalseKeyword,
 
 
+    //Nodes
+    CompilationUnit,
+
     //Expressions
     LiteralExpression,
     UnaryExpression,

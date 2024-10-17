@@ -3,37 +3,58 @@ package codeAnalysis.compiling;
 import codeAnalysis.Evaluator;
 import codeAnalysis.VariableSymbol;
 import codeAnalysis.binding.Binder;
+import codeAnalysis.binding.BoundGlobalScope;
 import codeAnalysis.syntax.SyntaxTree;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class Compilation {
-    SyntaxTree syntax;
+    @Nullable  Compilation previous;
+    SyntaxTree syntaxTree;
 
-    public Compilation(SyntaxTree syntax) {
-        this.syntax = syntax;
+    private BoundGlobalScope _globalScope;
+    public Compilation(SyntaxTree syntaxTree) {
+        this.syntaxTree = syntaxTree;
+        this.previous = null;
     }
 
-    public SyntaxTree getSyntax() {
-        return syntax;
+    private Compilation(Compilation previous, SyntaxTree syntaxTree ){
+        this.previous = previous;
+        this.syntaxTree = syntaxTree;
+
     }
+
+    public SyntaxTree getSyntaxTree() {
+        return syntaxTree;
+    }
+
+    ///minute 50 - 53 of episode 6 check for threading safety
+    private BoundGlobalScope getGlobalScope() {
+        if(_globalScope == null) {
+            _globalScope = Binder.bindGlobalScope(previous != null ? previous._globalScope : null , syntaxTree.getRoot());
+        }
+        return _globalScope;
+
+    }
+
+ public Compilation continueWith(SyntaxTree syntaxTree) {
+     return new Compilation(this, syntaxTree);
+ }
+
 
     public EvaluationResult Evaluate(Map<VariableSymbol, Object> variables) throws Exception {
-       var binder = new Binder(variables);
-       var boundExpression = binder.bindExpression(syntax.getRoot());
-        List<Diagnostic> diagnostics = new ArrayList<>();
-        diagnostics.addAll(syntax.getDiagnostics());
-        diagnostics.addAll(binder.diagnostics().get_diagnostics());
 
+        var diagnostics = syntaxTree.getDiagnostics();
+        diagnostics.addAll(getGlobalScope().getDiagnostics());
         if (!diagnostics.isEmpty()) {
-           return new EvaluationResult(diagnostics, null);
+           return new EvaluationResult((ArrayList) diagnostics, null);
        }
-       var evaluator = new Evaluator(boundExpression, variables);
+       var evaluator = new Evaluator(getGlobalScope().getExpression(), variables);
        var value = evaluator.Evaluate();
-       return new EvaluationResult(Collections.emptyList(), value);
+        ArrayList ArrayList = new ArrayList();
+        return new EvaluationResult(ArrayList, value);
     }
-
-
 
 }
 

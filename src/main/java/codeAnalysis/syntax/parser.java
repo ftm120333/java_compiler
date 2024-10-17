@@ -64,10 +64,10 @@ class Parser {
 
     }
 
-    public SyntaxTree parse() {
+    public CompilationUnitSyntax parseCompilationUnit() {
         var expression = parseExpression();
         var endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
-        return new SyntaxTree(_text, _diagnostics.get_diagnostics(), expression, endOfFileToken);
+        return new CompilationUnitSyntax( expression, endOfFileToken);
     }
 
     private ExpressionSyntax parseExpression(){
@@ -108,7 +108,6 @@ class Parser {
         }
         return left;
     }
-
 
     private ExpressionSyntax ParsePrimaryExpression() {
         switch (current().kind) {

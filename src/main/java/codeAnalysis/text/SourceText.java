@@ -1,7 +1,5 @@
 package codeAnalysis.text;
 
-import codeAnalysis.text.TextLine;
-import codeAnalysis.text.TextSpan;
 
 import java.util.ArrayList;
 import java.util.Collections;

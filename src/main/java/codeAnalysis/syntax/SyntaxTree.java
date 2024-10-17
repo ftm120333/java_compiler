@@ -6,17 +6,18 @@ import codeAnalysis.text.SourceText;
 import java.util.Collection;
 import java.util.List;
 
+
 public class SyntaxTree {
     private final List<Diagnostic> diagnostics;
-    private final ExpressionSyntax Root;
-    private final SyntaxToken EndOfFileToken;
+    private final CompilationUnitSyntax Root;
+
     private final SourceText text;
 
-    public SyntaxTree(SourceText text, List<Diagnostic> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
+    private SyntaxTree(SourceText text)
     {
-        this.diagnostics = diagnostics;
-        this.Root = root;
-        this.EndOfFileToken = endOfFileToken;
+        var parser = new Parser(text);
+        this.Root = parser.parseCompilationUnit();
+        this.diagnostics = parser.diagnosticBag().get_diagnostics();
         this.text = text;
     }
 
@@ -24,7 +25,7 @@ public class SyntaxTree {
         return diagnostics;
     }
 
-    public ExpressionSyntax getRoot() {
+    public CompilationUnitSyntax getRoot() {
         return Root;
     }
 
@@ -32,9 +33,6 @@ public class SyntaxTree {
         return text;
     }
 
-    public SyntaxToken getEndOfFileToken() {
-        return EndOfFileToken;
-    }
 
     public static SyntaxTree parse(String text) {
         var sourceText = SourceText.from(text);
@@ -42,8 +40,7 @@ public class SyntaxTree {
     }
 
     public static SyntaxTree parse(SourceText text) {
-        var parser = new Parser(text);
-        return parser.parse();
+        return new SyntaxTree(text);
     }
 
     public static Iterable<SyntaxToken> parseTokens(String text){
