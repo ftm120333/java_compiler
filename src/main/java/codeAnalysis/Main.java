@@ -4,7 +4,6 @@ import codeAnalysis.syntax.SyntaxNode;
 import codeAnalysis.syntax.SyntaxToken;
 import codeAnalysis.syntax.SyntaxTree;
 import codeAnalysis.compiling.Compilation;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;

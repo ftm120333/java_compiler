@@ -19,21 +19,16 @@ public class Compilation {
     }
 
     public EvaluationResult Evaluate(Map<VariableSymbol, Object> variables) throws Exception {
-       var binder = new Binder(variables);
-       var boundExpression = binder.bindExpression(syntax.getRoot().getExpression());
-        List<Diagnostic> diagnostics = new ArrayList<>();
+       var globalScope = Binder.bindGlobalScope(syntax.getRoot());
+        var diagnostics = new ArrayList<>();
         diagnostics.addAll(syntax.getDiagnostics());
-        diagnostics.addAll(binder.diagnostics().get_diagnostics());
-
         if (!diagnostics.isEmpty()) {
            return new EvaluationResult(diagnostics, null);
        }
-       var evaluator = new Evaluator(boundExpression, variables);
+       var evaluator = new Evaluator(globalScope.getExpression(), variables);
        var value = evaluator.Evaluate();
-       return new EvaluationResult(Collections.emptyList(), value);
+       return new EvaluationResult((ArrayList<Object>) Collections.emptyList(), value);
     }
-
-
 
 }
 

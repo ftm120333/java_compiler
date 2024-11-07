@@ -58,4 +58,10 @@ public final class DiagnosticBag implements Iterable<Diagnostic> {
         var message = "Variable  " + name + " does not exist "+ ".";
         report(span, message);
     }
+
+    public void ReportVariableAlreadyDeclared(TextSpan span, String name) {
+        var message = "Variable  " + name + " already declared "+ ".";
+        report(span, message);
+
+    }
 }

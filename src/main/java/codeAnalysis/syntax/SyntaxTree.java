@@ -6,13 +6,14 @@ import codeAnalysis.text.SourceText;
 import java.util.Collection;
 import java.util.List;
 
+
 public class SyntaxTree {
     private final List<Diagnostic> diagnostics;
     private final CompilationUnitSyntax Root;
 
     private final SourceText text;
 
-    private SyntaxTree(SourceText text )
+    private SyntaxTree(SourceText text)
     {
         var parser = new Parser(text);
         this.Root = parser.parseCompilationUnit();

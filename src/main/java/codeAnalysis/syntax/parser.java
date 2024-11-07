@@ -109,7 +109,6 @@ class Parser {
         return left;
     }
 
-
     private ExpressionSyntax ParsePrimaryExpression() {
         switch (current().kind) {
             case OpenParanthesisToken -> {

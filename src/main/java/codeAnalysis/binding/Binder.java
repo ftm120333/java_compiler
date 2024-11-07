@@ -6,22 +6,42 @@ import codeAnalysis.compiling.DiagnosticBag;
 import codeAnalysis.syntax.*;
 
 
-
-import java.util.Map;
+import java.util.*;
 
 abstract class BoundNode {
     public abstract BoundNodeKind getKind();
 }
 
-
 public class Binder {
-   private final Map<VariableSymbol, Object> _variables;
    private final DiagnosticBag _diagnostics = new DiagnosticBag();
-
-    public Binder(Map<VariableSymbol, Object> variables) {
-        _variables = variables;
+   private BoundScope _scope;
+    public Binder(BoundScope parent) {
+        _scope = new BoundScope(parent);
     }
-
+    public static BoundGlobalScope bindGlobalScope(BoundGlobalScope previous, CompilationUnitSyntax syntax) {
+        var binder = new Binder(null);
+        var expression = binder.bindExpression(syntax.getExpression());
+        var variables = binder._scope;
+        var dagnostics = binder._diagnostics;
+        return new BoundGlobalScope(null,dagnostics, variables, expression);
+    }
+    private static BoundScope createParentScope(BoundGlobalScope previous) {
+        var stack = new Stack<BoundGlobalScope>();
+        while (previous != null) {
+            stack.push(previous);
+            previous = previous.previous;
+        }
+        BoundScope parent = null;
+        while (!stack.isEmpty()) {
+            previous = stack.pop();
+            var scope = new BoundScope(parent);
+            for (var variable : previous.variables) {
+                parent.tryDeclare(variable);
+            }
+            parent = scope;
+        }
+        return parent;
+    }
     public DiagnosticBag diagnostics() {
        return _diagnostics;
    }
@@ -49,25 +69,21 @@ public class Binder {
 
     private BoundExpression BindNameExpression(NameExpressionSyntax syntax) {
        var name = syntax.getIdentifierToken().text;
-        var variable = _variables.keySet().stream()
-                .filter(v -> v.getName().equals(name))
-                .findFirst();
-       if(variable != null){
+        var variable =_scope.tryLookup(name, new VariableSymbol(name, null));
+       if(!variable){
            _diagnostics.ReportUndefinedName(syntax.getIdentifierToken().span(), name);
            return new BoundLiteralExpression(0);
        }
-       return new BoundVariableExpression(variable.get());
+       return new BoundVariableExpression( variable);
     }
 
     private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax) {
         var name = syntax.getIdentifierToken().text;
         var boundExpression = bindExpression(syntax.getExpression());
-        var existingVariable = _variables.keySet().stream()
-                .filter(v -> v.getName().equals(name))
-                .findFirst();
-        if(existingVariable != null)
-            _variables.remove(existingVariable);
         var variable = new VariableSymbol(name, boundExpression.getClass());
+        if(!_scope.tryLookup(name, variable)){
+            _diagnostics.ReportVariableAlreadyDeclared(syntax.getIdentifierToken().span(), name);
+        }
         return new BoundAssignmentExpression(variable, boundExpression);
     }
 
@@ -115,3 +131,5 @@ public class Binder {
 
 
 }
+
+
