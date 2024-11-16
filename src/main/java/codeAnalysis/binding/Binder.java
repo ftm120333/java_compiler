@@ -19,6 +19,7 @@ public class Binder {
     public Binder(BoundScope parent) {
         _scope = new BoundScope(parent);
     }
+
     public static BoundGlobalScope bindGlobalScope(BoundGlobalScope previous,CompilationUnitSyntax syntax) {
         var parentScope = createParentScope(previous);
         var binder = new Binder(parentScope);
@@ -27,13 +28,14 @@ public class Binder {
         var diagnostics = binder.diagnostics().get_diagnostics();
         return new BoundGlobalScope(previous,diagnostics, variables, expression);
     }
+
     private static BoundScope createParentScope(BoundGlobalScope previous) {
         var stack = new Stack<BoundGlobalScope>();
         while (previous != null) {
             stack.push(previous);
             previous = previous.previous;
         }
-        BoundScope parent = null;
+        BoundScope parent = new BoundScope(null);;
         while (!stack.isEmpty()) {
             previous = stack.pop();
             var scope = new BoundScope(parent);
@@ -82,10 +84,16 @@ public class Binder {
     private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax) {
         var name = syntax.getIdentifierToken().text;
         var boundExpression = bindExpression(syntax.getExpression());
-        var variable = new VariableSymbol(name, boundExpression.getClass());
-        if(!_scope.tryLookup(name, variable)){
-            _diagnostics.reportVariableAlreadyDeclared(syntax.getIdentifierToken().span(), name);
+        var variable = new VariableSymbol(name, null);
+        if(!_scope.tryLookup(name, new VariableSymbol(name, null))){
+            variable = new VariableSymbol(name, boundExpression.getClass());
+            _scope.tryDeclare(variable);
         }
+
+        if(boundExpression.getClass() != variable.getType()){
+            _diagnostics.reportCannotConvert(syntax.getIdentifierToken().span(), boundExpression.getClass(), variable.getType());
+        }
+
         return new BoundAssignmentExpression(variable, boundExpression);
     }
 

@@ -47,6 +47,11 @@ public class Main {
                     System.out.flush();
                     continue;
                 }
+                else if(input.equals("#reset")){
+                    //this is to delete the previous compilation
+                    previous = null;
+                    continue;
+                }
         }
         textBuilder.append(input);  //appendLine in C#
         var text = textBuilder.toString();

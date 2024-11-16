@@ -64,4 +64,9 @@ public final class DiagnosticBag implements Iterable<Diagnostic> {
         report(span, message);
 
     }
+    public void reportCannotConvert(TextSpan span, Class fromType , Class toType) {
+        var message = "Can not convert type " + fromType + " to "+ toType + ".";
+        report(span, message);
+
+    }
 }
