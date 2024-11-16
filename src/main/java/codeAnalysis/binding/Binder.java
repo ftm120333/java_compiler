@@ -15,15 +15,17 @@ abstract class BoundNode {
 public class Binder {
    private final DiagnosticBag _diagnostics = new DiagnosticBag();
    private BoundScope _scope;
+
     public Binder(BoundScope parent) {
         _scope = new BoundScope(parent);
     }
-    public static BoundGlobalScope bindGlobalScope(BoundGlobalScope previous, CompilationUnitSyntax syntax) {
-        var binder = new Binder(null);
+    public static BoundGlobalScope bindGlobalScope(BoundGlobalScope previous,CompilationUnitSyntax syntax) {
+        var parentScope = createParentScope(previous);
+        var binder = new Binder(parentScope);
         var expression = binder.bindExpression(syntax.getExpression());
-        var variables = binder._scope;
-        var dagnostics = binder._diagnostics;
-        return new BoundGlobalScope(null,dagnostics, variables, expression);
+        var variables = binder._scope.getDeclareVariables();
+        var diagnostics = binder.diagnostics().get_diagnostics();
+        return new BoundGlobalScope(previous,diagnostics, variables, expression);
     }
     private static BoundScope createParentScope(BoundGlobalScope previous) {
         var stack = new Stack<BoundGlobalScope>();
@@ -71,10 +73,10 @@ public class Binder {
        var name = syntax.getIdentifierToken().text;
         var variable =_scope.tryLookup(name, new VariableSymbol(name, null));
        if(!variable){
-           _diagnostics.ReportUndefinedName(syntax.getIdentifierToken().span(), name);
+           _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
            return new BoundLiteralExpression(0);
        }
-       return new BoundVariableExpression( variable);
+       return new BoundVariableExpression(new VariableSymbol(name, null));
     }
 
     private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax) {
@@ -82,7 +84,7 @@ public class Binder {
         var boundExpression = bindExpression(syntax.getExpression());
         var variable = new VariableSymbol(name, boundExpression.getClass());
         if(!_scope.tryLookup(name, variable)){
-            _diagnostics.ReportVariableAlreadyDeclared(syntax.getIdentifierToken().span(), name);
+            _diagnostics.reportVariableAlreadyDeclared(syntax.getIdentifierToken().span(), name);
         }
         return new BoundAssignmentExpression(variable, boundExpression);
     }

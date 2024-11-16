@@ -1,18 +1,19 @@
 package codeAnalysis.compiling;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class EvaluationResult {
 
-    final Iterable<Diagnostic> diagnostics;
+    final List diagnostics;
     Object value;
 
-    public EvaluationResult(ArrayList<Object> diagnostics, Object value) {
+    public EvaluationResult(ArrayList diagnostics, Object value) {
         this.diagnostics = diagnostics;
         this.value = value;
     }
 
-    public Iterable<Diagnostic> getDiagnostics() {
+    public Iterable<Object> getDiagnostics() {
         return diagnostics;
     }
 

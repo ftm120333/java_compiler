@@ -8,12 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import codeAnalysis.text.TextSpan;
+
 public class Main {
+
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean showTree = false;
         Map<VariableSymbol, Object> variable = new HashMap<>();
         var textBuilder = new StringBuilder();
+        Compilation previous = null;
+
         while (true){
             if(textBuilder.isEmpty())
                 System.out.print("» ");
@@ -21,7 +25,7 @@ public class Main {
                 System.out.print("· ");
 
             var input = scanner.nextLine();
-            boolean isBlank = input == null || input.isBlank();
+            boolean isBlank = input == null || input.isBlank(); //is null or white space
             if(textBuilder.isEmpty()){
                 if(isBlank)
                 {
@@ -50,34 +54,40 @@ public class Main {
         if(!isBlank && syntaxTree.getDiagnostics() != null)
             continue;
 
-        var compilation = new Compilation(syntaxTree);
+        var compilation = previous==null?
+                new Compilation(syntaxTree):
+                previous.continueWith(syntaxTree);
+        previous = compilation;
         var result = compilation.Evaluate(variable);
+          //  System.out.println("result: " + result.getValue());
+
 
             if(showTree){
-                //PrettyPrint(syntaxTree.getRoot(),"", false);
-                System.out.println(syntaxTree.getRoot());
+                PrettyPrint(syntaxTree.getRoot(),"", false);
+                //System.out.println(syntaxTree.getRoot());
             }
 
             if (syntaxTree.getDiagnostics() != null) {
                 System.out.println(result.getValue());
+                previous = compilation;
             }
             else {
                 for (var diagnostic: result.getDiagnostics()) {
-                    var lineIndex = syntaxTree.getText().getLineIndex(diagnostic.getSpan().getStart());
+                    var lineIndex = syntaxTree.getText().getLineIndex(diagnostic.getClass().getModifiers());
                     var line = syntaxTree.getText().getLines().get(lineIndex);
                     var lineNumber = lineIndex + 1;
-                    var character = diagnostic.getSpan().getStart() - syntaxTree.getText().getLines().get(lineIndex).getStart() + 1;
+                    var character = diagnostic.getClass().getModifiers() - syntaxTree.getText().getLines().get(lineIndex).getStart() + 1;
 
                     System.out.println();
                     System.out.println("(" +lineNumber + ", " + character + "): ");
                     System.out.println(diagnostic);
                     System.out.println();
 
-                    var prefixSpan = TextSpan.fromBounds(line.getStart(), diagnostic.getSpan().getStart());
-                    var suffixSpan = TextSpan.fromBounds(diagnostic.getSpan().end(), line.end());
+                    var prefixSpan = TextSpan.fromBounds(line.getStart(), diagnostic.getClass().getModifiers());
+                    var suffixSpan = TextSpan.fromBounds(diagnostic.getClass().getModifiers(), line.end());
 
                     var prefix = syntaxTree.getText().toString(prefixSpan);
-                    var error = input.substring(diagnostic.getSpan().getLength());
+                    var error = input.substring(diagnostic.getClass().getModifiers());
                     var suffix = syntaxTree.getText().toString(suffixSpan);
 
                     System.out.println();
@@ -92,6 +102,10 @@ public class Main {
         }
         //textBuilder.delete();
     }
+
+
+
+
     static void PrettyPrint(SyntaxNode node, String indent, boolean isLast){
         var marker = isLast ? "|__": "|--";
         System.out.print(indent);

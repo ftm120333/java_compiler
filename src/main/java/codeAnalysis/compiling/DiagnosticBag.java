@@ -54,12 +54,12 @@ public final class DiagnosticBag implements Iterable<Diagnostic> {
 
     }
 
-    public void ReportUndefinedName(TextSpan span, String name) {
+    public void reportUndefinedName(TextSpan span, String name) {
         var message = "Variable  " + name + " does not exist "+ ".";
         report(span, message);
     }
 
-    public void ReportVariableAlreadyDeclared(TextSpan span, String name) {
+    public void reportVariableAlreadyDeclared(TextSpan span, String name) {
         var message = "Variable  " + name + " already declared "+ ".";
         report(span, message);
 

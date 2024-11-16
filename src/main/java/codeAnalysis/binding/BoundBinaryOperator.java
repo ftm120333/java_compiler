@@ -70,16 +70,10 @@ public final class BoundBinaryOperator {
 
         for (BoundBinaryOperator op : operators) {
 
-            System.out.println(op.syntaxKind +" >:> " + syntaxKind);
-            System.out.println(op.leftType +" >:> " + leftType);
-            System.out.println(op.rightType +" >:> " + rightType);
             if (op.syntaxKind == syntaxKind && op.leftType == leftType && op.rightType == rightType) {
-
-                System.out.println("op is>>>" + op);
                 return op;
             }
         }
-        System.out.println("you are here!22");
         return null;
     }
 }

@@ -3,11 +3,12 @@ package codeAnalysis.binding;
 import codeAnalysis.VariableSymbol;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoundScope {
     private final BoundScope parent;
-    private Map<String, VariableSymbol> _variables = new HashMap<>();
+    private Map<String, VariableSymbol> _variables =  new HashMap<>();
 
     public BoundScope(BoundScope parent) {
         this.parent = parent;
@@ -17,7 +18,7 @@ public class BoundScope {
         return parent;
     }
 
-    public boolean getDeclare(VariableSymbol variable) {
+    public boolean tryDeclare(VariableSymbol variable) {
         if (_variables.containsKey(variable.getName()))
             return false;
         _variables.put(variable.getName(), variable);
@@ -34,6 +35,7 @@ public class BoundScope {
     }
 
 
-    public void tryDeclare(Object variable) {
-    }
+  public List getDeclareVariables() {
+    return List.of(_variables.values().toArray());
+  }
 }

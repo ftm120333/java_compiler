@@ -21,6 +21,7 @@ public class CompilationUnitSyntax extends SyntaxNode {
         return null;
     }
 
+
     public ExpressionSyntax getExpression() {
         return expression;
     }

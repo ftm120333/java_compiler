@@ -1,14 +1,18 @@
 package codeAnalysis.binding;
 
+import codeAnalysis.VariableSymbol;
+import codeAnalysis.compiling.Diagnostic;
 import codeAnalysis.compiling.DiagnosticBag;
+
+import java.util.List;
 
 public class BoundGlobalScope {
     BoundGlobalScope previous;
-    DiagnosticBag diagnostics;
-    BoundScope variables;
+    List<Diagnostic> diagnostics;
+    List<VariableSymbol> variables;
     BoundExpression expression;
 
-    public BoundGlobalScope(BoundGlobalScope previous, DiagnosticBag diagnostics, BoundScope variables, BoundExpression expression) {
+    public BoundGlobalScope(BoundGlobalScope previous, List<Diagnostic> diagnostics, List<VariableSymbol> variables, BoundExpression expression) {
         this.previous = previous;
         this.diagnostics = diagnostics;
         this.variables = variables;
@@ -20,11 +24,11 @@ public class BoundGlobalScope {
         return previous;
     }
 
-    public DiagnosticBag getDiagnostics() {
+    public List<Diagnostic> getDiagnostics() {
         return diagnostics;
     }
 
-    public BoundScope getVariables() {
+    public List<VariableSymbol> getVariables() {
         return variables;
     }
 
