@@ -23,7 +23,7 @@ public class Binder {
     public static BoundGlobalScope bindGlobalScope(BoundGlobalScope previous,CompilationUnitSyntax syntax) {
         var parentScope = createParentScope(previous);
         var binder = new Binder(parentScope);
-        var expression = binder.bindExpression(syntax.getExpression());
+        var expression = binder.bindStatement(syntax.getStatement());
         var variables = binder._scope.getDeclareVariables();
         var diagnostics = binder.diagnostics().get_diagnostics();
         return new BoundGlobalScope(previous,diagnostics, variables, expression);
@@ -40,7 +40,7 @@ public class Binder {
             previous = stack.pop();
             var scope = new BoundScope(parent);
             for (var variable : previous.variables) {
-                parent.tryDeclare(variable);
+                scope.tryDeclare(variable);
             }
             parent = scope;
         }
@@ -54,7 +54,6 @@ public class Binder {
         switch (syntax.getKind()){
             case SyntaxKind.LiteralExpression:
                 return  BindLiteralExpression(((LiteralExpressionSyntax) syntax));
-
             case SyntaxKind.UnaryExpression:
                 return  BindUnaryExpression((UnaryExpressionSyntax) syntax);
 
@@ -71,10 +70,43 @@ public class Binder {
         }
     }
 
+    private BoundStatement bindStatement(StatementSyntax syntax) {
+        switch (syntax.getKind()){
+            case SyntaxKind.BlockStatement:
+                return  BindBlockStatement((BlockStatementSyntax) syntax);
+
+            case SyntaxKind.ExpressionStatement:
+                return  BindExpressionStatement((ExpressionStatementSyntax) syntax);
+
+            default:
+                throw new IllegalStateException("Unexpected Syntax: " + syntax.getKind());
+        }
+    }
+
+    private BoundStatement BindBlockStatement(BlockStatementSyntax syntax) {
+
+        var statements = new ArrayList<BoundStatement>();
+        for (var statementSyntax : syntax.getStatements()) {
+            var statement = bindStatement((StatementSyntax) statementSyntax); // TODO: remove casting
+            statements.add(statement);
+        }
+        return new BoundBlockStatement(statements);
+    }
+
+    private BoundStatement BindExpressionStatement(ExpressionStatementSyntax syntax) {
+        var expression = bindExpression(syntax.getExpression());
+        return new BoundExpressionStatement( expression);
+
+    }
+
+
+
+
     private BoundExpression BindNameExpression(NameExpressionSyntax syntax) {
        var name = syntax.getIdentifierToken().text;
-        var variable =_scope.tryLookup(name, new VariableSymbol(name, null));
+        var variable =_scope.tryLookup(name);
        if(!variable){
+           System.out.println("Undefined variable name: " + name);
            _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
            return new BoundLiteralExpression(0);
        }
@@ -85,7 +117,7 @@ public class Binder {
         var name = syntax.getIdentifierToken().text;
         var boundExpression = bindExpression(syntax.getExpression());
         var variable = new VariableSymbol(name, null);
-        if(!_scope.tryLookup(name, new VariableSymbol(name, null))){
+        if(!_scope.tryLookup(name)){
             variable = new VariableSymbol(name, boundExpression.getClass());
             _scope.tryDeclare(variable);
         }
@@ -126,9 +158,11 @@ public class Binder {
     private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax){
 
         var boundLeft = bindExpression(syntax.getLeft());
+        System.out.println("left: " +  syntax.getLeft());
         var boundRight = bindExpression(syntax.getRight());
+        System.out.println("right: " +  syntax.getRight());
         var boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
-
+        System.out.println("operator: " +  syntax.getOperatorToken().kind);
         if (boundOperator == null) {
             _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, boundLeft.type(), boundRight.type() );
             return boundLeft;

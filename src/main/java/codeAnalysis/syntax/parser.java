@@ -4,6 +4,7 @@ import codeAnalysis.compiling.DiagnosticBag;
 import codeAnalysis.text.SourceText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class Parser {
     private final ArrayList<SyntaxToken> _tokens;
@@ -37,6 +38,8 @@ class Parser {
    public  DiagnosticBag diagnosticBag() {
         return _diagnostics;
    }
+ /* peek(int offset): Retrieves a token at  a specific offset from
+  the current position without advancing the position.*/
 
     private SyntaxToken peek(int offset) {
         var index = _position + offset;
@@ -65,14 +68,41 @@ class Parser {
     }
 
     public CompilationUnitSyntax parseCompilationUnit() {
-        var expression = parseExpression();
+        var statement = parseStatement();
         var endOfFileToken = matchToken(SyntaxKind.EndOfFileToken);
-        return new CompilationUnitSyntax( expression, endOfFileToken);
+        return new CompilationUnitSyntax( statement, endOfFileToken);
     }
 
     private ExpressionSyntax parseExpression(){
          return parseAssignmentExpression();
     }
+
+    private StatementSyntax parseStatement() {
+        if (current().kind == SyntaxKind.OpenBraceToken) {
+            return parseBlockStatement();
+        } else {
+            return parseExpressionStatement();
+        }
+    }
+
+    private ExpressionStatementSyntax parseExpressionStatement() {
+        var expression = parseExpression();
+        return new ExpressionStatementSyntax(expression);
+    }
+
+    private BlockStatementSyntax parseBlockStatement() {
+        var statements = new ArrayList<StatementSyntax>();
+        var openBraceToken = matchToken(SyntaxKind.OpenBraceToken);
+
+        while (current().kind != SyntaxKind.EndOfFileToken &&
+                current().kind != SyntaxKind.CloseBraceToken) {
+            statements.add(parseStatement());
+        }
+
+        var closeBraceToken = matchToken(SyntaxKind.CloseBraceToken);
+        return new BlockStatementSyntax(openBraceToken, List.copyOf(statements), closeBraceToken);
+    }
+
 
     private ExpressionSyntax parseAssignmentExpression(){
 
@@ -111,7 +141,7 @@ class Parser {
 
     private ExpressionSyntax ParsePrimaryExpression() {
         switch (current().kind) {
-            case OpenParanthesisToken -> {
+            case OpenParenthesisToken -> {
                 return parseParenthesizedExpression();
             }
             case FalseKeyword, TrueKeyword -> {
@@ -147,9 +177,9 @@ class Parser {
     }
 
     private ExpressionSyntax parseParenthesizedExpression() {
-        var left = matchToken(SyntaxKind.OpenParanthesisToken);
+        var left = matchToken(SyntaxKind.OpenParenthesisToken);
         var expression = parseExpression();
-        var right = matchToken(SyntaxKind.ClosedParanthesisToken);
+        var right = matchToken(SyntaxKind.ClosedParenthesisToken);
         return new ParanthrsizedExpressionSyntax(left, expression, right);
     }
 

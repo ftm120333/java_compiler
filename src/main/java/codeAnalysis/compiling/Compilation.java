@@ -50,7 +50,7 @@ public class Compilation {
         if (!diagnostics.isEmpty()) {
            return new EvaluationResult((ArrayList) diagnostics, null);
        }
-       var evaluator = new Evaluator(getGlobalScope().getExpression(), variables);
+       var evaluator = new Evaluator(getGlobalScope().getStatement(), variables);
        var value = evaluator.Evaluate();
         ArrayList ArrayList = new ArrayList();
         return new EvaluationResult(ArrayList, value);

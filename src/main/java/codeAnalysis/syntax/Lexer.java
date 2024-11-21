@@ -67,12 +67,22 @@ public class Lexer {
                     _position++;
                 }
                 case '(' -> {
-                    _kind = SyntaxKind.OpenParanthesisToken;
+                    _kind = SyntaxKind.OpenParenthesisToken;
                     _position++;
                 }
 
                 case ')' -> {
-                    _kind = SyntaxKind.ClosedParanthesisToken;
+                    _kind = SyntaxKind.ClosedParenthesisToken;
+                    _position++;
+                }
+
+                case '{' -> {
+                    _kind = SyntaxKind.OpenBraceToken;
+                    _position++;
+                }
+
+                case '}' -> {
+                    _kind = SyntaxKind.CloseBraceToken;
                     _position++;
                 }
 

@@ -1,13 +1,14 @@
 package codeAnalysis.syntax;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CompilationUnitSyntax extends SyntaxNode {
-    ExpressionSyntax expression;
+    StatementSyntax statement;
     SyntaxToken endOfFileToken;
 
-    public CompilationUnitSyntax(ExpressionSyntax expression, SyntaxToken endOfFileToken) {
-        this.expression = expression;
+    public CompilationUnitSyntax(StatementSyntax statement, SyntaxToken endOfFileToken) {
+        this.statement = statement;
         this.endOfFileToken = endOfFileToken;
     }
 
@@ -18,12 +19,11 @@ public class CompilationUnitSyntax extends SyntaxNode {
 
     @Override
     public List<SyntaxNode> GetChildren() {
-        return null;
+        return Collections.emptyList();
     }
 
-
-    public ExpressionSyntax getExpression() {
-        return expression;
+    public StatementSyntax getStatement() {
+        return statement;
     }
 
     public SyntaxToken getEndOfFileToken() {

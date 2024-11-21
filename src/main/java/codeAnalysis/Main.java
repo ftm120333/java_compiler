@@ -72,9 +72,11 @@ public class Main {
                 //System.out.println(syntaxTree.getRoot());
             }
 
-            if (syntaxTree.getDiagnostics() != null) {
-                System.out.println(result.getValue());
-                previous = compilation;
+            if (syntaxTree.getDiagnostics() != null && !syntaxTree.getDiagnostics().isEmpty()) {
+                for (var diagnostic : syntaxTree.getDiagnostics()) {
+                    System.out.println(diagnostic.getMessage());
+                }
+                continue;
             }
             else {
                 for (var diagnostic: result.getDiagnostics()) {
@@ -127,12 +129,14 @@ public class Main {
 
 
         var children = node.GetChildren();
-        if (!children.isEmpty()) {
-            SyntaxNode lastChild = children.get(children.size() - 1);
-
-            for (var child : children) {
-                PrettyPrint(child, indent, child == lastChild);
-            }
+        if (children == null || children.isEmpty()) {
+            return;
         }
+
+        SyntaxNode lastChild = children.get(children.size() - 1);
+        for (var child : children) {
+            PrettyPrint(child, indent, child == lastChild);
+        }
+
     }
 }
