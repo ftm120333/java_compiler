@@ -74,22 +74,27 @@ public class Binder {
         switch (syntax.getKind()){
             case SyntaxKind.BlockStatement:
                 return  BindBlockStatement((BlockStatementSyntax) syntax);
-
+            case SyntaxKind.VariableDeclaration:
+                return BindVariableDeclaration((VariableDeclarationSyntax) syntax);
             case SyntaxKind.ExpressionStatement:
                 return  BindExpressionStatement((ExpressionStatementSyntax) syntax);
-
+      
             default:
                 throw new IllegalStateException("Unexpected Syntax: " + syntax.getKind());
         }
     }
 
+
     private BoundStatement BindBlockStatement(BlockStatementSyntax syntax) {
 
         var statements = new ArrayList<BoundStatement>();
+        _scope = new BoundScope(_scope);
         for (var statementSyntax : syntax.getStatements()) {
             var statement = bindStatement((StatementSyntax) statementSyntax); // TODO: remove casting
             statements.add(statement);
         }
+
+        _scope = _scope.getParent();
         return new BoundBlockStatement(statements);
     }
 
@@ -98,6 +103,17 @@ public class Binder {
         return new BoundExpressionStatement( expression);
 
     }
+    private BoundStatement BindVariableDeclaration(VariableDeclarationSyntax syntax) {
+        var name = syntax.getIdentifier().text;
+        var isReadonly = syntax.getKeyword().kind == SyntaxKind.LetKeyword;
+        var initializer = bindExpression(syntax.getInitializer());
+        var variable = new VariableSymbol(name,isReadonly,initializer.getClass());
+
+        if(!_scope.tryDeclare(variable)){
+            _diagnostics.reportVariableAlreadyDeclared(syntax.getIdentifier().span(), name);
+        }
+        return new BoundVariableDeclaration(variable, initializer);
+    }
 
 
 
@@ -105,25 +121,31 @@ public class Binder {
     private BoundExpression BindNameExpression(NameExpressionSyntax syntax) {
        var name = syntax.getIdentifierToken().text;
         var variable =_scope.tryLookup(name);
+        var isReadonly = syntax.getIdentifierToken().kind == SyntaxKind.LetKeyword;
        if(!variable){
            System.out.println("Undefined variable name: " + name);
            _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
            return new BoundLiteralExpression(0);
        }
-       return new BoundVariableExpression(new VariableSymbol(name, null));
+       return new BoundVariableExpression(new VariableSymbol(name, isReadonly, null));
     }
 
     private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax) {
         var name = syntax.getIdentifierToken().text;
         var boundExpression = bindExpression(syntax.getExpression());
-        var variable = new VariableSymbol(name, null);
+        var isReadonly = syntax.getIdentifierToken().kind == SyntaxKind.LetKeyword;
+        //check variable declaration
+        var variable = new VariableSymbol(name, isReadonly, boundExpression.getClass());
         if(!_scope.tryLookup(name)){
-            variable = new VariableSymbol(name, boundExpression.getClass());
-            _scope.tryDeclare(variable);
+            _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
+            return boundExpression;
         }
-
+        if(variable.isReadOnly()){
+            _diagnostics.reportCannotAssign(syntax.getEqualsToken().span(), name);
+        }
         if(boundExpression.getClass() != variable.getType()){
             _diagnostics.reportCannotConvert(syntax.getIdentifierToken().span(), boundExpression.getClass(), variable.getType());
+            return boundExpression;
         }
 
         return new BoundAssignmentExpression(variable, boundExpression);

@@ -80,9 +80,22 @@ class Parser {
     private StatementSyntax parseStatement() {
         if (current().kind == SyntaxKind.OpenBraceToken) {
             return parseBlockStatement();
+
+        } else if (current().kind == SyntaxKind.LetKeyword || current().kind == SyntaxKind.VarKeyword) {
+            return parseVariableDeclaration();
+            
         } else {
             return parseExpressionStatement();
         }
+    }
+
+    private StatementSyntax parseVariableDeclaration() {
+        var expected = current().kind == SyntaxKind.LetKeyword ? SyntaxKind.LetKeyword : SyntaxKind.VarKeyword;
+        var keyword = matchToken(expected);
+        var identifier = matchToken(SyntaxKind.IdentifierToken);
+        var equalsToken = matchToken(SyntaxKind.EqualsToken);
+        var initializer = parseExpression();
+        return new VariableDeclarationSyntax(keyword, identifier, equalsToken, initializer);
     }
 
     private ExpressionStatementSyntax parseExpressionStatement() {

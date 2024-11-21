@@ -4,9 +4,12 @@ public class VariableSymbol {
     private final String name;
     private final Class<?> type;
 
-    public VariableSymbol(String name, Class<?> type) {
+    private boolean isReadOnly;
+
+    public VariableSymbol(String name,boolean isReadOnly, Class<?> type) {
         this.name = name;
         this.type = type;
+        this.isReadOnly = isReadOnly;
     }
 
     public String getName() {
@@ -15,5 +18,9 @@ public class VariableSymbol {
 
     public Class<?> getType() {
         return type;
+    }
+
+    public boolean isReadOnly() {
+        return isReadOnly;
     }
 }

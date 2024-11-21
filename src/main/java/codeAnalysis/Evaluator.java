@@ -50,11 +50,15 @@ public class Evaluator{
 
 
 
-    public void evaluateStatement(BoundStatement node) {
+    public void evaluateStatement(BoundStatement node) throws Exception {
         switch (node.getKind()){
             case BoundNodeKind.BlockStatement -> {
                 evaluateBlockStatement((BoundBlockStatement) node);
                 break;
+            }
+            case BoundNodeKind.VariableDeclaration -> {
+                evaluateVariableDeclaration((BoundVariableDeclaration) node);
+                break;  
             }
             case  BoundNodeKind.ExpressionStatement -> {
                 try {
@@ -69,7 +73,13 @@ public class Evaluator{
 
     }
 
-    private void evaluateBlockStatement(BoundBlockStatement node) {
+    private void evaluateVariableDeclaration(BoundVariableDeclaration node) throws Exception {
+         var value = evaluateExpression(node.getInitializer());
+         _variables.put(node.getVariable(),value);
+         _lastValue = value;
+    }
+
+    private void evaluateBlockStatement(BoundBlockStatement node) throws Exception {
         for (var statement : node.getStatements()) {
             evaluateStatement(statement);
         }

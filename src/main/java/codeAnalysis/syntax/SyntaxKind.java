@@ -22,9 +22,6 @@ public enum SyntaxKind{
     EqualsEqualsToken,
     BangEqualsToken,
     IdentifierToken,
-    //Keywords
-    TrueKeyword,
-    FalseKeyword,
 
 
     //Nodes
@@ -49,18 +46,6 @@ public enum SyntaxKind{
     AmpersandToken,
     AmpersandEqualsToken,
     PipeToken,
-    WhileKeyword,
-    DoKeyword,
-    VarKeyword,
-    ToKeyword,
-    ReturnKeyword,
-    LetKeyword,
-    IfKeyword,
-    FunctionKeyword,
-    ForKeyword,
-    ElseKeyword,
-    ContinueKeyword,
-    BreakKeyword,
     CommaToken,
     ColonToken,
     CloseBraceToken,
@@ -75,6 +60,23 @@ public enum SyntaxKind{
     //statements
     BlockStatement,
     ExpressionStatement,
+    VariableDeclaration,
 
+
+    //Keywords
+    TrueKeyword,
+    FalseKeyword,
+    WhileKeyword,
+    DoKeyword,
+    VarKeyword,
+    ToKeyword,
+    ReturnKeyword,
+    LetKeyword,
+    IfKeyword,
+    FunctionKeyword,
+    ForKeyword,
+    ElseKeyword,
+    ContinueKeyword,
+    BreakKeyword,
 
 }

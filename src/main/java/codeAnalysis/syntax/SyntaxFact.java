@@ -44,12 +44,19 @@ public final class SyntaxFact {
     public static SyntaxKind getKeywordKind(String text) {
 
         switch (text) {
-            case "true" -> {
-                return SyntaxKind.TrueKeyword;
-            }
             case "false" -> {
                 return SyntaxKind.FalseKeyword;
             }
+            case "let" -> {
+                return SyntaxKind.LetKeyword;
+            }
+            case "true" -> {
+                return SyntaxKind.TrueKeyword;
+            }
+            case "var" -> {
+                return SyntaxKind.VarKeyword;
+            }
+
 //            case "if" -> {
 //                return SyntaxKind.IfKeyword;
 //            }
