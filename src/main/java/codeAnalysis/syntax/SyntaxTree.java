@@ -15,6 +15,7 @@ public class SyntaxTree {
 
     private SyntaxTree(SourceText text)
     {
+
         var parser = new Parser(text);
         this.Root = parser.parseCompilationUnit();
         this.diagnostics = parser.diagnosticBag().get_diagnostics();

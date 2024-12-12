@@ -12,7 +12,7 @@ public class BoundLiteralExpression extends BoundExpression {
         return BoundNodeKind.LiteralExpression;
     }
 
-    // TODO: check this
+
 
     @Override
     public Class<?> type() {

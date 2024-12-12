@@ -5,10 +5,10 @@ import java.util.List;
 public class BlockStatementSyntax extends StatementSyntax {
 
     private final SyntaxToken openBraceToken;
-    private final List<SyntaxNode> statements;
+    private final List<StatementSyntax> statements;
     private final SyntaxToken closeBraceToken;
 
-    public BlockStatementSyntax(SyntaxToken openBraceToken, List<SyntaxNode> statements,
+    public BlockStatementSyntax(SyntaxToken openBraceToken, List<StatementSyntax> statements,
                                 SyntaxToken closeBraceToken) {
         this.openBraceToken = openBraceToken;
         this.statements = statements;
@@ -31,7 +31,7 @@ public class BlockStatementSyntax extends StatementSyntax {
         return openBraceToken;
     }
 
-    public List<SyntaxNode> getStatements() {
+    public List<StatementSyntax> getStatements() {
         return statements;
     }
 

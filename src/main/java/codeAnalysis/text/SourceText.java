@@ -23,6 +23,7 @@ public final class SourceText {
     }
 
     private static List<TextLine> parseLines(SourceText sourceText, String text) {
+
         List<TextLine> result = new ArrayList<>();
         int position = 0;
         int lineStart = 0;
@@ -37,11 +38,13 @@ public final class SourceText {
                 position += lineBreakWidth;
                 lineStart = position;
             }
+
         }
 
         if (position >= lineStart) {
             addLine(result, sourceText, position, lineStart, 0);
         }
+        result.forEach(System.out::println);
 
         return Collections.unmodifiableList(result);  // Make the list immutable
     }
@@ -53,6 +56,15 @@ public final class SourceText {
         result.add(line);
     }
 
+
+    /*
+    This method identifies different types of line breaks in a text. Common line breaks include:
+        Windows-style (\r\n): A carriage return (\r) followed by a newline (\n) — width 2.
+        Unix-style (\n): A single newline character — width 1.
+        Mac-style (legacy, pre-OS X) (\r): A single carriage return character — width 1.
+
+        If no line break is detected at the given position, it returns 0.
+    */
     private static int getLineBreakWidth(String text, int position) {
         char c = text.charAt(position);
         char l = position + 1 >= text.length() ? '\0' : text.charAt(position + 1);

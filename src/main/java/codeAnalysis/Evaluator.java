@@ -21,23 +21,23 @@ public class Evaluator{
     private Object evaluateExpression(BoundExpression node) throws Exception {
         switch (node.getKind()){
             case UnaryExpression -> {
-                System.out.println("Evaluating: " + node.getKind());
+
                 return evaluateUnaryExpression((BoundUnaryExpression) node);
             }
             case BinaryExpression -> {
-                System.out.println("Evaluating: " + node.getKind());
+
                 return evaluateBinaryExpression((BoundBinaryExpression) node);
             }
             case VariableExpression -> {
-                System.out.println("Evaluating: " + node.getKind());
+
                 return evaluateVariableExpression((BoundVariableExpression) node);
             }
             case LiteralExpression -> {
-                System.out.println("Evaluating: " + node.getKind());
+
                 return evaluateLiteralExpression((BoundLiteralExpression) node);
             }
             case AssignmentExpression -> {
-                System.out.println("Evaluating: " + node.getKind());
+
                 return evaluateAssignmentExpression((BoundAssignmentExpression) node);
             }
             default -> throw new Exception("Unexpected node "+ node.getKind());
@@ -98,7 +98,7 @@ public class Evaluator{
 
 
     private Object evaluateVariableExpression(BoundVariableExpression a){
-        System.out.println("Current variables: ");
+
         _variables.values().forEach(System.out::println);
 
         return _variables.get(a.getVariable());
@@ -108,7 +108,7 @@ public class Evaluator{
     private Object evaluateAssignmentExpression(BoundAssignmentExpression a) throws Exception {
         var value = evaluateExpression(a.getExpression());
         _variables.put(a.getVariable(),value);
-        System.out.println("Current variables: ");
+
 
         _variables.values().forEach(System.out::println);
         return value;
