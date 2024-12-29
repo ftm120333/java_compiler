@@ -43,99 +43,99 @@ public class Lexer {
     }
     public SyntaxToken lex() {
 
-
         _start = _position;
+        _kind = SyntaxKind.BangToken;
+        _value = null;
+        switch (getCurrent()) {
 
-            switch (getCurrent()) {
+            case '\0' ->
+                _kind = SyntaxKind.EndOfFileToken;
+            case '+' -> {
+                _kind = SyntaxKind.PlusToken;
+                _position++;
+            }
+            case '-' -> {
+                _kind = SyntaxKind.MinusToken;
+                _position++;
+            }
+            case '*' -> {
+                _kind = SyntaxKind.StarToken;
+                _position++;
+            }
+            case '/' -> {
+                _kind = SyntaxKind.SlashToken;
+                _position++;
+            }
+            case '(' -> {
+                _kind = SyntaxKind.OpenParenthesisToken;
+                _position++;
+            }
 
-                case '\0' ->
-                    _kind = SyntaxKind.EndOfFileToken;
-                case '+' -> {
-                    _kind = SyntaxKind.PlusToken;
+            case ')' -> {
+                _kind = SyntaxKind.ClosedParenthesisToken;
+                _position++;
+            }
+
+            case '{' -> {
+                _kind = SyntaxKind.OpenBraceToken;
+                _position++;
+            }
+
+            case '}' -> {
+                _kind = SyntaxKind.CloseBraceToken;
+                _position++;
+            }
+
+            case '&' -> {
+                if (lookAhead() == '&') {
+                    _position += 2;
+                    _kind = SyntaxKind.AmpersandAmpersandToken;
+                }
+
+            }
+            case '|' -> {
+                if (lookAhead() == '|') {
+                    _position += 2;
+                    _kind = SyntaxKind.PipePipeToken;
+                }
+
+            }
+            case '=' -> {
+                if (lookAhead() != '=') {
+                    _kind = SyntaxKind.EqualsToken;
+                    _position++;
+                } else {
+                    _position += 2;
+                    _kind = SyntaxKind.EqualsEqualsToken;
+                }
+            }
+            case '!' -> {
+                if (lookAhead() != '=') {
+                    _kind = SyntaxKind.BangToken;
+                    _position++;
+                } else {
+                    _kind = SyntaxKind.BangEqualsToken;
+                    _position += 2;
+                }
+            }
+            case '0', '1', '2', '3', '4', '5' , '6', '7','8','9'-> readNumberToken();
+            case ' ', '\r', '\t' ->  readWhiteSpace();
+            default -> {
+            if (Character.isLetter(getCurrent())) {
+                    readIdentifierOrKeyword();
+            }else if(Character.isWhitespace(getCurrent())){
+                readWhiteSpace();
+            }else{
+                    _diagnostics.reportBadCharacter(_position, getCurrent());
                     _position++;
                 }
-                case '-' -> {
-                    _kind = SyntaxKind.MinusToken;
-                    _position++;
-                }
-                case '*' -> {
-                    _kind = SyntaxKind.StarToken;
-                    _position++;
-                }
-                case '/' -> {
-                    _kind = SyntaxKind.SlashToken;
-                    _position++;
-                }
-                case '(' -> {
-                    _kind = SyntaxKind.OpenParenthesisToken;
-                    _position++;
-                }
 
-                case ')' -> {
-                    _kind = SyntaxKind.ClosedParenthesisToken;
-                    _position++;
-                }
+            }}
 
-                case '{' -> {
-                    _kind = SyntaxKind.OpenBraceToken;
-                    _position++;
-                }
-
-                case '}' -> {
-                    _kind = SyntaxKind.CloseBraceToken;
-                    _position++;
-                }
-
-                case '&' -> {
-                    if (lookAhead() == '&') {
-                        _position += 2;
-                        _kind = SyntaxKind.AmpersandAmpersandToken;
-                    }
-
-                }
-                case '|' -> {
-                    if (lookAhead() == '|') {
-                        _position += 2;
-                        _kind = SyntaxKind.PipePipeToken;
-                    }
-
-                }
-                case '=' -> {
-                    if (lookAhead() != '=') {
-                        _kind = SyntaxKind.EqualsToken;
-                        _position++;
-                    } else {
-                        _position += 2;
-                        _kind = SyntaxKind.EqualsEqualsToken;
-                    }
-                }
-                case '!' -> {
-                    if (lookAhead() != '=') {
-                        _kind = SyntaxKind.BangToken;
-                        _position++;
-                    } else {
-                        _kind = SyntaxKind.BangEqualsToken;
-                        _position += 2;
-                    }
-                }
-                case '0', '1', '2', '3', '4', '5' , '6', '7','8','9'-> readNumberToken();
-                case ' ', '\r', '\t' ->  readWhiteSpace();
-                default -> {
-                if (Character.isLetter(getCurrent())) {
-                        readIdentifierOrKeyword();
-                }else if(Character.isWhitespace(getCurrent())){
-                    readWhiteSpace();
-                }else{
-                        _diagnostics.reportBadCharacter(_position, getCurrent());
-                        _position++;
-                    }
-
-                }}
-
-    var length = _position - _start;
-    var text = SyntaxFact.getText(_kind);
-    if(text == null)
-        text = _text.toString(_start,_position);
+        var length = _position - _start;
+        var text = SyntaxFact.getText(_kind);
+        if(text == null)
+            text = this._text.toString(_start,_position);
 
     return new SyntaxToken(_kind, _start, (String) text, _value);
 

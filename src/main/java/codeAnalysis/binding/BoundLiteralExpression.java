@@ -16,7 +16,8 @@ public class BoundLiteralExpression extends BoundExpression {
 
     @Override
     public Class<?> type() {
-        return value.getClass();
+      //  return value.getClass();
+        return value != null ? value.getClass() : Integer.class; // Default to Integer
     }
 
     public Object getValue() {

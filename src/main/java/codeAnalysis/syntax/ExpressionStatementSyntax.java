@@ -19,9 +19,9 @@ public class ExpressionStatementSyntax extends StatementSyntax {
     public SyntaxKind getKind() {
         return SyntaxKind.ExpressionStatement;
     }
-
     @Override
     public List<SyntaxNode> GetChildren() {
         return List.of();
     }
+
 }

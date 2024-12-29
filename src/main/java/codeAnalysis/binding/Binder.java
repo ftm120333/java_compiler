@@ -15,13 +15,14 @@ abstract class BoundNode {
 
 public class Binder {
    private final DiagnosticBag _diagnostics = new DiagnosticBag();
+    private  Map<VariableSymbol, Object> _variables;
    private BoundScope _scope;
 
     public Binder(BoundScope parent) {
         _scope = new BoundScope(parent);
     }
 
-    public static BoundGlobalScope bindGlobalScope(BoundGlobalScope previous,CompilationUnitSyntax syntax) {
+    public static BoundGlobalScope bindGlobalScope(BoundGlobalScope previous, CompilationUnitSyntax syntax) {
 
         var parentScope = createParentScope(previous);
         var binder = new Binder(parentScope);
@@ -45,15 +46,19 @@ public class Binder {
             stack.push(previous);
             previous = previous.getPrevious();
         }
+
         BoundScope parent = null;
         while (!stack.isEmpty()) {
             previous = stack.pop();
             var scope = new BoundScope(parent);
             for (VariableSymbol variable : previous.getVariables()) {
+
                 scope.tryDeclare(variable);
             }
             parent = scope;
         }
+
+
         return parent;
     }
 
@@ -86,7 +91,7 @@ public class Binder {
             case SyntaxKind.ParanthesizedExpression:
                 return  BindParenthesizedExpression((ParanthrsizedExpressionSyntax) syntax);
             case SyntaxKind.NameExpression:
-                return  BindNameExpression((NameExpressionSyntax) syntax);
+                return  bindNameExpression((NameExpressionSyntax) syntax);
             case SyntaxKind.AssignmentExpression:
                 return  BindAssignmentExpression((AssignmentExpressionSyntax) syntax);
             default:
@@ -127,18 +132,40 @@ public class Binder {
         return new BoundExpressionStatement( expression);
     }
 
+//    private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
+//        String name = syntax.getIdentifierToken().text;
+//        VariableSymbol variable = _scope.lookupVariable(name);
+//        if (variable == null) {
+//            _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
+//            return new BoundLiteralExpression(0);
+//        }
+//        BoundExpression boundExpression = new BoundVariableExpression(variable);
+//
+//        if (variable.isReadOnly()) {
+//            _diagnostics.reportVariableAlreadyDeclared(syntax.getIdentifierToken().span(), name);
+//        }
+//
+//        if (!boundExpression.type().equals(variable.getType())) {
+//            _diagnostics.reportCannotConvert(syntax.getIdentifierToken().span(), boundExpression.type(), variable.getType());
+//            return boundExpression;
+//        }
+//
+//        return new BoundAssignmentExpression(variable, boundExpression);
+//    }
+private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
+    String name = syntax.getIdentifierToken().text;
 
-    private BoundExpression BindNameExpression(NameExpressionSyntax syntax) {
-        String name = syntax.getIdentifierToken().text;
-        VariableSymbol variable = _scope.lookupVariable(name);
-        var isReadonly = syntax.getIdentifierToken().kind == SyntaxKind.LetKeyword;
-
-        if(variable == null) {
-          _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
-           return new BoundLiteralExpression(0);
-       }
-        return new BoundVariableExpression(variable);
+    // Lookup variable in the current scope
+    VariableSymbol variable = _scope.lookupVariable(name);
+    if (variable == null) {
+        _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
+        return new BoundLiteralExpression(0); // Default value for undefined variables
     }
+    // Return the variable expression directly
+    return new BoundVariableExpression(variable);
+}
+
+
 
     private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax) {
 
@@ -156,7 +183,7 @@ public class Binder {
         if(variable.isReadOnly()){
             _diagnostics.reportCannotAssign(syntax.getEqualsToken().span(), name);
         }
-        if(boundExpression.getClass() != variable.getType()){
+        if(!boundExpression.type().equals(variable.getType())){
             _diagnostics.reportCannotConvert(syntax.getIdentifierToken().span(), boundExpression.getClass(), variable.getType());
             return boundExpression;
         }
@@ -178,6 +205,7 @@ public class Binder {
 
     private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax) {
         BoundExpression boundOperand = bindExpression(syntax.operand);
+
         BoundUnaryOperator boundOperator = BoundUnaryOperator.bind(syntax.operatorToken.kind, boundOperand.type());
 
        if (boundOperator == null) {
@@ -187,23 +215,48 @@ public class Binder {
                                             //boundOperatorKind.value (in the video)
        return new BoundUnaryExpression(boundOperator, boundOperand);
     }
-
-    private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax){
+    private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax) {
         BoundExpression boundLeft = bindExpression(syntax.getLeft());
         BoundExpression boundRight = bindExpression(syntax.getRight());
 
-        BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
-        System.out.println("boundLeft: " + boundLeft.type());
-        System.out.println("boundRight: " + boundRight.type());
-        System.out.println("boundOperator: " + boundOperator);
+        // Resolve actual types of operands for operator binding
+        Class<?> leftType = resolveType(boundLeft);
+        Class<?> rightType = resolveType(boundRight);
+
+        // Find the matching binary operator
+        BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, leftType, rightType);
+
         if (boundOperator == null) {
-            _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, boundLeft.type(), boundRight.type() );
-            return boundLeft;
+            _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, leftType, rightType);
+            return boundLeft; // Return the left operand as a fallback
         }
 
         return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
-
     }
+
+    // Helper method to resolve the type of a bound expression
+    private Class<?> resolveType(BoundExpression expression) {
+        if (expression instanceof BoundLiteralExpression) {
+            return expression.type();
+        } else if (expression instanceof BoundVariableExpression variableExpression) {
+            return variableExpression.getVariable().getType();
+        }
+        return expression.type(); // Default case
+    }
+//    private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax){
+//        BoundExpression boundLeft = bindExpression(syntax.getLeft());
+//        BoundExpression boundRight = bindExpression(syntax.getRight());
+//
+//
+//        BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
+//          if (boundOperator == null) {
+//            _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, boundLeft.type(), boundRight.type() );
+//            return boundLeft;
+//        }
+//
+//        return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
+//
+//    }
 }
 
 

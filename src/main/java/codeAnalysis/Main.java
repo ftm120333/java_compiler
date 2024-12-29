@@ -151,7 +151,6 @@ import codeAnalysis.compiling.Compilation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import codeAnalysis.text.TextSpan;
 
 public class Main {
 
@@ -164,7 +163,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean showTree = false;
-        Map<VariableSymbol, Object> variable = new HashMap<>();
+        Map<String, Object> variable = new HashMap<>();
         var textBuilder = new StringBuilder();
         Compilation previous = null;
 
@@ -192,10 +191,10 @@ public class Main {
                     previous = null;
                     continue;
                 } else if (input.isBlank()) {
+
                     break; // Exit the loop on a blank line if no input was provided before
                 }
             }
-
 
 
             // Run the code if the user enters a blank line after adding input
@@ -218,7 +217,7 @@ public class Main {
                         : previous.continueWith(syntaxTree);
                 previous = compilation;
 
-                var result = compilation.Evaluate(variable);
+                var result = compilation.evaluate(variable);
                 System.out.println("result: " + result.getValue());
 
                 if (showTree) {

@@ -30,6 +30,7 @@ public class LiteralExpressionSyntax extends ExpressionSyntax  {
         return SyntaxKind.LiteralExpression;
     }
 
+
     @Override
     public List<SyntaxNode> GetChildren() {
         return Collections.singletonList(literalToken);

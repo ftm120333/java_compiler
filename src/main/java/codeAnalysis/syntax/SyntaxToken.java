@@ -27,7 +27,7 @@ public class SyntaxToken extends SyntaxNode{
         return kind;
     }
 
-    @Override
+
     public List<SyntaxNode> GetChildren() {
         return new ArrayList<SyntaxNode>();
     }

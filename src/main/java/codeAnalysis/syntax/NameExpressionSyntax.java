@@ -19,6 +19,7 @@ public final class  NameExpressionSyntax extends ExpressionSyntax{
         return SyntaxKind.NameExpression;
     }
 
+
     @Override
     public List<SyntaxNode> GetChildren() {
         return Collections.singletonList(identifierToken);

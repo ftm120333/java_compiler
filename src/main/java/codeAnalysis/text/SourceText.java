@@ -44,7 +44,7 @@ public final class SourceText {
         if (position >= lineStart) {
             addLine(result, sourceText, position, lineStart, 0);
         }
-        result.forEach(System.out::println);
+
 
         return Collections.unmodifiableList(result);  // Make the list immutable
     }

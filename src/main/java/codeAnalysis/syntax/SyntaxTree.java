@@ -3,6 +3,7 @@ package codeAnalysis.syntax;
 import codeAnalysis.compiling.Diagnostic;
 import codeAnalysis.text.SourceText;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -49,14 +50,16 @@ public class SyntaxTree {
         return  parseTokens(sourceText);
 
     }
-    public static Iterable<SyntaxToken> parseTokens(SourceText text){
+    public static List<SyntaxToken> parseTokens(SourceText text) {
         var lexer = new Lexer(text);
-        while (true){
-            var token= lexer.lex();
-            if (token.kind == SyntaxKind.EndOfFileToken)
-                break;
-            return (Iterable<SyntaxToken>) token;
-        }
-        return null;
+        var tokens = new ArrayList<SyntaxToken>();
+        SyntaxToken token;
+        do {
+            token = lexer.lex();
+            tokens.add(token);
+        } while (token.kind != SyntaxKind.EndOfFileToken);
+        return tokens;
     }
+
+
 }

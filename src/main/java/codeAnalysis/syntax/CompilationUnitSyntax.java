@@ -18,9 +18,11 @@ public class CompilationUnitSyntax extends SyntaxNode {
     }
 
     @Override
+
     public List<SyntaxNode> GetChildren() {
         return Collections.emptyList();
     }
+
 
     public StatementSyntax getStatement() {
         return statement;

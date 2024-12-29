@@ -21,11 +21,6 @@ public class BlockStatementSyntax extends StatementSyntax {
         return SyntaxKind.BlockStatement;
     }
 
-    @Override
-    public List<SyntaxNode> GetChildren() {
-        return List.of();
-    }
-
 
     public SyntaxToken getOpenBraceToken() {
         return openBraceToken;
@@ -38,6 +33,11 @@ public class BlockStatementSyntax extends StatementSyntax {
     public SyntaxToken getCloseBraceToken() {
         return closeBraceToken;
     }
+    @Override
+    public List<SyntaxNode> GetChildren() {
+        return List.of();
+    }
+
 }
 
 

@@ -28,7 +28,13 @@ public class BoundScope {
         _variables.put(variable.getName(), variable);
         return true;
     }
-
+    public VariableSymbol lookupVariable(String name) {
+        if (_variables.containsKey(name))
+            return _variables.get(name); // Return the variable if it exists in the current scope.
+        if (parent != null)
+            return parent.lookupVariable(name); // Recursively check parent scopes.
+        return null; // Return null if the variable is not found.
+    }
     public boolean tryLookup(String name) {
         if(_variables.containsKey(name))
             return true; // Variable exists in the current scope.
@@ -37,13 +43,7 @@ public class BoundScope {
         return false;// Variable not found in any scope.
     }
 
-    public VariableSymbol lookupVariable(String name) {
-        if (_variables.containsKey(name))
-            return _variables.get(name); // Return the variable if it exists in the current scope.
-        if (parent != null)
-            return parent.lookupVariable(name); // Recursively check parent scopes.
-        return null; // Return null if the variable is not found.
-    }
+
 
   public List getDeclareVariables() {
     return List.copyOf(_variables.values());

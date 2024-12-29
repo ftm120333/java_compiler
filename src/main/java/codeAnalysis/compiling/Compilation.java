@@ -5,7 +5,6 @@ import codeAnalysis.VariableSymbol;
 import codeAnalysis.binding.Binder;
 import codeAnalysis.binding.BoundGlobalScope;
 import codeAnalysis.syntax.SyntaxTree;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -46,7 +45,7 @@ public class Compilation {
      }
 
 
-    public EvaluationResult Evaluate(Map<VariableSymbol, Object> variables) throws Exception {
+    public EvaluationResult evaluate(Map<String, Object> variables) throws Exception {
 
         var diagnostics = syntaxTree.getDiagnostics();
 
@@ -57,7 +56,7 @@ public class Compilation {
        }
        var evaluator = new Evaluator(getGlobalScope().getStatement(), variables);
 
-       var value = evaluator.Evaluate();
+       var value = evaluator.evaluate();
         ArrayList ArrayList = new ArrayList();
         return new EvaluationResult(ArrayList, value);
     }
