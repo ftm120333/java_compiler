@@ -2,6 +2,8 @@ package codeAnalysis.syntax;
 
 import codeAnalysis.compiling.DiagnosticBag;
 import codeAnalysis.text.SourceText;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +106,7 @@ class Parser {
         return new ExpressionStatementSyntax(expression);
     }
 
+
     private BlockStatementSyntax parseBlockStatement() {
         var statements = new ArrayList<StatementSyntax>();
         var openBraceToken = matchToken(SyntaxKind.OpenBraceToken);
@@ -149,6 +152,7 @@ class Parser {
             var operatorToken = nextToken();
             var right = parseBinaryExpression(precedence);
             left = new BinaryExpressionSyntax(left, operatorToken, right);
+
         }
         return left;
     }

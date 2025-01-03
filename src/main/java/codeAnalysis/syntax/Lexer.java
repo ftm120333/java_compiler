@@ -169,7 +169,7 @@ public class Lexer {
             next();
 
 
-        String text = this._text.toString(_start, _position);
+         String text = this._text.toString(_start, _position);
         _kind = SyntaxFact.getKeywordKind(text);
 
     }

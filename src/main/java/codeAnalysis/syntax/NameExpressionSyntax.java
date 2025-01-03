@@ -16,6 +16,7 @@ public final class  NameExpressionSyntax extends ExpressionSyntax{
 
     @Override
     public SyntaxKind getKind() {
+
         return SyntaxKind.NameExpression;
     }
 

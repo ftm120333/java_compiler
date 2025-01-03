@@ -215,48 +215,22 @@ private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
                                             //boundOperatorKind.value (in the video)
        return new BoundUnaryExpression(boundOperator, boundOperand);
     }
-    private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax) {
+
+    private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax){
         BoundExpression boundLeft = bindExpression(syntax.getLeft());
+        System.out.println(boundLeft.type());
         BoundExpression boundRight = bindExpression(syntax.getRight());
+        System.out.println(boundRight.type());
 
-        // Resolve actual types of operands for operator binding
-        Class<?> leftType = resolveType(boundLeft);
-        Class<?> rightType = resolveType(boundRight);
-
-        // Find the matching binary operator
-        BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, leftType, rightType);
-
-        if (boundOperator == null) {
-            _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, leftType, rightType);
-            return boundLeft; // Return the left operand as a fallback
+        BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
+          if (boundOperator == null) {
+            _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, boundLeft.type(), boundRight.type() );
+            return boundLeft;
         }
 
         return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
-    }
 
-    // Helper method to resolve the type of a bound expression
-    private Class<?> resolveType(BoundExpression expression) {
-        if (expression instanceof BoundLiteralExpression) {
-            return expression.type();
-        } else if (expression instanceof BoundVariableExpression variableExpression) {
-            return variableExpression.getVariable().getType();
-        }
-        return expression.type(); // Default case
     }
-//    private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax){
-//        BoundExpression boundLeft = bindExpression(syntax.getLeft());
-//        BoundExpression boundRight = bindExpression(syntax.getRight());
-//
-//
-//        BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
-//          if (boundOperator == null) {
-//            _diagnostics.addUndefinedBinaryOperator(syntax.getOperatorToken().span(), syntax.getOperatorToken().text, boundLeft.type(), boundRight.type() );
-//            return boundLeft;
-//        }
-//
-//        return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
-//
-//    }
 }
 
 
