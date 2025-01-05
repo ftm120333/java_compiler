@@ -79,24 +79,16 @@ public class Binder {
         }
     }
     public BoundExpression bindExpression(ExpressionSyntax syntax) {
-        switch (syntax.getKind()){
-            case SyntaxKind.LiteralExpression:
-                return  BindLiteralExpression(((LiteralExpressionSyntax) syntax));
-
-            case SyntaxKind.UnaryExpression:
-                return  BindUnaryExpression((UnaryExpressionSyntax) syntax);
-
-            case SyntaxKind.BinaryExpression:
-                return  BindBinaryExpression((BinaryExpressionSyntax) syntax);
-            case SyntaxKind.ParanthesizedExpression:
-                return  BindParenthesizedExpression((ParanthrsizedExpressionSyntax) syntax);
-            case SyntaxKind.NameExpression:
-                return  bindNameExpression((NameExpressionSyntax) syntax);
-            case SyntaxKind.AssignmentExpression:
-                return  BindAssignmentExpression((AssignmentExpressionSyntax) syntax);
-            default:
-                throw new RuntimeException("Unexpected syntax " + syntax.getKind());
-        }
+        return switch (syntax.getKind()) {
+            case SyntaxKind.LiteralExpression -> BindLiteralExpression(((LiteralExpressionSyntax) syntax));
+            case SyntaxKind.UnaryExpression -> BindUnaryExpression((UnaryExpressionSyntax) syntax);
+            case SyntaxKind.BinaryExpression -> BindBinaryExpression((BinaryExpressionSyntax) syntax);
+            case SyntaxKind.ParanthesizedExpression ->
+                    BindParenthesizedExpression((ParanthrsizedExpressionSyntax) syntax);
+            case SyntaxKind.NameExpression -> bindNameExpression((NameExpressionSyntax) syntax);
+            case SyntaxKind.AssignmentExpression -> BindAssignmentExpression((AssignmentExpressionSyntax) syntax);
+            default -> throw new RuntimeException("Unexpected syntax " + syntax.getKind());
+        };
     }
 
 
@@ -119,7 +111,7 @@ public class Binder {
         var name = syntax.getIdentifier().text;
         boolean isReadonly = syntax.getKeyword().kind == SyntaxKind.LetKeyword;
         BoundExpression initializer = bindExpression(syntax.getInitializer());
-        VariableSymbol variable = new VariableSymbol(name,isReadonly,initializer.getClass());
+        VariableSymbol variable = new VariableSymbol(name,isReadonly,initializer.type());
         if(!_scope.tryDeclare(variable)){
             _diagnostics.reportVariableAlreadyDeclared(syntax.getIdentifier().span(), name);
         }
@@ -174,7 +166,8 @@ private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
         boolean isReadonly = syntax.getIdentifierToken().kind == SyntaxKind.LetKeyword;
 
         //check variable declaration
-        var variable = new VariableSymbol(name, isReadonly, boundExpression.getClass());
+
+        var variable = new VariableSymbol(name, isReadonly, boundExpression.type());
 
         if(!_scope.tryLookup(name)){
             _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
@@ -218,9 +211,7 @@ private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
 
     private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax){
         BoundExpression boundLeft = bindExpression(syntax.getLeft());
-        System.out.println(boundLeft.type());
         BoundExpression boundRight = bindExpression(syntax.getRight());
-        System.out.println(boundRight.type());
 
         BoundBinaryOperator boundOperator = BoundBinaryOperator.bind(syntax.getOperatorToken().kind, boundLeft.type(), boundRight.type());
           if (boundOperator == null) {
