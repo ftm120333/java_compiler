@@ -20,6 +20,7 @@ public class Evaluator {
     }
 
     private void evaluateStatement(BoundStatement node) throws Exception {
+
         switch (node.getKind()) {
             case BoundNodeKind.BlockStatement -> evaluateBlockStatement((BoundBlockStatement) node);
             case BoundNodeKind.VariableDeclaration -> evaluateVariableDeclaration((BoundVariableDeclaration) node);
@@ -56,6 +57,7 @@ public class Evaluator {
     }
 
     private Object evaluateLiteralExpression(BoundLiteralExpression node) {
+
         return node.getValue();
     }
 
@@ -80,6 +82,7 @@ public class Evaluator {
 
     private Object evaluateBinaryExpression(BoundBinaryExpression node) throws Exception {
         var left = evaluateExpression(node.getLeft());
+        System.out.println();
         var right = evaluateExpression(node.getRight());
 
         return switch (node.getOperatorKind().getKind()) {

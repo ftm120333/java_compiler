@@ -15,7 +15,6 @@ public class LiteralExpressionSyntax extends ExpressionSyntax  {
     public LiteralExpressionSyntax(SyntaxToken literalToken, Object value) {
       this.literalToken = literalToken;
       this.value = value;
-
     }
     public Object getValue() {
         return value;

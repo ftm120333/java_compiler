@@ -219,6 +219,8 @@ public class Main {
 
                 var result = compilation.evaluate(variable);
                 System.out.println("result: " + result.getValue());
+                if(result.getValue() != null)
+                   System.out.println("result type : " + result.getValue().getClass());
 
                 if (showTree) {
                     PrettyPrint(syntaxTree.getRoot(), "", false);
