@@ -23,4 +23,10 @@ public class Diagnostic {
     public Object get_diagnostics() {
         return this;
     }
+
+    @Override
+    public String toString() {
+        return message; // Return the diagnostic message
+    }
+
 }

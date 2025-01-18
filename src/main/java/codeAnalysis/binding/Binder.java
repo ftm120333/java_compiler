@@ -163,13 +163,12 @@ private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
 
         String name = syntax.getIdentifierToken().text;
         BoundExpression boundExpression = bindExpression(syntax.getExpression());
-        boolean isReadonly = syntax.getIdentifierToken().kind == SyntaxKind.LetKeyword;
 
         //check variable declaration
 
-        var variable = new VariableSymbol(name, isReadonly, boundExpression.type());
+        var variable =  _scope.lookupVariable(name);
 
-        if(!_scope.tryLookup(name)){
+        if(variable == null){
             _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
             return boundExpression;
         }

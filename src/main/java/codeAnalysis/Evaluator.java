@@ -66,10 +66,21 @@ public class Evaluator {
     }
 
     private Object evaluateAssignmentExpression(BoundAssignmentExpression node) throws Exception {
+  
+        var variable = node.getVariable();
+        System.out.println("Variable: " + variable.getName() + ", isReadOnly: " + variable.isReadOnly());
+    
+        if (variable.isReadOnly()) {
+            throw new Exception("Variable " + variable.getName() + " is read-only and cannot be assigned.");
+        }
+    
         var value = evaluateExpression(node.getExpression());
-        _variables.put(node.getVariable().getName(), value);
+        _variables.put(variable.getName(), value);
         return value;
+
     }
+
+   
 
     private Object evaluateUnaryExpression(BoundUnaryExpression node) throws Exception {
         var operand = evaluateExpression(node.getOperand());
