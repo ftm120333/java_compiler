@@ -24,6 +24,9 @@ public class VariableSymbol {
         return type;
     }
 
-
+    @Override
+    public String toString() {
+        return "VariableSymbol{name='" + name + "', isReadOnly=" + isReadOnly + ", type=" + type + '}';
+    }
 }
 
