@@ -23,7 +23,7 @@ public class BoundScope {
     }
 
     public boolean tryDeclare(VariableSymbol variable) {
-         System.out.println("Declaring Variable: " + variable.getName() + ", isReadOnly: " + variable.isReadOnly());
+    
         if (_variables.containsKey(variable.getName())){
             return false; 
         } // Variable already exists in this scope.
@@ -43,7 +43,6 @@ public class BoundScope {
     public VariableSymbol lookupVariable(String name) {
         VariableSymbol variable = _variables.get(name);
         if (variable != null) {
-            System.out.println("Lookup Variable: " + variable.getName() + ", isReadOnly: " + variable.isReadOnly());
             return variable;
         }
         if (parent != null) {

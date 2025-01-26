@@ -1,130 +1,20 @@
 -------------------------------------------------------------------------------
 Test set: codeAnalysis.IntegratedTest
 -------------------------------------------------------------------------------
-Tests run: 16, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 0.034 s <<< FAILURE! -- in codeAnalysis.IntegratedTest
-codeAnalysis.IntegratedTest.testParenthesesPrecedence -- Time elapsed: 0.011 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-
-
-
-[32mResult: 21[0m
-Current Variables: {}
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testParenthesesPrecedence(IntegratedTest.java:89)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-codeAnalysis.IntegratedTest.testInvalidOperator -- Time elapsed: 0.002 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-Expected output not found: The binary operator %% is not defined for types Integer and Integer.
-Actual output:
-[31mBad character input: %.[0m
-[31mBad character input: %.[0m
-[31mUnexpected token <BangToken>. Expected <EndOfFileToken>.[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testInvalidOperator(IntegratedTest.java:138)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-codeAnalysis.IntegratedTest.testReadOnlyVariable -- Time elapsed: 0.001 s <<< FAILURE!
+Tests run: 15, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.031 s <<< FAILURE! -- in codeAnalysis.IntegratedTest
+codeAnalysis.IntegratedTest.testReadOnlyVariable -- Time elapsed: 0.006 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 Expected output not found: Variable x is read-only and cannot be assigned.
 Actual output:
-[31mUnexpected token <IdentifierToken>. Expected <EndOfFileToken>.[0m
+[31mVariable  x is read-only and can not be assigned.[0m
  ==> expected: <true> but was: <false>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
 	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
 	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
 	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testReadOnlyVariable(IntegratedTest.java:108)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-codeAnalysis.IntegratedTest.testWhitespaceHandling -- Time elapsed: 0.001 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-[31mUnexpected token <IdentifierToken>. Expected <EndOfFileToken>.[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testWhitespaceHandling(IntegratedTest.java:126)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-codeAnalysis.IntegratedTest.testBlockScope -- Time elapsed: 0.001 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-Expected output not found: Current Variables: {x=5}
-Actual output:
-
-[32mResult: 15[0m
-Current Variables: {x=5, y=10}
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testBlockScope(IntegratedTest.java:99)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-codeAnalysis.IntegratedTest.testMultipleAssignments -- Time elapsed: 0.001 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-[31mUnexpected token <VarKeyword>. Expected <EndOfFileToken>.[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testMultipleAssignments(IntegratedTest.java:67)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-
-codeAnalysis.IntegratedTest.testChainedAssignment -- Time elapsed: 0 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-[31mUnexpected token <VarKeyword>. Expected <EndOfFileToken>.[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testChainedAssignment(IntegratedTest.java:77)
+	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:151)
+	at codeAnalysis.IntegratedTest.testReadOnlyVariable(IntegratedTest.java:109)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)

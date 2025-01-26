@@ -24,7 +24,7 @@ public class VariableDeclarationSyntax extends StatementSyntax {
 
     @Override
     public List<SyntaxNode> GetChildren() {
-        return List.of();
+        return List.of(keyword, identifier, equalsToken, initializer);
     }
 
     public SyntaxToken getKeyword() {

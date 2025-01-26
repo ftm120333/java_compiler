@@ -71,7 +71,7 @@ public final class DiagnosticBag implements Iterable<Diagnostic> {
     }
 
     public void reportCannotAssign(TextSpan span, String name) {
-        var message = "Variable  " + name + " is read-only and can not be assigned.";
+        var message = "Variable " + name + " is read-only and can not be assigned.";
         report(span, message);
     }
 }
