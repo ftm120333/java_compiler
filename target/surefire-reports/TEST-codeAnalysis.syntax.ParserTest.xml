@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.IntegratedTest" time="0.019" tests="15" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.syntax.ParserTest" time="0.035" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -53,19 +53,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testParenthesesPrecedence" classname="codeAnalysis.IntegratedTest" time="0.003"/>
-  <testcase name="testReadOnlyVariable" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testUndefinedVariable" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testVariableUsage" classname="codeAnalysis.IntegratedTest" time="0.0"/>
-  <testcase name="testLogicalOperators" classname="codeAnalysis.IntegratedTest" time="0.0"/>
-  <testcase name="testWhitespaceHandling" classname="codeAnalysis.IntegratedTest" time="0.004"/>
-  <testcase name="testArithmeticExpression" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testBlockScope" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testInvalidNumber" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testSimpleAssignment" classname="codeAnalysis.IntegratedTest" time="0.0"/>
-  <testcase name="testInvalidSyntax" classname="codeAnalysis.IntegratedTest" time="0.0"/>
-  <testcase name="testVariableUsageWithScope" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testMultipleAssignments" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testChainedAssignment" classname="codeAnalysis.IntegratedTest" time="0.0"/>
-  <testcase name="testBooleanExpression" classname="codeAnalysis.IntegratedTest" time="0.0"/>
+  <testcase name="testParenthesizedExpression" classname="codeAnalysis.syntax.ParserTest" time="0.021"/>
+  <testcase name="testBlockStatement" classname="codeAnalysis.syntax.ParserTest" time="0.001"/>
+  <testcase name="testBooleanLiteral" classname="codeAnalysis.syntax.ParserTest" time="0.001"/>
+  <testcase name="testVariableDeclaration" classname="codeAnalysis.syntax.ParserTest" time="0.001"/>
+  <testcase name="testSimpleExpression" classname="codeAnalysis.syntax.ParserTest" time="0.001"/>
 </testsuite>

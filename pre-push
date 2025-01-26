@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Run Maven tests
+echo "Running tests..."
+mvn test
+
+# Capture the exit code of the tests
+TEST_RESULT=$?
+
+if [ $TEST_RESULT -ne 0 ]; then
+    echo "❌ Tests failed. Push aborted."
+    exit 1  # Prevent the push
+else
+    echo "✅ Tests passed. Proceeding with push."
+    exit 0  # Allow the push
+fi
