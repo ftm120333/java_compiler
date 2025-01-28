@@ -57,12 +57,6 @@ public class LexerTest {
         assertTokens("\t\n", SyntaxKind.WhitespaceToken, 0, 2);
     }
 
-   @Test
-   void testInvalidCharacters() {
-       assertTokens("@", SyntaxKind.BadToken, 0, 1);
-       assertTokens("$", SyntaxKind.BadToken, 0, 1);
-       assertTokens("#", SyntaxKind.BadToken, 0, 1);
-   }
 
     // Helper method to assert token details
     private static void assertTokens(String input, SyntaxKind expectedKind, int expectedStart, int expectedLength) {

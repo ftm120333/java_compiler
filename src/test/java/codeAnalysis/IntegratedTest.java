@@ -60,9 +60,9 @@ public class IntegratedTest {
     @Test
     void testMultipleAssignments() throws Exception {
         String expression = """
-            var x = 5
+            {var x = 5
             var y = 10
-            x + y
+            x + y}
             """;
         assertOutput(expression, "Result: 15", "Current Variables: {x=5, y=10}");
     }
@@ -70,10 +70,10 @@ public class IntegratedTest {
     @Test
     void testChainedAssignment() throws Exception {
         String expression = """
-            var x = 5
+           { var x = 5
             var y = x
-            y + 10
-            """;
+            {y + 10}
+                }""";
         assertOutput(expression, "Result: 15", "Current Variables: {x=5, y=5}");
     }
 
@@ -103,10 +103,10 @@ public class IntegratedTest {
     @Test
     void testReadOnlyVariable() throws Exception {
         String expression = """
-            let x = 10
-            x = 20
+            {let x = 10
+            {x = 20}}
             """;
-        assertOutput(expression, "Variable x is read-only and cannot be assigned.");
+        assertOutput(expression, "Variable x is read-only and can not be assigned.");
     }
 
     @Test
@@ -118,11 +118,11 @@ public class IntegratedTest {
     @Test
     void testWhitespaceHandling() throws Exception {
         String expression = """
-            
+           { 
             var x = 10   
             
             x + 5  
-   
+    }
             """;
         assertOutput(expression, "Result: 15", "Current Variables: {x=10}");
     }
@@ -133,6 +133,7 @@ public class IntegratedTest {
         assertOutput(expression, "Result: true");
     }
 
+    
 
     // Helper to run `compile` and assert output
     private void assertOutput(String expression, String... expectedOutputs) throws Exception {

@@ -124,26 +124,6 @@ public class Binder {
         return new BoundExpressionStatement( expression);
     }
 
-//    private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
-//        String name = syntax.getIdentifierToken().text;
-//        VariableSymbol variable = _scope.lookupVariable(name);
-//        if (variable == null) {
-//            _diagnostics.reportUndefinedName(syntax.getIdentifierToken().span(), name);
-//            return new BoundLiteralExpression(0);
-//        }
-//        BoundExpression boundExpression = new BoundVariableExpression(variable);
-//
-//        if (variable.isReadOnly()) {
-//            _diagnostics.reportVariableAlreadyDeclared(syntax.getIdentifierToken().span(), name);
-//        }
-//
-//        if (!boundExpression.type().equals(variable.getType())) {
-//            _diagnostics.reportCannotConvert(syntax.getIdentifierToken().span(), boundExpression.type(), variable.getType());
-//            return boundExpression;
-//        }
-//
-//        return new BoundAssignmentExpression(variable, boundExpression);
-//    }
 private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
     String name = syntax.getIdentifierToken().text;
 

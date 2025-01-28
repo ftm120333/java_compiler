@@ -1,5 +1,6 @@
 package codeAnalysis.syntax;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockStatementSyntax extends StatementSyntax {
@@ -33,10 +34,16 @@ public class BlockStatementSyntax extends StatementSyntax {
     public SyntaxToken getCloseBraceToken() {
         return closeBraceToken;
     }
+    
     @Override
     public List<SyntaxNode> GetChildren() {
-        return List.of();
+        var children = new ArrayList<SyntaxNode>();
+        children.add(openBraceToken);
+        children.addAll(statements);
+        children.add(closeBraceToken);
+        return children;
     }
+
 
 }
 

@@ -20,7 +20,7 @@ public class CompilationUnitSyntax extends SyntaxNode {
     @Override
 
     public List<SyntaxNode> GetChildren() {
-        return Collections.emptyList();
+        return List.of(statement, endOfFileToken);
     }
 
 

@@ -6,26 +6,6 @@ import codeAnalysis.syntax.SyntaxTree;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-class TestOutput extends PrintStream {
-    private final ByteArrayOutputStream output;
-
-    public TestOutput() {
-        super(new ByteArrayOutputStream());
-        this.output = (ByteArrayOutputStream) super.out;
-    }
-
-    public String getCapturedOutput() {
-        return output.toString();
-    }
-}
-
-
 public class TestMain {
 
     private static final String ANSI_RESET = "\u001B[0m";

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.IntegratedTest" time="0.034" tests="16" errors="0" skipped="0" failures="7">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.IntegratedTest" time="0.019" tests="15" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250118114359256_3.jar /home/fatima/Desktop/java/java_compiler/target/surefire 2025-01-18T11-43-59_215-jvmRun1 surefire-20250118114359256_1tmp surefire_0-20250118114359256_2tmp"/>
+    <property name="sun.java.command" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250126222033057_3.jar /home/fatima/Desktop/java/java_compiler/target/surefire 2025-01-26T22-20-33_005-jvmRun1 surefire-20250126222033057_1tmp surefire_0-20250126222033057_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/fatima/Desktop/java/java_compiler/target/test-classes:/home/fatima/Desktop/java/java_compiler/target/classes:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/home/fatima/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:/home/fatima/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.0/junit-jupiter-params-5.10.0.jar:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/home/fatima/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/fatima/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/home/fatima/.m2/repository/org/mockito/mockito-core/5.5.0/mockito-core-5.5.0.jar:/home/fatima/.m2/repository/net/bytebuddy/byte-buddy/1.14.6/byte-buddy-1.14.6.jar:/home/fatima/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.6/byte-buddy-agent-1.14.6.jar:/home/fatima/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/fatima/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/home/fatima/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250118114359256_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250126222033057_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.5+11-Ubuntu-1ubuntu122.04"/>
     <property name="user.name" value="fatima"/>
@@ -53,147 +53,19 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testParenthesesPrecedence" classname="codeAnalysis.IntegratedTest" time="0.011">
-    <failure message="Expected output not found: Result: 15&#10;Actual output:&#10;&#10;&#10;&#10;&amp;#27;[32mResult: 21&amp;#27;[0m&#10;Current Variables: {}&#10; ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-
-
-
-&amp#27;[32mResult: 21&amp#27;[0m
-Current Variables: {}
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testParenthesesPrecedence(IntegratedTest.java:89)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-  </testcase>
-  <testcase name="testInvalidOperator" classname="codeAnalysis.IntegratedTest" time="0.002">
-    <failure message="Expected output not found: The binary operator %% is not defined for types Integer and Integer.&#10;Actual output:&#10;&amp;#27;[31mBad character input: %.&amp;#27;[0m&#10;&amp;#27;[31mBad character input: %.&amp;#27;[0m&#10;&amp;#27;[31mUnexpected token &lt;BangToken&gt;. Expected &lt;EndOfFileToken&gt;.&amp;#27;[0m&#10; ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Expected output not found: The binary operator %% is not defined for types Integer and Integer.
-Actual output:
-&amp#27;[31mBad character input: %.&amp#27;[0m
-&amp#27;[31mBad character input: %.&amp#27;[0m
-&amp#27;[31mUnexpected token <BangToken>. Expected <EndOfFileToken>.&amp#27;[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testInvalidOperator(IntegratedTest.java:138)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-  </testcase>
-  <testcase name="testReadOnlyVariable" classname="codeAnalysis.IntegratedTest" time="0.001">
-    <failure message="Expected output not found: Variable x is read-only and cannot be assigned.&#10;Actual output:&#10;&amp;#27;[31mUnexpected token &lt;IdentifierToken&gt;. Expected &lt;EndOfFileToken&gt;.&amp;#27;[0m&#10; ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Expected output not found: Variable x is read-only and cannot be assigned.
-Actual output:
-&amp#27;[31mUnexpected token <IdentifierToken>. Expected <EndOfFileToken>.&amp#27;[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testReadOnlyVariable(IntegratedTest.java:108)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-  </testcase>
+  <testcase name="testParenthesesPrecedence" classname="codeAnalysis.IntegratedTest" time="0.003"/>
+  <testcase name="testReadOnlyVariable" classname="codeAnalysis.IntegratedTest" time="0.001"/>
   <testcase name="testUndefinedVariable" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testVariableUsage" classname="codeAnalysis.IntegratedTest" time="0.001"/>
+  <testcase name="testVariableUsage" classname="codeAnalysis.IntegratedTest" time="0.0"/>
   <testcase name="testLogicalOperators" classname="codeAnalysis.IntegratedTest" time="0.0"/>
-  <testcase name="testWhitespaceHandling" classname="codeAnalysis.IntegratedTest" time="0.001">
-    <failure message="Expected output not found: Result: 15&#10;Actual output:&#10;&amp;#27;[31mUnexpected token &lt;IdentifierToken&gt;. Expected &lt;EndOfFileToken&gt;.&amp;#27;[0m&#10; ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-&amp#27;[31mUnexpected token <IdentifierToken>. Expected <EndOfFileToken>.&amp#27;[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testWhitespaceHandling(IntegratedTest.java:126)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-  </testcase>
+  <testcase name="testWhitespaceHandling" classname="codeAnalysis.IntegratedTest" time="0.004"/>
   <testcase name="testArithmeticExpression" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testBlockScope" classname="codeAnalysis.IntegratedTest" time="0.001">
-    <failure message="Expected output not found: Current Variables: {x=5}&#10;Actual output:&#10;&#10;&amp;#27;[32mResult: 15&amp;#27;[0m&#10;Current Variables: {x=5, y=10}&#10; ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Expected output not found: Current Variables: {x=5}
-Actual output:
-
-&amp#27;[32mResult: 15&amp#27;[0m
-Current Variables: {x=5, y=10}
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testBlockScope(IntegratedTest.java:99)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-  </testcase>
+  <testcase name="testBlockScope" classname="codeAnalysis.IntegratedTest" time="0.001"/>
   <testcase name="testInvalidNumber" classname="codeAnalysis.IntegratedTest" time="0.001"/>
-  <testcase name="testSimpleAssignment" classname="codeAnalysis.IntegratedTest" time="0.001"/>
+  <testcase name="testSimpleAssignment" classname="codeAnalysis.IntegratedTest" time="0.0"/>
   <testcase name="testInvalidSyntax" classname="codeAnalysis.IntegratedTest" time="0.0"/>
-  <testcase name="testVariableUsageWithScope" classname="codeAnalysis.IntegratedTest" time="0.002"/>
-  <testcase name="testMultipleAssignments" classname="codeAnalysis.IntegratedTest" time="0.001">
-    <failure message="Expected output not found: Result: 15&#10;Actual output:&#10;&amp;#27;[31mUnexpected token &lt;VarKeyword&gt;. Expected &lt;EndOfFileToken&gt;.&amp;#27;[0m&#10; ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-&amp#27;[31mUnexpected token <VarKeyword>. Expected <EndOfFileToken>.&amp#27;[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testMultipleAssignments(IntegratedTest.java:67)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-  </testcase>
-  <testcase name="testChainedAssignment" classname="codeAnalysis.IntegratedTest" time="0.0">
-    <failure message="Expected output not found: Result: 15&#10;Actual output:&#10;&amp;#27;[31mUnexpected token &lt;VarKeyword&gt;. Expected &lt;EndOfFileToken&gt;.&amp;#27;[0m&#10; ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: 
-Expected output not found: Result: 15
-Actual output:
-&amp#27;[31mUnexpected token <VarKeyword>. Expected <EndOfFileToken>.&amp#27;[0m
- ==> expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:211)
-	at codeAnalysis.IntegratedTest.assertOutput(IntegratedTest.java:155)
-	at codeAnalysis.IntegratedTest.testChainedAssignment(IntegratedTest.java:77)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-  </testcase>
+  <testcase name="testVariableUsageWithScope" classname="codeAnalysis.IntegratedTest" time="0.001"/>
+  <testcase name="testMultipleAssignments" classname="codeAnalysis.IntegratedTest" time="0.001"/>
+  <testcase name="testChainedAssignment" classname="codeAnalysis.IntegratedTest" time="0.0"/>
   <testcase name="testBooleanExpression" classname="codeAnalysis.IntegratedTest" time="0.0"/>
 </testsuite>

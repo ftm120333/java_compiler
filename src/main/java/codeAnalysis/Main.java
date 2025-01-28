@@ -84,7 +84,7 @@ public class Main {
                    System.out.println("result type : " + result.getValue().getClass());
 
                 if (showTree) {
-                    PrettyPrint(syntaxTree.getRoot(), "", false);
+                    PrettyPrint(syntaxTree.getRoot(), "", false,0);
                 }
 
                 // Handle diagnostics for the syntax tree
@@ -121,27 +121,47 @@ public class Main {
             }
         }
     }
-    static void PrettyPrint(SyntaxNode node, String indent, boolean isLast) {
+    static void PrettyPrint(SyntaxNode node, String indent, boolean isLast, int level) {
+        // Define colors for different levels
+        final String[] colors = {
+            "\u001B[37m", // White (Level 0)
+            "\u001B[36m", // Cyan (Level 1)
+            "\u001B[33m", // Yellow (Level 2)
+            "\u001B[32m", // Green (Level 3)
+            "\u001B[35m", // Magenta (Level 4)
+            "\u001B[34m", // Blue (Level 5+)
+        };
+    
+        // Select color based on level
+        String color = colors[Math.min(level, colors.length - 1)];
+        String reset = "\u001B[0m"; // Reset color
+    
         var marker = isLast ? "|__" : "|--";
         System.out.print(indent);
+        System.out.print(color); // Apply color
         System.out.print(marker);
         System.out.print(node.getKind());
-
+    
+        // Print the value of SyntaxToken, if available
         if (node instanceof SyntaxToken t && t.value != null) {
             System.out.print(" ");
             System.out.print(t.value);
         }
-        System.out.println(" ");
-
+        System.out.println(reset); // Reset color
+    
+        // Update indentation for child nodes
         indent += isLast ? "   " : "|   ";
-        var children = node.GetChildren();
+    
+        var children = node.GetChildren(); // Get all child nodes
         if (children == null || children.isEmpty()) {
-            return;
+            return; // Stop if no children
         }
-
+    
+        // Traverse and pretty print all child nodes
         SyntaxNode lastChild = children.get(children.size() - 1);
         for (var child : children) {
-            PrettyPrint(child, indent, child == lastChild);
+            PrettyPrint(child, indent, child == lastChild, level + 1);
         }
     }
+    
 }

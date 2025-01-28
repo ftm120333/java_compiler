@@ -21,7 +21,7 @@ public class ExpressionStatementSyntax extends StatementSyntax {
     }
     @Override
     public List<SyntaxNode> GetChildren() {
-        return List.of();
+         return List.of(expression);
     }
 
 }
