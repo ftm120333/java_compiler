@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.EvaluationTest" time="0.158" tests="41" errors="0" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.EvaluationTest" time="0.039" tests="21" errors="2" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -7,13 +7,12 @@
     <property name="java.vm.vendor" value="Ubuntu"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://ubuntu.com/"/>
-    <property name="user.timezone" value="Asia/Muscat"/>
     <property name="os.name" value="Linux"/>
     <property name="java.vm.specification.version" value="21"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250204113352819_3.jar /home/fatima/Desktop/java/java_compiler/target/surefire 2025-02-04T11-33-52_760-jvmRun1 surefire-20250204113352819_1tmp surefire_0-20250204113352819_2tmp"/>
+    <property name="sun.java.command" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250204143252943_3.jar /home/fatima/Desktop/java/java_compiler/target/surefire 2025-02-04T14-32-52_903-jvmRun1 surefire-20250204143252943_1tmp surefire_0-20250204143252943_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/fatima/Desktop/java/java_compiler/target/test-classes:/home/fatima/Desktop/java/java_compiler/target/classes:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/home/fatima/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:/home/fatima/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.0/junit-jupiter-params-5.10.0.jar:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/home/fatima/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/fatima/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/home/fatima/.m2/repository/org/mockito/mockito-core/5.5.0/mockito-core-5.5.0.jar:/home/fatima/.m2/repository/net/bytebuddy/byte-buddy/1.14.6/byte-buddy-1.14.6.jar:/home/fatima/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.6/byte-buddy-agent-1.14.6.jar:/home/fatima/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/fatima/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/home/fatima/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250204113352819_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250204143252943_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.5+11-Ubuntu-1ubuntu122.04"/>
     <property name="user.name" value="fatima"/>
@@ -54,498 +53,147 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="evaluator_NameExpression_Reports_Undefined" classname="codeAnalysis.EvaluationTest" time="0.034">
-    <system-out><![CDATA[Final Text: x * 10
-Span Start: 0, End: 1
-]]></system-out>
-    <system-err><![CDATA[Feb 04, 2025 11:33:53 AM org.junit.jupiter.engine.discovery.MethodSelectorResolver resolve
-WARNING: Possible configuration error: method [public void codeAnalysis.EvaluationTest.evaluator_VariableDeclaration_Reports_Redeclaration() throws java.lang.Exception] resulted in multiple TestDescriptors [org.junit.jupiter.engine.descriptor.TestTemplateTestDescriptor, org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor]. This is typically the result of annotating a method with multiple competing annotations such as @Test, @RepeatedTest, @ParameterizedTest, @TestFactory, etc.
-Feb 04, 2025 11:33:53 AM org.junit.jupiter.engine.discovery.MethodSelectorResolver resolve
-WARNING: Possible configuration error: method [public void codeAnalysis.EvaluationTest.evaluator_VariableDeclaration_Reports_Redeclaration() throws java.lang.Exception] resulted in multiple TestDescriptors [org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor, org.junit.jupiter.engine.descriptor.TestTemplateTestDescriptor]. This is typically the result of annotating a method with multiple competing annotations such as @Test, @RepeatedTest, @ParameterizedTest, @TestFactory, etc.
-]]></system-err>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_unary2_Reports_undefined" classname="codeAnalysis.EvaluationTest" time="0.009"/>
+  <testcase name="evaluator_NameExpression_Reports_Undefined" classname="codeAnalysis.EvaluationTest" time="0.002"/>
+  <testcase name="evaluator_unary_Reports_undefined" classname="codeAnalysis.EvaluationTest" time="0.0"/>
+  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.0"/>
+  <testcase name="evaluator_binary_Reports_undefined" classname="codeAnalysis.EvaluationTest" time="0.002"/>
+  <testcase name="evaluator_computes_correctValues(String, Object)[1]" classname="codeAnalysis.EvaluationTest" time="0.002">
+    <system-out><![CDATA[Result: 1
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[2]" classname="codeAnalysis.EvaluationTest" time="0.0">
+    <system-out><![CDATA[Result: 1
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[3]" classname="codeAnalysis.EvaluationTest" time="0.0">
+    <system-out><![CDATA[Result: -1
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[4]" classname="codeAnalysis.EvaluationTest" time="0.0">
+    <system-out><![CDATA[
+Result: 26
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[5]" classname="codeAnalysis.EvaluationTest" time="0.0">
+    <system-out><![CDATA[
+Result: 9
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[6]" classname="codeAnalysis.EvaluationTest" time="0.001">
+    <system-out><![CDATA[
+Result: 8
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[7]" classname="codeAnalysis.EvaluationTest" time="0.001">
+    <system-out><![CDATA[
+Result: 3
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[8]" classname="codeAnalysis.EvaluationTest" time="0.001">
+    <system-out><![CDATA[Result: 10
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[9]" classname="codeAnalysis.EvaluationTest" time="0.0">
+    <system-out><![CDATA[
+Result: false
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[10]" classname="codeAnalysis.EvaluationTest" time="0.0">
+    <system-out><![CDATA[
+Result: true
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[11]" classname="codeAnalysis.EvaluationTest" time="0.0">
+    <system-out><![CDATA[
+Result: true
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
+  <testcase name="evaluator_computes_correctValues(String, Object)[12]" classname="codeAnalysis.EvaluationTest" time="0.001">
+    <system-out><![CDATA[
+Result: false
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.0">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.002">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.0">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.0">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.0">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_VariableDeclaration_Reports_Redeclaration" classname="codeAnalysis.EvaluationTest" time="0.0">
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    var y = 100
-    {
-        var x = 10
-    }
-    var x = 5
-}
-Span Start: 72, End: 73
-]]></system-out>
-  </testcase>
-  <testcase name="evaluator_AssignmentExpression_Reports_CannotConvert" classname="codeAnalysis.EvaluationTest" time="0.006">
-    <failure message="TextSpan start position mismatch! ==&gt; expected: &lt;25&gt; but was: &lt;21&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: TextSpan start position mismatch! ==> expected: <25> but was: <21>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:560)
-	at codeAnalysis.EvaluationTest.assertDiagnostics(EvaluationTest.java:144)
-	at codeAnalysis.EvaluationTest.evaluator_AssignmentExpression_Reports_CannotConvert(EvaluationTest.java:120)
+  <testcase name="evaluator_computes_correctValues(String, Object)[13]" classname="codeAnalysis.EvaluationTest" time="0.005">
+    <error message="Cannot invoke &quot;Object.toString()&quot; because the return value of &quot;codeAnalysis.compiling.EvaluationResult.getValue()&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot invoke "Object.toString()" because the return value of "codeAnalysis.compiling.EvaluationResult.getValue()" is null
+	at codeAnalysis.EvaluationTest.assertValue(EvaluationTest.java:69)
+	at codeAnalysis.EvaluationTest.evaluator_computes_correctValues(EvaluationTest.java:60)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></failure>
-    <system-out><![CDATA[Final Text: {
-    var x = 10
-    x = true
-}
-Span Start: 25, End: 29
+]]></error>
+    <system-out><![CDATA[Result: null
 ]]></system-out>
   </testcase>
-  <testcase name="evaluator_AssignmentExpression_Reports_CannotAssign" classname="codeAnalysis.EvaluationTest" time="0.001">
-    <system-out><![CDATA[Final Text: {
-    let x = 10
-    x = 0
-}
-Span Start: 23, End: 24
+  <testcase name="evaluator_computes_correctValues(String, Object)[14]" classname="codeAnalysis.EvaluationTest" time="0.002">
+    <error message="Cannot invoke &quot;Object.toString()&quot; because the return value of &quot;codeAnalysis.compiling.EvaluationResult.getValue()&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot invoke "Object.toString()" because the return value of "codeAnalysis.compiling.EvaluationResult.getValue()" is null
+	at codeAnalysis.EvaluationTest.assertValue(EvaluationTest.java:69)
+	at codeAnalysis.EvaluationTest.evaluator_computes_correctValues(EvaluationTest.java:60)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+]]></error>
+    <system-out><![CDATA[Result: null
 ]]></system-out>
   </testcase>
+  <testcase name="evaluator_binary_withOR_Reports_undefined" classname="codeAnalysis.EvaluationTest" time="0.001"/>
+  <testcase name="evaluator_AssignmentExpression_Reports_CannotAssign" classname="codeAnalysis.EvaluationTest" time="0.0"/>
 </testsuite>
