@@ -5,24 +5,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6890f6a-8957-4c26-84b9-5be317094e20" name="Changes" comment="tracing the issue of null when using a literal expression inside the binary expression">
-      <change afterPath="$PROJECT_DIR$/src/test/java/codeAnalysis/IntegrationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/codeAnalysis/TestMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/hamcrest_core_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/junit4_4_13_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/codeAnalysis/VariableSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/codeAnalysis/VariableSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/codeAnalysis/compiling/Diagnostic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/codeAnalysis/compiling/Diagnostic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/codeAnalysis/compiling/DiagnosticBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/codeAnalysis/compiling/DiagnosticBag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/codeAnalysis/syntax/LexerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/codeAnalysis/syntax/ParserTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/codeAnalysis/compiling/EvaluationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/codeAnalysis/compiling/EvaluationResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/Evaluator$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/Evaluator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/Evaluator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/VariableSymbol.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/VariableSymbol.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/Binder$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/Binder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/Binder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundAssignmentExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundAssignmentExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBinaryExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBinaryExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBinaryOperator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBinaryOperator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBinaryOperatorKind.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBinaryOperatorKind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBlockStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundBlockStatement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundExpressionStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundExpressionStatement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundGlobalScope.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundGlobalScope.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundLiteralExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundLiteralExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundNodeKind.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundNodeKind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundScope.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundScope.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundStatement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundUnaryExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundUnaryExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundUnaryOperator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundUnaryOperator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundUnaryOperatorKind.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundUnaryOperatorKind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundVariableDeclaration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundVariableDeclaration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundVariableExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/binding/BoundVariableExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/Compilation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/Compilation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/Diagnostic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/Diagnostic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/DiagnosticBag.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/DiagnosticBag.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/EvaluationResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/compiling/EvaluationResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/AssignmentExpressionSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/AssignmentExpressionSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/BinaryExpressionSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/BinaryExpressionSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/BlockStatementSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/BlockStatementSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/CompilationUnitSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/CompilationUnitSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/ExpressionStatementSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/ExpressionStatementSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/ExpressionSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/ExpressionSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/Lexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/Lexer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/LiteralExpressionSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/LiteralExpressionSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/NameExpressionSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/NameExpressionSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/ParanthrsizedExpressionSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/ParanthrsizedExpressionSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/Parser$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/Parser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/StatementSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/StatementSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxFact$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxFact.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxFact.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxKind.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxKind.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/SyntaxTree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/UnaryExpressionSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/UnaryExpressionSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/VariableDeclarationSyntax.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/syntax/VariableDeclarationSyntax.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/text/SourceText.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/text/SourceText.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/text/TextLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/text/TextLine.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/codeAnalysis/text/TextSpan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/codeAnalysis/text/TextSpan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/codeAnalysis/IntegratedTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/codeAnalysis/IntegratedTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/codeAnalysis/TestMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/codeAnalysis/TestMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/codeAnalysis/TestOutput.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/codeAnalysis/TestOutput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/codeAnalysis/binding/BinderTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/codeAnalysis/binding/BinderTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/codeAnalysis/syntax/LexerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/codeAnalysis/syntax/LexerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/codeAnalysis/syntax/ParserTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/codeAnalysis/syntax/ParserTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,33 +109,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.LexerTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.TestMain.executor&quot;: &quot;Run&quot;,
-    &quot;Application.main .executor&quot;: &quot;Run&quot;,
-    &quot;Application.main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.IntegrationTest.testArithmeticExpression.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LexerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LexerTest.testSingleTokens.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.main.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.java_compiler [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.java_compiler [test].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.java_compiler [validate].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;variable-binding&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/fatima/Desktop/java/java_compiler&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.build.tools.auto.reload&quot;: &quot;SELECTIVE&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Debugger_Data_Views_Java&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LexerTest.executor": "Run",
+    "Application.Main.executor": "Debug",
+    "Application.TestMain.executor": "Run",
+    "Application.main .executor": "Run",
+    "Application.main.executor": "Run",
+    "JUnit.IntegrationTest.testArithmeticExpression.executor": "Run",
+    "JUnit.LexerTest.executor": "Run",
+    "JUnit.LexerTest.testSingleTokens.executor": "Run",
+    "JUnit.main.executor": "Run",
+    "Maven.java_compiler [compile].executor": "Run",
+    "Maven.java_compiler [test].executor": "Run",
+    "Maven.java_compiler [validate].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "episode__7",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/fatima/Desktop/java/java_compiler",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.build.tools.auto.reload": "SELECTIVE",
+    "settings.editor.selected.configurable": "Debugger_Data_Views_Java"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="codeAnalysis.syntax" />

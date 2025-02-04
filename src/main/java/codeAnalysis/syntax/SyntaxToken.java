@@ -19,7 +19,8 @@ public class SyntaxToken extends SyntaxNode{
         this.value = value;
     }
 
-    public TextSpan span () {
+    public TextSpan span() {
+        
         return new TextSpan(position, text.length());
     }
     @Override

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.binding.BinderTest" time="0.02" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="codeAnalysis.binding.BinderTest" time="0.008" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -7,12 +7,13 @@
     <property name="java.vm.vendor" value="Ubuntu"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://ubuntu.com/"/>
+    <property name="user.timezone" value="Asia/Muscat"/>
     <property name="os.name" value="Linux"/>
     <property name="java.vm.specification.version" value="21"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250126222033057_3.jar /home/fatima/Desktop/java/java_compiler/target/surefire 2025-01-26T22-20-33_005-jvmRun1 surefire-20250126222033057_1tmp surefire_0-20250126222033057_2tmp"/>
+    <property name="sun.java.command" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250204113352819_3.jar /home/fatima/Desktop/java/java_compiler/target/surefire 2025-02-04T11-33-52_760-jvmRun1 surefire-20250204113352819_1tmp surefire_0-20250204113352819_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/fatima/Desktop/java/java_compiler/target/test-classes:/home/fatima/Desktop/java/java_compiler/target/classes:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.3/junit-jupiter-engine-5.9.3.jar:/home/fatima/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:/home/fatima/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.0/junit-jupiter-params-5.10.0.jar:/home/fatima/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.3/junit-jupiter-api-5.9.3.jar:/home/fatima/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/fatima/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/home/fatima/.m2/repository/org/mockito/mockito-core/5.5.0/mockito-core-5.5.0.jar:/home/fatima/.m2/repository/net/bytebuddy/byte-buddy/1.14.6/byte-buddy-1.14.6.jar:/home/fatima/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.6/byte-buddy-agent-1.14.6.jar:/home/fatima/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/fatima/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/home/fatima/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,13 +28,13 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250126222033057_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/fatima/Desktop/java/java_compiler/target/surefire/surefirebooter-20250204113352819_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.5+11-Ubuntu-1ubuntu122.04"/>
     <property name="user.name" value="fatima"/>
     <property name="stdout.encoding" value="UTF-8"/>
     <property name="path.separator" value=":"/>
-    <property name="os.version" value="6.8.0-51-generic"/>
+    <property name="os.version" value="6.8.0-52-generic"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
@@ -53,8 +54,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testReadOnlyVariableDeclaration" classname="codeAnalysis.binding.BinderTest" time="0.003"/>
-  <testcase name="testUndefinedVariable" classname="codeAnalysis.binding.BinderTest" time="0.012"/>
+  <testcase name="testReadOnlyVariableDeclaration" classname="codeAnalysis.binding.BinderTest" time="0.0"/>
+  <testcase name="testUndefinedVariable" classname="codeAnalysis.binding.BinderTest" time="0.002"/>
   <testcase name="testBlockStatement" classname="codeAnalysis.binding.BinderTest" time="0.001"/>
   <testcase name="testBinaryExpression" classname="codeAnalysis.binding.BinderTest" time="0.001"/>
   <testcase name="testVariableDeclaration" classname="codeAnalysis.binding.BinderTest" time="0.001"/>

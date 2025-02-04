@@ -1,5 +1,6 @@
 package codeAnalysis.text;
 
+import java.util.Objects;
 
 public class TextSpan {
     private final int start;
@@ -27,7 +28,27 @@ public class TextSpan {
         var length = end - start;
         return new TextSpan(start, length);
     }
+  
 
+    @Override
+    public String toString() {
+
+        return "TextSpan [start=" + start + ", length=" + length + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        TextSpan textSpan = (TextSpan) obj;
+        return start == textSpan.start && length == textSpan.length;
+    }
+
+    @Override
+    public int hashCode() {
+    
+        return Objects.hash(start, length);
+    }
 
 }
 

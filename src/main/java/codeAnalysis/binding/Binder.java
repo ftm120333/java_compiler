@@ -156,7 +156,7 @@ private BoundExpression bindNameExpression(NameExpressionSyntax syntax) {
             _diagnostics.reportCannotAssign(syntax.getEqualsToken().span(), name);
         }
         if(!boundExpression.type().equals(variable.getType())){
-            _diagnostics.reportCannotConvert(syntax.getIdentifierToken().span(), boundExpression.getClass(), variable.getType());
+            _diagnostics.reportCannotConvert(syntax.getIdentifierToken().span(), boundExpression.type(), variable.getType());
             return boundExpression;
         }
 

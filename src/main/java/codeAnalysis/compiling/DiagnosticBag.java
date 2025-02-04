@@ -60,7 +60,7 @@ public final class DiagnosticBag implements Iterable<Diagnostic> {
     }
 
     public void reportVariableAlreadyDeclared(TextSpan span, String name) {
-        var message = "Variable  " + name + " already declared "+ ".";
+        var message = "Variable " + name + " already declared"+ ".";
         report(span, message);
 
     }
