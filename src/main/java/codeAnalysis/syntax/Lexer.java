@@ -93,6 +93,7 @@ public class Lexer {
                 }
 
             }
+       
             case '|' -> {
                 if (lookAhead() == '|') {
                     _position += 2;
@@ -118,6 +119,31 @@ public class Lexer {
                     _position += 2;
                 }
             }
+
+            case '<' -> {
+                
+                if (lookAhead() != '=') {
+                    _kind = SyntaxKind.LessToken;
+                    _position++;
+                    
+                } else {
+                    _kind = SyntaxKind.LessOrEqualsToken;   
+                    _position += 2; 
+                }
+            }
+
+            case '>' -> {
+                
+                if (lookAhead() != '=') {
+                    _kind = SyntaxKind.GreaterToken;
+                    _position++;
+                    
+                } else {
+                    _kind = SyntaxKind.GreaterOrEqualsToken; 
+                    _position += 2;   
+                }
+            }
+
             case '0', '1', '2', '3', '4', '5' , '6', '7','8','9'-> readNumberToken();
             case ' ', '\r', '\t' ->  readWhiteSpace();
             default -> {

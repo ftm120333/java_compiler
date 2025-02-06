@@ -33,8 +33,13 @@ public final class SyntaxFact {
     public static int getBinaryOperatorPrecedence( SyntaxKind kind) {
         return switch (kind) {
             case SyntaxKind.StarToken, SyntaxKind.SlashToken -> 5;
+
             case SyntaxKind.PlusToken, SyntaxKind.MinusToken -> 4; 
-            case SyntaxKind.EqualsEqualsToken, SyntaxKind.BangEqualsToken -> 3;
+
+            case SyntaxKind.EqualsEqualsToken, SyntaxKind.BangEqualsToken,
+             SyntaxKind.LessToken, SyntaxKind.LessOrEqualsToken, 
+             SyntaxKind.GreaterToken, SyntaxKind.GreaterOrEqualsToken -> 3;
+             
             case SyntaxKind.AmpersandAmpersandToken -> 2;
                 case SyntaxKind.PipePipeToken -> 1;
             default -> 0;

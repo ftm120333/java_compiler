@@ -105,6 +105,11 @@ public class Evaluator {
             case LogicalOr -> (boolean) left || (boolean) right;
             case Equals -> Objects.equals(left, right);
             case NotEquals -> !Objects.equals(left, right);
+
+            case Less -> (int) left < (int) right;
+            case LessOrEquals -> (int) left <=  (int) right;
+            case Greater -> (int) left > (int) right;
+            case GreaterOrEquals -> (int) left >= (int) right;
             default -> throw new Exception("Unexpected operator kind: " + node.getOperatorKind().getKind());
         };
     }
